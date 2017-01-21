@@ -1,0 +1,147 @@
+\begin{thebibliography}{10}
+
+\bibitem{RefWorks:8}
+National~Institute of~Mental~Health.
+\newblock Schizophrenia, 2016.
+
+\bibitem{RefWorks:9}
+O.~J. Bienvenu, D.~S. Davydow, and K.~S. Kendler.
+\newblock Psychiatric `diseases' versus behavioral disorders and degree of
+  genetic influence.
+\newblock {\em Psychological medicine; Psychol.Med.}, 41(1):33--40, 2011.
+\newblock ID: TN\_cambridgeS003329171000084X.
+
+\bibitem{RefWorks:10}
+Schizophrenia.com.
+\newblock Heredity and the genetics of schizophrenia, 2004.
+
+\bibitem{RefWorks:12}
+Bob Weinhold.
+\newblock Epigenetics: The science of change.
+\newblock {\em Environmental health perspectives}, 114(3):A160--A167, 2006.
+\newblock ID: TN\_pubmed\_central1392256.
+
+\bibitem{RefWorks:11}
+Florence Thibaut.
+\newblock Why schizophrenia genetics needs epigenetics: a review.
+\newblock {\em Psychiatria Danubina}, 24(1):25, 2012.
+\newblock ID: TN\_medline22447081.
+
+\bibitem{RefWorks:82}
+Heidi Ledford.
+\newblock If depression were cancer.
+\newblock {\em Nature}, (515):182--184, 2014.
+
+\bibitem{RefWorks:79}
+W.~P. Kuo, E.~Y Kim, J.~Trimarchi, T.~K Jenssen, S.~A. Vinterbo, and
+  L.~Ohno-Machado.
+\newblock A primer on gene expression and microarrays for machine learning
+  researchers.
+\newblock {\em Journal of Biomedical Informatics}, 37(4):293--303, 08 2004.
+
+\bibitem{RefWorks:80}
+A.~Bharathi and A.~M. Natarajan.
+\newblock Microarray gene expression cancer diagnosis using machine learning
+  algorithms.
+\newblock In {\em 3rd IEEE International Conference on Signal and Image
+  Processing, ICSIP 2010, December 15, 2010 - December 17}, pages 275--280,
+  Chennai, India, 2010 2010. Bannari Amman Institute of Technology, Tamilnadu
+  (State), India, IEEE Computer Society.
+\newblock Compilation and indexing terms, Copyright 2016 Elsevier Inc.; T3:
+  Proceedings of the 2010 International Conference on Signal and Image
+  Processing, ICSIP 2010.
+
+\bibitem{RefWorks:88}
+Chang~Kyoo Yoo and Krist~V. Gernaey.
+\newblock Classification and diagnostic output prediction of cancer using gene
+  expression profiling and supervised machine learning algorithms.
+\newblock {\em Journal of Chemical Engineering of Japan}, 41(9):898--914, 2008.
+\newblock Compilation and indexing terms, Copyright 2016 Elsevier Inc.
+
+\bibitem{RefWorks:89}
+Y.~Lu and J.~Han.
+\newblock Cancer classification using gene expression data.
+\newblock {\em Information Systems}, 28(4):243--68, 06 2003.
+
+\bibitem{RefWorks:98}
+Tom M. (Tom Michael)~Mitchell 1951.
+\newblock {\em Machine learning}.
+\newblock International 1997 edition, 1997.
+\newblock Includes bibliographical references and index.; ID:
+  44IMP\_ALMA\_DS2143719110001591.
+
+\bibitem{RefWorks:99}
+J.R. Quinlan.
+\newblock Induction of decision trees, 1986.
+\newblock ID: RS\_60168743381inductionofdecisiontrees.
+
+\bibitem{RefWorks:101}
+Leo Breiman.
+\newblock Random forests.
+\newblock {\em Machine Learning}, 45(1):5--32, 2001.
+\newblock ID: TN\_springer\_jour1010933404324.
+
+\bibitem{RefWorks:100}
+Juergen Gall, Nima Razavi, and Luc~Van Gool.
+\newblock An introduction to random forests for multi-class object detection.
+\newblock In {\em 15th International Workshop on Theoretical Foundations of
+  Computer Vision, June 26, 2011 - July 1}, volume 7474 LNCS, pages 243--263,
+  Dagstuhl Castle, Germany, 2011 2012. Computer Vision Laboratory, ETH Zurich,
+  SwitzerlandMax Planck Institute for Intelligent Systems, GermanyESAT/IBBT,
+  Katholieke Universiteit Leuven, Belgium, Springer Verlag.
+\newblock Compilation and indexing terms, Copyright 2016 Elsevier Inc.; T3:
+  Lecture Notes in Computer Science (including subseries Lecture Notes in
+  Artificial Intelligence and Lecture Notes in Bioinformatics).
+
+\bibitem{RefWorks:103}
+Songul Cinaroglu.
+\newblock Comparison of performance of decision tree algorithms and random
+  forest: An application on oecd countries health expenditures.
+\newblock {\em International Journal of Computer Applications}, 138(1):37--41,
+  March 2016.
+
+\bibitem{RefWorks:102}
+Andy Liaw and Matthew Wiener.
+\newblock Classification and regression by randomforest.
+\newblock {\em R News}, 2(3):18--22, December, 2002.
+
+\bibitem{RefWorks:94}
+Robert Tibshirani.
+\newblock Regression shrinkage and selection via the lasso.
+\newblock {\em Journal of the Royal Statistical Society}, pages 267--288, 1996.
+
+\bibitem{RefWorks:96}
+Hui Zou and Trevor Hastie.
+\newblock Regularization and variable selection via the elastic net.
+\newblock {\em Journal of the Royal Statistical Society: Series B (Statistical
+  Methodology)}, 67(2):301--320, 2005.
+\newblock ID: TN\_wj10.1111/j.1467-9868.2005.00503.x.
+
+\bibitem{RefWorks:93}
+C.~De Mol, E.~De Vito, and L.~Rosasco.
+\newblock Elastic-net regularization in learning theory.
+\newblock {\em Journal of Complexity}, 25(2):201--30, 04 2009.
+
+\bibitem{RefWorks:78}
+Eilis Hannon, Emma Dempster, Joana Viana, Joe Burrage, Adam~R. Smith, Ruby
+  Macdonald, David~St Clair, Colette Mustard, Gerome Breen, Sebastian Therman,
+  Jaakko Kaprio, Timothea Toulopoulou, Hilleke E.~Hulshoff Pol, Marc~M.
+  Bohlken, Rene~S. Kahn, Igor Nenadic, Christina~M. Hultman, Robin~M. Murray,
+  David~A. Collier, Nick Bass, Hugh Gurling, Andrew McQuillin, Leonard
+  Schalkwyk, and Jonathan Mill.
+\newblock An integrated genetic-epigenetic analysis of schizophrenia: evidence
+  for co-localization of genetic associations and differential dna methylation.
+\newblock {\em Genome biology}, 17(1):176, 2016.
+\newblock ID: Hannon2016.
+
+\bibitem{RefWorks:90}
+Michael P.~S. Brown, David Lin, Terrence~S. Furey, David Haussler,
+  Charles~Walsh Sugnet, Manuel~Ares Jr., William~Noble Grundy, and Nello
+  Cristianini.
+\newblock Knowledge-based analysis of microarray gene expression data by using
+  support vector machines.
+\newblock {\em Proceedings of the National Academy of Sciences of the United
+  States of America}, 97(1):262--267, 2000.
+\newblock ID: TN\_scopus2-s2.0-0034602774.
+
+\end{thebibliography}
