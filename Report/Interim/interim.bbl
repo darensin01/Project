@@ -3,6 +3,8 @@
 \bibitem{RefWorks:8}
 National~Institute of~Mental~Health.
 \newblock Schizophrenia, 2016.
+\newblock Available from
+  \url{https://www.nimh.nih.gov/health/topics/schizophrenia/index.shtml}.
 
 \bibitem{RefWorks:9}
 O.~J. Bienvenu, D.~S. Davydow, and K.~S. Kendler.
@@ -14,6 +16,8 @@ O.~J. Bienvenu, D.~S. Davydow, and K.~S. Kendler.
 \bibitem{RefWorks:10}
 Schizophrenia.com.
 \newblock Heredity and the genetics of schizophrenia, 2004.
+\newblock Available from
+  \url{http://www.schizophrenia.com/research/hereditygen.htm}.
 
 \bibitem{RefWorks:12}
 Bob Weinhold.
@@ -31,6 +35,74 @@ Florence Thibaut.
 Heidi Ledford.
 \newblock If depression were cancer.
 \newblock {\em Nature}, (515):182--184, 2014.
+\newblock Available from
+  \url{http://www.nature.com/news/medical-research-if-depression-were-cancer-1.16307}.
+
+\bibitem{RefWorks:96}
+Hui Zou and Trevor Hastie.
+\newblock Regularization and variable selection via the elastic net.
+\newblock {\em Journal of the Royal Statistical Society: Series B (Statistical
+  Methodology)}, 67(2):301--320, 2005.
+\newblock ID: TN\_wj10.1111/j.1467-9868.2005.00503.x.
+
+\bibitem{RefWorks:106}
+Lister Hill National~Center for Biomedical~Communications.
+\newblock {\em Help Me Understand Genetics}.
+\newblock 2017.
+\newblock Available from \url{https://ghr.nlm.nih.gov/primer}.
+
+\bibitem{RefWorks:108}
+National Human Genome~Research Institute.
+\newblock Epigenomics, 2016.
+\newblock Available from \url{https://www.genome.gov/27532724/}.
+
+\bibitem{RefWorks:110}
+YourGenome.
+\newblock What is gene expression?, 2016.
+\newblock Available from
+  \url{http://www.yourgenome.org/facts/what-is-gene-expression}.
+
+\bibitem{RefWorks:111}
+Heidi Chial, Carrie Drovdlic, Maggie Koopman, Sarah~Catherine Nelson, Angela
+  Spivey, and Robin Smith.
+\newblock Essentials of genetics, 2014.
+\newblock Available from
+  \url{http://www.nature.com/scitable/ebooks/essentials-of-genetics-8}.
+
+\bibitem{RefWorks:109}
+National Human Genome~Research Institute.
+\newblock All about the human genome project, 2015.
+\newblock Available from \url{https://www.genome.gov/10001772/}.
+
+\bibitem{RefWorks:107}
+University of~Utah.
+\newblock Insights from identical twins.
+\newblock Available from
+  \url{http://learn.genetics.utah.edu/content/epigenetics/twins/}.
+
+\bibitem{RefWorks:104}
+Arturas Petronis.
+\newblock Epigenetics and twins: three variations on the theme.
+\newblock {\em Trends in Genetics}, 22(7):347--350, 2006.
+\newblock ID: TN\_sciversesciencedirect\_elsevierS0168-9525(06)00126-0.
+
+\bibitem{RefWorks:105}
+Pernille Poulsen, Manel Esteller, Allan Vaag, and Mario~F. Fraga.
+\newblock The epigenetic basis of twin discordance in age- related diseases.
+\newblock {\em Pediatric research}, 61(5):38R, 2007.
+\newblock ID: TN\_medline17413848.
+
+\bibitem{RefWorks:78}
+Eilis Hannon, Emma Dempster, Joana Viana, Joe Burrage, Adam~R. Smith, Ruby
+  Macdonald, David~St Clair, Colette Mustard, Gerome Breen, Sebastian Therman,
+  Jaakko Kaprio, Timothea Toulopoulou, Hilleke E.~Hulshoff Pol, Marc~M.
+  Bohlken, Rene~S. Kahn, Igor Nenadic, Christina~M. Hultman, Robin~M. Murray,
+  David~A. Collier, Nick Bass, Hugh Gurling, Andrew McQuillin, Leonard
+  Schalkwyk, and Jonathan Mill.
+\newblock An integrated genetic-epigenetic analysis of schizophrenia: evidence
+  for co-localization of genetic associations and differential dna methylation.
+\newblock {\em Genome biology}, 17(1):176, 2016.
+\newblock ID: Hannon2016.
 
 \bibitem{RefWorks:79}
 W.~P. Kuo, E.~Y Kim, J.~Trimarchi, T.~K Jenssen, S.~A. Vinterbo, and
@@ -62,6 +134,11 @@ Chang~Kyoo Yoo and Krist~V. Gernaey.
 Y.~Lu and J.~Han.
 \newblock Cancer classification using gene expression data.
 \newblock {\em Information Systems}, 28(4):243--68, 06 2003.
+
+\bibitem{RefWorks:114}
+American~Psychiatric Association.
+\newblock Diagnostic and statistical manual of mental disorders, 2013.
+\newblock ID: 44IMP\_ALMA\_DS5172131690001591.
 
 \bibitem{RefWorks:98}
 Tom M. (Tom Michael)~Mitchell 1951.
@@ -110,29 +187,20 @@ Robert Tibshirani.
 \newblock Regression shrinkage and selection via the lasso.
 \newblock {\em Journal of the Royal Statistical Society}, pages 267--288, 1996.
 
-\bibitem{RefWorks:96}
-Hui Zou and Trevor Hastie.
-\newblock Regularization and variable selection via the elastic net.
-\newblock {\em Journal of the Royal Statistical Society: Series B (Statistical
-  Methodology)}, 67(2):301--320, 2005.
-\newblock ID: TN\_wj10.1111/j.1467-9868.2005.00503.x.
-
 \bibitem{RefWorks:93}
 C.~De Mol, E.~De Vito, and L.~Rosasco.
 \newblock Elastic-net regularization in learning theory.
 \newblock {\em Journal of Complexity}, 25(2):201--30, 04 2009.
 
-\bibitem{RefWorks:78}
-Eilis Hannon, Emma Dempster, Joana Viana, Joe Burrage, Adam~R. Smith, Ruby
-  Macdonald, David~St Clair, Colette Mustard, Gerome Breen, Sebastian Therman,
-  Jaakko Kaprio, Timothea Toulopoulou, Hilleke E.~Hulshoff Pol, Marc~M.
-  Bohlken, Rene~S. Kahn, Igor Nenadic, Christina~M. Hultman, Robin~M. Murray,
-  David~A. Collier, Nick Bass, Hugh Gurling, Andrew McQuillin, Leonard
-  Schalkwyk, and Jonathan Mill.
-\newblock An integrated genetic-epigenetic analysis of schizophrenia: evidence
-  for co-localization of genetic associations and differential dna methylation.
-\newblock {\em Genome biology}, 17(1):176, 2016.
-\newblock ID: Hannon2016.
+\bibitem{RefWorks:115}
+C.~M.~M. Wahid, A.~B. M.~S. Ali, and K.~Tickle.
+\newblock Impact of feature selection on support vector machine using
+  microarray gene expression data.
+\newblock In {\em 2009 Second International Conference on Machine Vision (ICMV
+  2009)}, pages 189--93, Piscataway, NJ, USA, 28-30 Dec. 2009 2009. Sch. of
+  Comput. Sci., CQ Univ., QLD, Australia, IEEE.
+\newblock T3: Proceedings of the 2009 Second International Conference on
+  Machine Vision (ICMV 2009);.
 
 \bibitem{RefWorks:90}
 Michael P.~S. Brown, David Lin, Terrence~S. Furey, David Haussler,
@@ -143,5 +211,12 @@ Michael P.~S. Brown, David Lin, Terrence~S. Furey, David Haussler,
 \newblock {\em Proceedings of the National Academy of Sciences of the United
   States of America}, 97(1):262--267, 2000.
 \newblock ID: TN\_scopus2-s2.0-0034602774.
+
+\bibitem{RefWorks:116}
+Davide Anguita, Luca Ghelardoni, Alessandro Ghio, Luca Oneto, and Sandro
+  Ridella.
+\newblock The `k’ in k-fold cross validation.
+\newblock In {\em European Symposium on Artificial Neural Networks,
+  Computational Intelligence and Machine Learning}, April 2012.
 
 \end{thebibliography}

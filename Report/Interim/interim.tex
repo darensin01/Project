@@ -8,13 +8,14 @@
 \usepackage{graphicx}
 \usepackage{mathtools}
 \usepackage{units}
-\usepackage[margin=1.0in]{geometry}
+\usepackage[margin=1.1in]{geometry}
 \usepackage{comment} 
 \usepackage{subcaption}
 \usepackage{float}
 \usepackage{units}
 \usepackage{natbib}
 \usepackage{multirow}
+\usepackage{url}
 
 \begin{document}
 
@@ -34,7 +35,7 @@
 
 Schizophrenia is a complex mental disorder that displays an array of symptoms. It is commonly perceived that schizophrenia is a hereditary disease that can be passed down within the family, but some individuals diagnosed with schizophrenia do not have a family member with the disorder \cite{RefWorks:8}. Thus, it is postulated that the heritability of schizophrenia might not be as high as what is commonly believed \cite{RefWorks:9}.
 
-Furthermore, there is a strong indication that environmental factors - such as tobacco smoke and viruses - and genetic factors have an influence on the development of psychiatric disorders in an individual \cite{RefWorks:8, RefWorks:10}. This results in a hypothesis that the epigenetics - ``any process that alters gene activity without changing the DNA sequence'' - of an individual might have a role to play in the development of schizophrenia \cite{RefWorks:12}. However, exactly how these two factors play a part is still unclear \cite{RefWorks:11}. What we should also note about the current research on psychiatric disorders is that studies on such disorders do not receive as much attention as other illnesses such as cancer \cite{RefWorks:82}. Thus, any insight generated from this project would be beneficial to helping us understand psychiatric disorders better.
+Furthermore, there is a strong indication that environmental factors - such as tobacco smoke and viruses - and genetic factors have an influence on the development of psychiatric disorders in an individual \cite{RefWorks:8, RefWorks:10}. This results in a hypothesis that the epigenetics - ``any process that alters gene activity without changing the DNA sequence'' - of an individual might have a role to play in the development of schizophrenia (see Section \ref{bg_epigenetics}) \cite{RefWorks:12}. However, exactly how these two factors play a part is still unclear \cite{RefWorks:11}. What we should also note about the current research on psychiatric disorders is that studies on such disorders do not receive as much attention as other illnesses such as cancer \cite{RefWorks:82}. Thus, any insight generated from this project would be beneficial to helping us understand psychiatric disorders better.
 
 Overall, this project aims to predict Schizophrenia cases on the basis of epigenetics and epivariations.
 
@@ -43,18 +44,17 @@ Overall, this project aims to predict Schizophrenia cases on the basis of epigen
 
 Using data from a recent study on epigenetics and schizophrenia (see Section \ref{bg_genetic_data}), the project aims to use machine learning to elucidate any statistical regularity in the data, in hope that any insight into the data can help geneticists and psychiatrists understand the etiology of schizophrenia - and indeed, other psychiatric disorders - better.
 
-As a starting point, simple classifiers can be used on the data, to determine the classification accuracy of the data. Later on, we would then use more complex classifiers and techniques which might produce better results.
+As a starting point, simple classifiers can be used on the data, to determine the classification accuracy of the data (see Section \ref{bg_ML}). Later on, we can explore more complex classifiers - by, for example, combining different methods - and techniques - like performing numerical experiments on hyperparameters - which might produce better results.
 
-What make this endeavour interesting are the potential problems that we might face while drawing inferences from the data.
+Previous work on using machine learning on biological data (see Section \ref{bg_cancer}) has always been plagued with the ``Curse of dimensionality'', where the number of biological samples is far lesser than the number of features (or dimensions) of the data (the ``$p \gg n$'' problem \cite{RefWorks:96}). In our case, we have 847 samples (individuals) with 420374 features, resulting in about 2 gigabytes of data.
 
-Previous work on using machine learning on biological data (see Section \ref{bg_cancer}) has always been plagued with the ``Curse of dimensionality'', where the number of biological samples is far lesser than the number of features (or dimensions) of the data. In our case, we have 847 samples (individuals) with 420374 features, resulting in about 2 gigabytes of data.
-
-Here, we face a potential problem of a similar nature - the data has high dimensions, but not all the genes involved in the study would directly play a part in the classification of the disorder; some genes may only contribute a little to the outcome of the classification. In this case, we would need to perform feature/dimension reduction to only select features that have significant contribution to the classification outcome.
+Here, we face a potential problem of a similar nature - the data has high dimensions, but not all the genes involved in the study would directly play a part in the classification of the disorder; some genes may only contribute a little to the outcome of the classification. In this case, we would need to perform feature/dimension reduction to only select features that have significant contribution to the classification outcome (see Section \ref{bg_feature_selection}).
 
 Moreover, linear classifiers may not be able to capture the complexity of the data, as it is hypothesised that subsets of genes - rather than single genes - contribute to the genesis of the disorder \cite{RefWorks:10}.
 
 These potential problems make the project interesting, as we cannot simply use ordinary machine learning techniques to manipulate the data - we have to adapt our algorithms and classifiers to suit the complexity and context of the dataset and problem.
 
+\newpage
 
 \section{Background}
 % relating it to existing published work which you read at the start of the project when your approach and methods were being considered.
@@ -69,19 +69,50 @@ These potential problems make the project interesting, as we cannot simply use o
 
 % Analysis is shown by explaining how the proposed solution operates in your own words as well as its benefits and consequences. Synthesis is shown through the organisation of your Related Work section and through identifying and generalising common aspects across different solutions. Critical judgement is shown by discussing the limitations of the solutions proposed both in terms of their disadvantages and limits of applicability.
 
-\subsection{Machine learning and cancer classification} \label{bg_cancer}
+\subsection{Biological review}
+\subsubsection{Molecular biology and definitions}
+This section outlines the necessary biology that will be relevant to the discussion in this project \cite{RefWorks:106, RefWorks:108, RefWorks:110, RefWorks:111}.
 
-There is a significant amount of literature on gene expression data and cancer classification. These works primarily aim to uncover biological or medical insights using biological data obtained from microarrays, which are tools to measure the
-gene expression of thousands of genes simultaneously \citep{RefWorks:79}. For example, using neural networks, gene expression data can be used to distinguish between tumour types, which helps in solving cancer diagnosis problems \citep{RefWorks:80, RefWorks:88}.
+\begin{itemize}
+\item \textbf{DNA:} Deoxyribonucleic Acid, also known as DNA, is a molecule that contains all the hereditary material in all living things. It serves as the fundamental unit of heredity.
 
-What is similar about this project and previous work on cancer classification is that the data for both cases are plagued with high dimensionality (``Curse of dimensionality''). For example, in cancer studies, microarrays are used, with a large number of genes (features) but a small number of samples (observations) \cite{RefWorks:88}. Furthermore, only a (small) subset of the features are relevant for the studies, as not all genes are relevant for determining the type of cancer a patient has. This is known as biological noise \cite{RefWorks:89}. As such, a feature/dimensionality reduction on the data has to be performed to select only the relevant genes/features for the classification problem. In other words, the solution for our situation (and also for cancer classification) would ideally be sparse, as we seek to identify the features are the most relevant to the classification.
+\item \textbf{DNA bases:} The hereditary information stored in DNA molecules are made up of four bases - Adenine (A), Thymine (T), Cytosine (C) and Guanine (G). These bases pair up in a specific way: A with T and C with G. Along with other types of molecules, these pairs form a nucleotide. Nucleotides are then arranged in a double helix structure.
 
-However, what is fundamentally different about studies on psychiatric disorders and cancer, is that the latter is observable, such that we can know for sure that an individual has cancer using medical tools. However, it is not obvious that an individual has a psychiatric disorder, as its symptoms might not be as obvious or observable.
+\item \textbf{Genes:} A gene is the fundamental building block of heredity. Genes consist of DNA, and encode instructions to produce proteins. It is estimated that humans have about 20000 genes \cite{RefWorks:109}. The instructions stored in genes are used to produce proteins through the process of transcription and translation (or, gene expression). This process is often called the ``central dogma'' of molecular biology.
 
-\subsection{Existing work on psychiatric disorders}
+\item \textbf{Gene expression:} Gene expressions behave like a switch to determine when and what kind of proteins are produced by cells. All cells in a human being carry the same genome. Thus, gene expression allows cells to specialise into different functionalities (e.g. differentiate between a brain cell and a skin cell).
 
-\subsection{Review of machine learning classifiers}
-This section reviews machine learning classifiers that might be relevant for this project.
+\item \textbf{Epigenome:} The epigenome is a set of chemical compounds and modifications that can alter the genome, and thus alter DNA and the proteins that it produces. The epigenome can thus alter the ``on/off'' action in gene expression and control the production of proteins. The epigenome arises naturally, but can be affected by external factors (e.g. environmental factors, disease), which might explain why even though twins have the same genome, it often happens that one twin inherits a disease, while the other does not \cite{RefWorks:107}.
+
+\item \textbf{DNA methylation:} A common chemical modification is DNA methylation, where methyl groups ($-$CH$_3$) are attached to the bases of DNA at specific places. These methyl groups switch off the gene which they are attached to in the DNA, and thus no protein can be generated from that gene.
+\end{itemize}
+
+\subsection{Relationship between epigenetics and disease} \label{bg_epigenetics}
+Studies that involve monozygotic twins (twins who share the same set of genomes) are useful to discover the effect of epigenetics on the phenotypes (observable, physical characteristics) of these twins \cite{RefWorks:104}.
+
+A study that focuses on monozygotic twins and their susceptibility to disease found that the genes that make up an individual cannot fully explain how likely he/she would be diagnosed with a disease \cite{RefWorks:105}. It is thus interesting to ascertain, using epigenetics data and machine learning, whether epigenetics has any influence on being diagnosed with psychiatric disorders, by detecting any statistical regularity in the data.
+
+\subsection{The data} \label{bg_genetic_data}
+This project makes use of data from a recent genetic-epigenetic analysis of schizophrenia, conducted in 2016 \cite{RefWorks:78}. There are high-throughput methods that enable genomics researchers to perform epigenome-wide association studies (EWAS). In this study in particular, its researchers aimed to use these methods to identify positions in the genome that display DNA methylations associated with environmental exposure and disease. It turns out that there are significant differences in DNA methylation between individuals diagnosed with schizophrenia, and those who were not (controls).
+
+In particular, we are interested in the data offered in ``phase 2'' of the study, where schizophrenia-associated differentially methylated positions (DMPs) - positions on the genome where there is a difference in patterns of DNA methylation between two sets of genomes - were tested among 847 individuals, 414 of whom were schizophrenia cases.
+
+Throughout this project, we shall identify the data produced from this study as \textit{the data}. At the time of writing, some work has already been done to the data. See section \ref{workDone}.
+
+\subsection{Cancer classification} \label{bg_cancer}
+
+There is a significant amount of literature on gene expression data and cancer classification. These works primarily aim to uncover biological or medical insights using biological data obtained from microarrays, which are tools to measure the gene expression of thousands of genes simultaneously \citep{RefWorks:79}. For example, using neural networks, gene expression data can be used to distinguish between tumour types, which helps in solving cancer diagnosis problems \citep{RefWorks:80, RefWorks:88}. We can draw lessons from these studies to apply on this project.
+
+What is similar about this project and previous work on cancer classification is that the data for both cases are plagued with high dimensionality (\textit{Curse of dimensionality}). For example, in cancer studies, microarrays are used, with a large number of genes (features) but a small number of samples (observations) \cite{RefWorks:88}.
+
+Furthermore, only a (small) subset of the features are relevant for the studies, as not all genes are relevant for determining the type of cancer a patient has. This is known as biological noise \cite{RefWorks:89}. As such, a feature/dimensionality reduction on the data has to be performed to select only the relevant genes/features for the classification problem. In other words, the solution for our situation (and also for cancer classification) would ideally be sparse, as we seek to identify the features that are most relevant to the classification.
+
+However, what is fundamentally different about studies on psychiatric disorders and cancer, is that the latter is observable, such that we can know for sure that an individual has cancer using medical methods, such as conducting a blood test. However, it is not obvious that an individual has a psychiatric disorder, as its symptoms might not be straightforward.
+
+For example, the manual ``\textit{Diagnostic and statistical manual of mental disorders}'' discusses culture-related diagnostic issues of schizophrenia: ``the assessment of disorganized speech may be made difficult by linguistic variation in narrative styles across cultures''. Furthermore, ``ideas that appear to be delusional in one culture (e.g., witchcraft) may be commonly held in another'' \cite{RefWorks:114}. These highlight how diagnosing a psychiatric disorder like schizophrenia is not at all easy.
+
+\subsection{Review of machine learning classifiers} \label{bg_ML}
+Eventually, we would need to select an ideal machine learning method to detect statistical regularity in our data. This section reviews machine learning classifiers that might be relevant for this project.
 
 \subsubsection{Decision Trees}
 In our context, the task is to classify the data according to whether a sample (individual) has a psychiatric disorder - in particular, schizophrenia - or not. In other words, the classification task is binary. An intuitive solution is to use decision trees; problems with discrete output values can be solved using decision trees \cite{RefWorks:98}.
@@ -119,20 +150,31 @@ So, overall, the decision tree and random forest methods might not be the best m
 
 \subsubsection{Support vector machines}
 
+
 \subsubsection{Lasso and Elastic net}
 In Section \ref{intro_ML}, we discussed how, in this project, not only are we seeking low classification errors, we also have to select features/variables in the data that are relevant in producing accurate predictions. An obvious, but naive, solution is to consider all the features in different combinations. But this solution is evidently computationally expensive, much less with data as large as the one we consider in this project.
 
 One method to overcome this problem is by Lasso regression \cite{RefWorks:94}, which is a regularised least squares scheme that imposes an $l_1$-norm penalty on an error function that it tries to minimise. More importantly, in the context of big data and especially this project, the Lasso is an appealing solution because it produces a sparse solution, by shrinking the coefficients of insignificant features to 0. However, Zou and Hastie \cite{RefWorks:96} examined the limitations of the Lasso method, especially in the context of microarray data. In particular, Lasso has some limitations in variable selection, if a subset of features have high correlation with one another. This is precisely a characteristic of genes, as genes often interact with one another.
 
-As a result, Zou and Hastie proposed the \textit{elastic net}, which imposes a linear combination (weighted) of the $l_1$-norm and the square of the $l_2$-norm. This method performs feature selection, presents a sparse solution and takes into account variables with high correlation, where groups of correlated variables are not known in advance \cite{RefWorks:93}. Furthermore, Zou and Hastie showed that the elastic net method outperforms Lasso. As such, elastic net can be used on our data set.
+As a result, Zou and Hastie proposed the \textit{elastic net}, which imposes a linear combination (weighted) of the $l_1$-norm and the square of the $l_2$-norm. This method performs feature selection, presents a sparse solution and takes into account variables with high correlation, where groups of correlated variables are not known in advance \cite{RefWorks:93}. Furthermore, Zou and Hastie showed that the elastic net method outperforms Lasso. As such, elastic net might be used on our data set.
 
 Besides, we can also utilise the elastic net library in \texttt{scikit-learn} implemented in Python. This allows us to experiment with elastic net easily, to see if it would be suitable for our dataset.
 
+\subsection{Feature selection and dimensionality reduction} \label{bg_feature_selection}
+As mentioned in section \ref{intro_ML}, the data suffers a \textit{curse of dimensionality}, where the number of features exceeds the number of samples available. This usually causes \textit{over-fitting} on the classifier. This refers to the situation where the classifier can classify the training data perfectly, but performs poorly with unseen data.
 
-\subsection{Review of genetic data} \label{bg_genetic_data}
-This project makes use of data from a recent genetic-epigenetic analysis of schizophrenia, conducted in 2016 \cite{RefWorks:78}.
+Furthermore, there is a possibility that not all of the genes in our data set have a role to play in the classification of schizophrenia. As such, the feature selection method is necessary to select the significant features and eliminate the others. Besides, once we obtain only the relevant features, it would be less computationally expensive to train our classifier just on these features.
+
+In 2010, a study was conducted to investigate the impact of feature selection methods (Kernel Principal Component Analysis (PCA), Greedy Kernel PCA and Generalised discriminant analysis) on real microarray gene expression data. It concluded that applying feature selection methods improved the performance of the SVM classifier \cite{RefWorks:115}. This strengthens our belief that the feature selection process would enable our classifier to perform better with our data set.
+
+This study also explored these feature selection methods on various datasets. The number of genes/features available in these datasets ranges from 2000 to 12000, and the algorithm employed extracted 2, 4 and 10 features at a time.
 
 
+\subsection{Cross validation}
+% How many folds in k fold cross validation?
+% Type of feature selection method?
+
+\newpage
 
 \section{Project plan}
 % You should explain what needs to be done in order to complete the project and roughly what you expect the timetable to be.
@@ -141,54 +183,92 @@ This project makes use of data from a recent genetic-epigenetic analysis of schi
 
 % You should also identify what extensions could be added if time permits.  The plan should be complete and should include those parts that you have already addressed (make it clear how far you have progressed at the time of writing).
 
-\subsection{Work that has been done}
-
+\subsection{Work that has been done} \label{workDone}
+\subsubsection{Understanding the data}
 The first step that was done for this project was to find ways to understand the data. At the time of writing this report, the Python library \texttt{pandas} is used to manipulate the csv data set. \texttt{pandas} is a high-performance data analysis tool, which is suitable to be used on large datasets.
 
 On a typical laptop, attempting to read the csv file row by row would result in a memory error in Python. The \texttt{pandas} library allows the file to be read chunk by chunk. This method then enables us to find out exactly how many rows and columns there are in the csv file. Moreover, we found that the rows represent the sites in the DNA that can be methylated (features), while the columns represent the samples (individuals).
 
+\subsubsection{Data preprocessing}
 Furthermore, in the National Center for Biotechnology Information (NCBI) database, a ``series matrix'' file  explains what the data in the csv file represents. In particular, the columns (individuals) can be divided into the ``control'' (individuals with no schizophrenia) and the ``cases'' (individuals known to have schizophrenia). This is labelled by \texttt{disease\_status=1} and \texttt{disease\_status=2} respectively. This is helpful for classification, as we know beforehand what the label of each column (individual) is. This is necessary for supervised learning algorithms to be applied.
 
+We also have to convert the data that can be read by our classifier. For example, we have to convert the csv file into matrices, and convert the classification (control or case) into a (binary) vector.
+
 \subsection{Performance of classifiers}
-Similar to previous work on cancer classification, we would need to employ different types of supervised learning algorithms on the dataset. Although several experiments have shown that support vector machines (SVMs) are superior compared to other methods \cite{RefWorks:90}, we should still consider other classifiers, such as decision trees and random forests. We then need to determine the classification accuracy of each classifier, and select the best classifier for our data.
+Similar to previous work on cancer classification, we would need to employ different types of supervised learning algorithms on the dataset. Although several experiments have shown that support vector machines (SVMs) are superior compared to other methods \cite{RefWorks:90}, we should still consider other classifiers, such as decision trees and random forests, to ascertain their suitability on the data. We then need to determine the classification accuracy of each classifier, and select the best classifier for our data.
 
-Furthermore, classifiers such as the SVM requires several parameters. We would then need to run experiments to find out what the optimal values for the parameters are. These optimal values should give us the best classification accuracy.
+The classification accuracy of each classifier can be determined using methods such as $k$-fold or leave-one-out cross validation.
 
+Furthermore, classifiers such as the SVM requires several parameters. We would then need to run numerical  experiments to find out what the optimal values for these parameters are. These optimal values should give us the best classification accuracy.
 
-\subsection{Timeline, planning of project}
+Overall, this entire process of training the right classifier can be summarised in three steps:
+\begin{itemize}
+\item Training of the classifier using data
+\item Model selection: finding the best set of parameters for the classifier
+\item Classification error: accessing the performance of the classifier
+\end{itemize}
 
-The significant milestones relevant for this project are stated in the table below.
+\subsection{Dimensionality reduction}
+As briefly mentioned in section \ref{bg_feature_selection}, once we get the classifier working on the dataset to a satisfactory accuracy, we can then proceed to perform dimensionality reduction and feature selection on the data. This allows us to select only the most informative and relevant genes. It also helps to reduce the size and amount of data needed for the classifier.
+
+\subsection{Biological implications}
+Once the most optimal weights/parameters of the classifer are obtained, we can then see if we are able to select the most informative features. This has biological implications, as we can understand which part(s) of the genome has the most impact on the outcome of data (i.e. whether an individual has schizophrenia).
+
+Next, after any insight found using our preferred classifer on the data set, we can extend our methodology to other datasets. In this way, we can investigate how well the classifer (together with the optimal parameters) generalises to other datasets.
+
+\subsection{Timeline and planning of project}
+
+The significant dates relevant for this project are stated in the table below.
 
 \begin{center}
     \begin{tabular}{ | c | c |}
     \hline
     Date & Significant event \\ \hline \hline
     27 Jan & Submission of interim report \\ \hline
-    17 Feb & Project review deadline \\ \hline
+    17 Feb & Project review deadline \\ \hline \hline
+    13 Mar & Spring term exam revision \\ \hline
+    20 Mar & Spring term exam \\ \hline \hline
     \multirow{2}{*}{25 Mar} & Start of Easter break \\
-    & Math exam revision \\ \hline
+    & Math summer exam revision \\ \hline
     \multirow{2}{*}{30 Apr} & End of Easter break \\
-     & Math Exam \\ \hline
+     & Math summer exam \\ \hline \hline
     15 May & Project health check-up \\ \hline
-    31 May & Latest date to start final report \\ \hline
+    \multirow{2}{*}{31 May} & Latest date to start final report \\
+    & (3 weeks period to work on report) \\ \hline
     21 Jun & Final report due \\
     \hline
     \end{tabular}
 \end{center}
 
-\subsection{Possible extensions}
+I would give myself the following dates to complete the following:
+\begin{itemize}
+\item \textit{Before 17 February:} Complete experiments with classifiers, determine the best one (in terms of accuracy, computational cost etc.) (3 weeks).
+\item \textit{Before 3 March:} Experiment with parameters of classifer(s); determine the most optimal set of parameters (2 weeks).
+\item \textit{Before 13 March:} Experiment with feature reduction; we can see if it is possible to select the most informative features (1+ weeks).
+\end{itemize}
+
+The following are the fundamental components of this project. It is evident that there is plenty of time to complete this. In case any of the procedure takes a longer time than anticipated, there will be enough time to finish them. I would also need to consider the ongoing courseworks and deadlines within this period.
+
+Besides, I would have 1 Math exam in Summer, whose date is not finalised yet, but it should occur in the month of May. This also means that I should be able to juggle between the exam and this project fairly well during the Easter break and in Summer.
+
+Taking the above into consideration, if the above schedule works, I would then proceed with the extensions (see Section \ref{extensions}).
+
+\subsection{Possible extensions} \label{extensions}
 First, more complex algorithms, such as the neural network, which requires more time to train due to the high dimensionality of the data, can be used. We can then, similarly, compare the classification accuracy of the neural network, and decide if we should adopt the classifier that was deemed the best, or the neural network. We also need to take into account the time that the network takes to be trained.
 
 Second, we can create a toolbox or script that consists of an analysis pipeline for biomedical researchers to analyse similar epigenetic data. In other words, we can automate the process of manipulating the data and training the classification algorithm, such that future epigenetic data can be similarly analysed. We can then obtain biological and/or medical insight from the data much quicker.
 
+Next, when conducting $k$-fold cross validation when selecting the most optimal set of parameters for our classifier, we would fix the value of $k$ beforehand, typically 5, 10 or 20 \cite{RefWorks:116}. However, we can go one step further to consider $k$ as a hyperparameter, as suggested in \cite{RefWorks:116}. We can then find the most optimal $k$ by, say, using a grid search.
+
 \section{Evaluation plan}
 \subsection{An investigation into the use of epigenetic data}
-Essentially, this project is about investigating whether the use of epigenetic data is relevant in helping us to identify individuals with psychiatric disorders. In other words, the project might conclude that epigenetic data is not able to help us to predict individuals that potentially have schizophrenia. Nevertheless, this is also a beneficial development to the biological community.
+Essentially, this project is about investigating whether the use of epigenetic data is relevant in helping us to identify individuals with psychiatric disorders. In other words, the project might conclude that epigenetic data is not able to help us to predict individuals that potentially have schizophrenia. Nevertheless, this can also be seen as a beneficial development.
 
 % how you plan to measure success.
 
 % For example, what functionality do you need to demonstrate?  What experiments to you need to undertake and what outcome(s) would constitute success?  What benchmarks should you use? How has your project extended the state of the art?  How do you measure qualitative aspects, such as ease of use?  These are the sort of questions that your project evaluation should address; this section should outline your plan.
 
+\newpage
 
 \bibliographystyle{unsrt}
 \bibliography{references}
