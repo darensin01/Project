@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.5.22)  25 JAN 2017 11:31
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.5.22)  26 JAN 2017 23:29
 entering extended mode
 **interim.tex
 (C:\Users\Daren\Desktop\Project\Report\Interim\interim.tex
@@ -491,18 +491,18 @@ LaTeX Info: Redefining \cite on input line 694.
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
 (C:\Users\Daren\Desktop\Project\Report\Interim\interim.aux)
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\context\base\supp-pdf.mkii"
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -555,27 +555,30 @@ LaTeX Font Info:    ... okay on input line 20.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: float package is loaded.
 Package caption Info: End \AtBeginDocument code.
-LaTeX Font Info:    Try loading font information for U+msa on input line 27.
+LaTeX Font Info:    Try loading font information for U+msa on input line 29.
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsfonts\umsa.fd"
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 27.
+LaTeX Font Info:    Try loading font information for U+msb on input line 29.
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsfonts\umsb.fd"
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1
 
 {C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}] [2]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 77.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 79.
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\omscmr.fd"
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 77.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 79.
  [3] [4] [5]
-[6] [7] [8] [9] [10] [11] [12]
-(C:\Users\Daren\Desktop\Project\Report\Interim\interim.bbl
+[6] [7] [8] [9] [10] [11] [12] [13] [14]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [15]
+[16] [17] (C:\Users\Daren\Desktop\Project\Report\Interim\interim.bbl
 Underfull \hbox (badness 10000) in paragraph at lines 35--40
 []\OT1/cmr/m/n/12 Heidi Led-ford.  If de-pres-sion were can-cer.  \OT1/cmr/m/it
 /12 Na-ture\OT1/cmr/m/n/12 , (515):182--
@@ -587,7 +590,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 35--40
 nature . com / news /$
  []
 
-[13]
+[18]
 Underfull \hbox (badness 1824) in paragraph at lines 144--149
 \OT1/cmr/m/n/12 1997 edi-tion, 1997.  In-cludes bib-li-o-graph-i-cal ref-er-enc
 es and in-dex.; ID:
@@ -598,37 +601,47 @@ Underfull \hbox (badness 10000) in paragraph at lines 151--154
 []\OT1/cmr/m/n/12 J.R. Quin-lan.  In-duc-tion of de-ci-sion trees, 1986.  ID:
  []
 
-[14]
-Underfull \hbox (badness 1502) in paragraph at lines 206--214
+[19]
+Underfull \hbox (badness 2495) in paragraph at lines 223--228
+\OT1/cmr/m/n/12 New York, 2006.  In-cludes Bib-li-og-ra-phy: p. 711-728 and in-
+dex; ID:
+ []
+
+[20]
+Underfull \hbox (badness 1502) in paragraph at lines 271--279
 \OT1/cmr/m/n/12 Sug-net, Manuel Ares Jr., William No-ble Grundy, and Nello Cris
 -tian-ini.
  []
 
-) [15] (C:\Users\Daren\Desktop\Project\Report\Interim\interim.aux) ) 
+) [21] (C:\Users\Daren\Desktop\Project\Report\Interim\interim.aux) ) 
 Here is how much of TeX's memory you used:
- 5419 strings out of 493921
- 78357 string characters out of 3144876
- 150166 words of memory out of 3000000
- 8608 multiletter control sequences out of 15000+200000
- 15381 words of font info for 58 fonts, out of 3000000 for 9000
+ 5464 strings out of 493921
+ 79164 string characters out of 3144876
+ 152406 words of memory out of 3000000
+ 8651 multiletter control sequences out of 15000+200000
+ 16026 words of font info for 61 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
- 42i,8n,40p,939b,321s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 42i,13n,40p,939b,373s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program
  Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program F
 iles (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Fil
 es (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Program Files
  (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Program Files (x
 86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmib10.pfb><C:/Program Files (x8
+6)/MiKTeX 2.9/fonts/type1/public/amsfonts/cmextra/cmmib8.pfb><C:/Program Files 
+(x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files (x8
 6)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files (x86)/
 MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Program Files (x86)/MiK
-TeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Program Files (x86)/MiKTeX 
-2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files (x86)/MiKTeX 2.
-9/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Program Files (x86)/MiKTeX 2.9/f
-onts/type1/public/amsfonts/cm/cmti12.pfb><C:/Program Files (x86)/MiKTeX 2.9/fon
-ts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on interim.pdf (15 pages, 182157 bytes).
+TeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Program Files (x86)/MiKTeX 
+2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Program Files (x86)/MiKTeX 2.9/
+fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fo
+nts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts
+/type1/public/amsfonts/cm/cmti12.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/t
+ype1/public/amsfonts/cm/cmtt12.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/typ
+e1/public/amsfonts/symbols/msbm10.pfb>
+Output written on interim.pdf (21 pages, 247204 bytes).
 PDF statistics:
- 99 PDF objects out of 1000 (max. 8388607)
+ 134 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

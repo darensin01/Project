@@ -17,6 +17,8 @@
 \usepackage{multirow}
 \usepackage{url}
 
+\def\vec{\boldsymbol}
+
 \begin{document}
 
 \title{Individual Project - Interim Report}
@@ -148,9 +150,6 @@ Since the number of trees grow with the number of features that directly affect 
 
 So, overall, the decision tree and random forest methods might not be the best methods for our context, even though they are considered to be popular machine learning techniques \cite{RefWorks:103}.
 
-\subsubsection{Support vector machines}
-
-
 \subsubsection{Lasso and Elastic net}
 In Section \ref{intro_ML}, we discussed how, in this project, not only are we seeking low classification errors, we also have to select features/variables in the data that are relevant in producing accurate predictions. An obvious, but naive, solution is to consider all the features in different combinations. But this solution is evidently computationally expensive, much less with data as large as the one we consider in this project.
 
@@ -160,6 +159,137 @@ As a result, Zou and Hastie proposed the \textit{elastic net}, which imposes a l
 
 Besides, we can also utilise the elastic net library in \texttt{scikit-learn} implemented in Python. This allows us to experiment with elastic net easily, to see if it would be suitable for our dataset.
 
+
+\subsection{Support vector machines}
+This section explains and discusses Support Vector Machines\footnote{Most of the Mathematics here is with reference to notes from the Department of Computing, course CO496 - Mathematics for Inference and Machine Learning.}.
+
+Consider our dataset that comprises $m$ features and $n$ samples. Then, the data can be written as a set: $\left\lbrace (\boldsymbol{x}_1, y_1), \dots, (\boldsymbol{x}_n, y_n) \right\rbrace$, where $\boldsymbol{x}_i \in \mathbb{R}^m$ is an $m$ dimensional vector that corresponds to the $i$-th sample. Moreover, $y_i = \pm 1$ is the label of the $i$-th sample: $y_i = 1$ if the classification is positive (e.g. sample does not have schizophrenia) and $y_i = -1$ otherwise, for $i = 1, \dots , n$.
+
+Suppose we have data points that correspond to either class 1 or class 2. The Support Vector Machine (SVM) \cite{RefWorks:122} uses a separating hyperplane to distinguish between data points that belong to class 1 and class 2. Using Statistical Learning Theory, by Vapnik et. al \cite{RefWorks:122}, the SVM finds the hyperplane with the largest margin between the two classes.
+
+The hyperplane is parameterised with weight vector $\boldsymbol w$ and a bias $b$. We thus solve classification problems using linear models:
+\begin{align}
+f(\vec{x}) = \vec{w}^\top \vec{x} + b \label{bg:svm:linear_model}
+\end{align}
+
+Finding the hyperplane with maximum margin amounts to solving the following optimisation problem:
+\begin{align}
+\min_{w, b} \quad &\frac{1}{2} \boldsymbol w^\top \boldsymbol w \label{bg:svm} \\
+\text{subject to} \quad & y_i(\boldsymbol w^\top \boldsymbol x_i + b) \geq 1 \label{bg:svm:cond} 
+\end{align}
+for $i = 1, \dots , n$, where, as defined above, $y_i = \pm 1$, depending on the classification of the vector of features $\boldsymbol x_i$. We then get the result:
+\begin{align*}
+\boldsymbol w^\top \boldsymbol x_i + b \geq 1 \quad &\text{if $y_i = 1$} \\
+\boldsymbol w^\top \boldsymbol x_i + b \leq -1 \quad &\text{if $y_i = -1$}
+\end{align*}
+
+\subsubsection{Dual representation}
+To solve the (primal) optimisation problem in (\ref{bg:svm}) subject to the condition in (\ref{bg:svm:cond}), we can formulate the following Lagrangian equation:
+\begin{align}
+L(\boldsymbol w, b, \boldsymbol a)
+= \frac{1}{2} \boldsymbol w^\top \boldsymbol w - \sum_{i=1}^n a_i (y_i(\boldsymbol w^\top \boldsymbol x_i + b) - 1) \label{bg:svm:primal:eqn}
+\end{align}
+where $\boldsymbol a$ is the $n$-dimensional vector containing the Lagrangian multipliers ($a_i \geq 0$) corresponding to the inequality condition in (\ref{bg:svm:cond}). The (primal) optimisation problem in (\ref{bg:svm:primal:eqn}) can be written as:
+\begin{align}
+\min_{\boldsymbol w} \max_{\boldsymbol a \geq 0} L(\boldsymbol w, b, \vec a) \label{bg:svm:primal}
+\end{align}
+
+The primal problem stated in (\ref{bg:svm:primal}) can be written as its dual equivalent:
+\begin{align}
+\max_{\vec a \geq 0} \min_{\vec w, b} L(\vec w, b, \vec a) \label{bg:svm:dual}
+\end{align}
+
+It can shown that:
+\begin{itemize}
+\item The equation $L$ in (\ref{bg:svm:primal:eqn}) is convex, and thus any optimal solution found is guaranteed to be the global optimal solution \cite{RefWorks:123}.
+\item The primal (\ref{bg:svm:primal}) and dual (\ref{bg:svm:dual}) problems have the same optimal solutions, if any \cite{RefWorks:124}.
+\end{itemize}
+
+To solve the problem in (\ref{bg:svm:dual}), we must first minimise $L$ with respect to $\vec w$ and $b$ for fixed $\vec a$. To do this, we can take the derivative of $L$ with respect to $\vec w$ and $b$. The optimal $\vec w$ and $b$ would then satisfy the condition that the derivatives are 0. Doing this would result in the constraints $a_i \geq 0$ and $\sum_{i=1}^n a_i y_i = 0$.
+
+We would then obtain an expression of $L$ with respect to $\vec a$ that we wish to maximise:
+\begin{align*}
+L(\vec a) = \sum_{i=1}^n a_i - \frac{1}{2} \sum_{i=1}^n \sum_{j=1}^n a_i a_j y_i y_j \vec{x}_i^\top \vec{x}_j
+\end{align*}
+
+Combining the above together with the constraints $a_i \geq 0$ and $\sum_{i=1}^n a_i y_i = 0$, we would get the following quadratic optimisation problem:
+\begin{align*}
+\max_{\vec a} \quad &\vec{1}^\top \vec a - \frac{1}{2} \vec{a}^\top \vec{K}_y \vec{a} \\
+\text{subject to} \quad &a_i \geq 0, \quad i = 1, \dots , n \\
+&\vec{a}^\top \vec y = 0
+\end{align*}
+where $\vec{1}$ is an $n$ dimensional vector of ones, and $\vec{K}_y = y_i \, y_j \, \vec{x}_i^\top \vec{x}_j$.
+
+While setting the derivatives of $L$ with respect to $\vec{w}$ and setting to 0, we would obtain the following condition:
+\begin{align*}
+\vec{w} = \sum_{i=1}^n a_i y_i \vec{x}_i
+\end{align*}
+
+Substituting this into the linear model equation (\ref{bg:svm:linear_model}), we get:
+\begin{align}
+f(\vec{x}) = \sum_{i=1}^n a_i y_i \vec{x}_i^\top \vec{x} + b \label{bg:svm:decision}
+\end{align}
+
+In order to determine the classification of a new incoming point $\vec{x}$, we simply have to determine the sign of $f(\vec{x})$ in (\ref{bg:svm:decision}).
+
+\subsubsection{Mapping to higher dimensional space}
+When the relationship between data points in the input space is not linear, the (linear) SVM with the description above would not be able to learn these non-linear relations. This would result in underfitting.
+
+As such, we would need to map the input data points into a higher dimensional space (feature space). We can then build an SVM based on this high dimensional space such that the points in the feature space is linearly separable.
+
+We first define a mapping $\phi : X \rightarrow F$ where $\phi$ is a non-linear mapping from the input space $X$ to a higher dimensional space $F$. We then define the \textit{kernel} function $K$ such that $\forall \vec x, \vec y \in X$,
+\begin{align*}
+K(\vec x, \vec y) = \phi(\vec x)^\top \phi(\vec{y}) = \left\langle \phi(\vec x) , \phi(\vec{y}) \right\rangle
+\end{align*}
+
+The optimisation problem can then be written as:
+\begin{align*}
+\min_{\vec a} \quad &\frac{1}{2} \vec{a}^\top \vec{K}_y \vec{a} - \vec{1}^\top \vec a \\
+\text{subject to} \quad &a_i \geq 0, \quad i = 1, \dots , n \\
+&\vec{a}^\top \vec y = 0
+\end{align*}
+where $\vec{K}_y = y_i \, y_j \, \phi(\vec{x}_i)^\top \phi(\vec{x}_j) = y_i \, y_j \, K(\vec{x}_i, \vec{x}_j)$. Similarly, equation (\ref{bg:svm:decision}), which determines the classification of a new data $\vec{x}$, can be written as:
+\begin{align*}
+f(\vec{x}) = \sum_{i=1}^n a_i y_i K(\vec{x}_i, \vec{x}) + b = \sum_{i=1}^n a_i y_i \, \phi(\vec{x}_i)^\top \phi(\vec{x}) + b
+\end{align*}
+
+Thus, for a new vector $\vec{x}$, we simply need to test the sign of $f(\vec{x})$. If $f(\vec{x})$ is positive, then we can classify it as class 1, and class 2 if $f(\vec{x})$ is negative.
+
+\subsubsection{Slack variables}
+We should note that real-life data may not be perfectly linearly separable in the feature space $\phi(\vec{x})$, especially due to the presence of noise \cite{RefWorks:127}. Slack variables, $\xi$, are introduced to allow some form of error when training data points are misclassified. These slack variables allow data points to be classified on the wrong side of the decision hyperplane, but the further away a point is from the decision boundary, the larger the penalty imposed. We then need one slack variable per input data point \cite{RefWorks:126}, defined as such:
+\begin{itemize}
+\item $\xi_i = 0$: data point is correctly classified.
+\item $0 < \xi_i \leq 1$: data point lies inside the margin, but is on the correct side of the boundary.
+\item $\xi_i > 1$: data point is wrongly classified.
+\end{itemize}
+
+This is often referred to as the 1-norm soft margin constraint in the literature \cite{RefWorks:127}. Now, we would need to maximise the margin of the hyperplane, while penalising the misclassified points. We can thus formulate our problem as such:
+\begin{align}
+\min_{\vec{w}, b, \vec{\xi}} \quad &\frac{1}{2}\vec{w}^\top \vec{w} + C \sum_{i=1}^n \xi_i \label{bg:svm:slack:primal} \\
+\text{subject to} \quad &y_i(\vec{w}^\top \vec{x}_i + b) \geq 1 - \xi_i \label{bg:svm:slack:constraint} \\
+&\xi_i \geq 0, \quad \text{for $i = 1, \dots , n$}
+\end{align}
+where $C>0$ is the penalty parameter. Similarly, to state the dual of (\ref{bg:svm:slack:primal}) subject to the conditions of (\ref{bg:svm:slack:constraint}), we need to compute the Lagrangian:
+\begin{align*}
+L(\vec{w}, b, \vec{\xi}, a_i, r_i) =
+\frac{1}{2} \vec{w}^\top \vec{w} + C \sum_{i=1}^n \xi_i - \sum_{i=1}^n a_i(y_i(\vec{w}^\top \vec{x}_i + b) - 1 + \xi_i) - \sum_{i=1}^n r_i\xi_i
+\end{align*}
+where $a_i \geq 0$ and $r_i \geq 0$ are the Lagrangian multipliers.
+
+Similarly, we compute the derivative of the above with respect to $\vec{w}$, $b$ and $\xi_i$ to get the following dual problem:
+\begin{align*}
+\min_{\vec{a}} \quad &L(\vec{a}) = \frac{1}{2}\vec{a}^\top \vec{K}_y \vec{a} - \vec{a}^\top \vec{1} \\
+\text{subject to} \quad &\vec{a}^\top \vec{y} = 0, \quad 0 \leq a_i \leq C
+\end{align*}
+where $K_y = [y_i \, y_j \, \vec{x}_i^\top \vec{x}_j]$.
+
+Now, suppose we choose to map the input space into a higher dimensional feature space, we simply modify $K$ in the above problem:
+\begin{align*}
+K_y = [y_i \, y_j \, \phi(\vec{x}_i)^\top \phi(\vec{x}_j)]
+\end{align*}
+
+\subsubsection{Kernel methods}
+
 \subsection{Feature selection and dimensionality reduction} \label{bg_feature_selection}
 As mentioned in section \ref{intro_ML}, the data suffers a \textit{curse of dimensionality}, where the number of features exceeds the number of samples available. This usually causes \textit{over-fitting} on the classifier. This refers to the situation where the classifier can classify the training data perfectly, but performs poorly with unseen data.
 
@@ -167,12 +297,52 @@ Furthermore, there is a possibility that not all of the genes in our data set ha
 
 In 2010, a study was conducted to investigate the impact of feature selection methods (Kernel Principal Component Analysis (PCA), Greedy Kernel PCA and Generalised discriminant analysis) on real microarray gene expression data. It concluded that applying feature selection methods improved the performance of the SVM classifier \cite{RefWorks:115}. This strengthens our belief that the feature selection process would enable our classifier to perform better with our data set.
 
-This study also explored these feature selection methods on various datasets. The number of genes/features available in these datasets ranges from 2000 to 12000, and the algorithm employed extracted 2, 4 and 10 features at a time.
+\subsubsection{Feature selection methods}
 
+Feature selection methods can be classified as \cite{RefWorks:117, RefWorks:118}:
+\begin{itemize}
+\item \textbf{Filters:} Ranks genes based on a univariate measure, and selects only the top ranking genes. No learning is involved. Interaction between features is also not considered.
+\item \textbf{Wrappers:} Use learning to decide which subset(s) of features are relevant.
+\item \textbf{Embedded:} Incorporates feature selection process into the classifier.
+\item \textbf{Hybrid:} Combination of the above approaches.
+\end{itemize}
+
+Several reviews of feature selection methods on microarray data \cite{RefWorks:117, RefWorks:118} came to the conclusion that filter methods are not as appropriate as the others, as, for example, the method might rank similar features highly, and thus pose a lot of redundancy after processing the data. Besides, filter methods do not take into account the classifier that we train, and they do not consider the interaction between features \cite{RefWorks:119}.
+
+Furthermore, since embedded methods are executed together with the training process of the classifier, the resulting optimal set of features is coupled with the classifier that is trained. In other words, this set of features is classifier dependent \cite{RefWorks:118}. Since we want the classifier to eventually generalise to other epigenetic datasets (see Section \ref{extensions} on possible extensions), we might want to avoid this class of methods. 
+
+\subsubsection{Wrappers}
+In general, wrapper methods are expected to yield better features. However, one disadvantage of wrappers is that it is computationally expensive, and the cost of the method increases with the feature space.
+
+Wrapper methods can be classified into optimal and suboptimal search algorithms \cite{RefWorks:120}. The former searches the whole space of features and their subsets, while the latter only considers part of this space. The optimal algorithms can give us better results since they consider all combinations of the features, but they are obviously computationally too expensive. Although the suboptimal algorithms does not guarantee the best result, they are much more practical to execute. Such algorithms include:
+\begin{itemize}
+\item \textbf{Sequential forward selection:} start from an empty set of features. At each iteration, add in a new feature that maximises the selection criterion (e.g. training error produced by classifier). Stop when the criterion stops improving.
+\item \textbf{Sequential backward selection:} start from the whole set of features. Delete one feature at a time, until the number of features required is reached.
+\end{itemize}
+
+There are also ``floating'' versions of the above selection methods, which allows backtracking to remove features that might improve the selection criterion \cite{RefWorks:121}.
+
+There also has been work that combines genetic algorithms with SVMs \cite{RefWorks:120}. However, these algorithms are deemed to be more time consuming, although it can cover more combinations of feature subsets (see Section \ref{extensions} for possible extensions).
+
+\subsubsection{Novel methods in feature selection} \label{bg_GLGS}
+In \cite{RefWorks:119}, Tang et. al suggested two novel methods for feature selection:
+\begin{itemize}
+\item Gradient-based leave-one-out gene selection (GLGS) algorithm
+\item Leave-one-out calculation sequential forward selection (LOOCSFS) algorithm
+\end{itemize}
+
+The GLGS uses a gradient-based algorithm, while the LOOCSFS incorporates the Sequential Forward Selection method and uses the leave-one-out cross validation error (LOOE) of the SVM as a selection criterion. Experiments on different datasets by Tang et. al seem to come to the conclusion that the GLGS algorithm might be a good choice for small number of samples (individuals in our context), with large $d$ and $t$, where $d$ is the number of features and $t$ is the number of features to be selected. We can take this approach in our context, and see if either method outperforms the other with our data.
+
+Furthermore, Tang et. al pointed out that the number of features to be selected our algorithm ($t$) must be defined beforehand for the algorithm to work. The experimenters set this number to be 100 for all the datasets that were explored. However, the paper later recommends different values of $t$ for two of the datasets that were used.
+
+This suggests that $t$ might be dependent on the dataset used. We can thus select $t$ using the approaches listed by Tang et. al:
+\begin{itemize}
+\item Terminate the algorithm if the selection criterion does not improve much when more features are added.
+\item Plot a graph of the error against $t$. We can inspect visually the most optimal value of $t$.
+\end{itemize}
 
 \subsection{Cross validation}
 % How many folds in k fold cross validation?
-% Type of feature selection method?
 
 \newpage
 
@@ -208,13 +378,15 @@ Overall, this entire process of training the right classifier can be summarised 
 \item Classification error: accessing the performance of the classifier
 \end{itemize}
 
-\subsection{Dimensionality reduction}
-As briefly mentioned in section \ref{bg_feature_selection}, once we get the classifier working on the dataset to a satisfactory accuracy, we can then proceed to perform dimensionality reduction and feature selection on the data. This allows us to select only the most informative and relevant genes. It also helps to reduce the size and amount of data needed for the classifier.
+\subsection{Feature selection}
+As briefly mentioned in section \ref{bg_feature_selection}, once we get the classifier working on the dataset to a satisfactory accuracy, we can then proceed to perform feature selection on the data. This allows us to select only the most informative and relevant genes. It also helps to reduce the size and amount of data needed for the classifier.
+
+I intend to start with the GLGS and LOOCSFS (see section \ref{bg_GLGS}) algorithms, as they have been proven to work well with biological data with small sample size and large number of features. We can then also find the most optimal value of $t$, which was defined as the number of features to be selected by the algorithm.
 
 \subsection{Biological implications}
-Once the most optimal weights/parameters of the classifer are obtained, we can then see if we are able to select the most informative features. This has biological implications, as we can understand which part(s) of the genome has the most impact on the outcome of data (i.e. whether an individual has schizophrenia).
+Once the above are obtained, we can then see if we are able to select the most informative features. This has biological implications, as we can understand which part(s) of the genome has the most impact on the outcome of data (i.e. whether an individual has schizophrenia).
 
-Next, after any insight found using our preferred classifer on the data set, we can extend our methodology to other datasets. In this way, we can investigate how well the classifer (together with the optimal parameters) generalises to other datasets.
+Next, after any insight found using our preferred classifier on the data set, we can extend our methodology to other datasets. In this way, we can investigate how well the classifier (together with the optimal parameters) generalises to other datasets.
 
 \subsection{Timeline and planning of project}
 
@@ -243,7 +415,7 @@ The significant dates relevant for this project are stated in the table below.
 I would give myself the following dates to complete the following:
 \begin{itemize}
 \item \textit{Before 17 February:} Complete experiments with classifiers, determine the best one (in terms of accuracy, computational cost etc.) (3 weeks).
-\item \textit{Before 3 March:} Experiment with parameters of classifer(s); determine the most optimal set of parameters (2 weeks).
+\item \textit{Before 3 March:} Experiment with parameters of classifier(s); determine the most optimal set of parameters (2 weeks).
 \item \textit{Before 13 March:} Experiment with feature reduction; we can see if it is possible to select the most informative features (1+ weeks).
 \end{itemize}
 
@@ -256,9 +428,11 @@ Taking the above into consideration, if the above schedule works, I would then p
 \subsection{Possible extensions} \label{extensions}
 First, more complex algorithms, such as the neural network, which requires more time to train due to the high dimensionality of the data, can be used. We can then, similarly, compare the classification accuracy of the neural network, and decide if we should adopt the classifier that was deemed the best, or the neural network. We also need to take into account the time that the network takes to be trained.
 
-Second, we can create a toolbox or script that consists of an analysis pipeline for biomedical researchers to analyse similar epigenetic data. In other words, we can automate the process of manipulating the data and training the classification algorithm, such that future epigenetic data can be similarly analysed. We can then obtain biological and/or medical insight from the data much quicker.
+Second, we can create a toolbox or script that consists of an analysis pipeline for biomedical researchers to analyse similar epigenetic data. In other words, we can automate the process of manipulating the data and training the classification algorithm, such that future epigenetic data can be similarly analysed. We can then obtain biological and/or medical insight from the data much quicker. However, to do this, we must ensure that the algorithm generalises to other datasets, not just the data that we use in this project.
 
 Next, when conducting $k$-fold cross validation when selecting the most optimal set of parameters for our classifier, we would fix the value of $k$ beforehand, typically 5, 10 or 20 \cite{RefWorks:116}. However, we can go one step further to consider $k$ as a hyperparameter, as suggested in \cite{RefWorks:116}. We can then find the most optimal $k$ by, say, using a grid search.
+
+Moreover, we can extend our investigation into the best feature selection method for our dataset. In particular, we can choose to focus our attention on probabilistic wrappers. These involve genetic algorithms to select the most optimal set of features \cite{RefWorks:118}. As discussed above, feature selection with genetic algorithms tend to take more time to train, so this can only be done after our initial investigation of the ideal feature selection method.
 
 \section{Evaluation plan}
 \subsection{An investigation into the use of epigenetic data}

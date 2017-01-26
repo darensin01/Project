@@ -192,6 +192,40 @@ C.~De Mol, E.~De Vito, and L.~Rosasco.
 \newblock Elastic-net regularization in learning theory.
 \newblock {\em Journal of Complexity}, 25(2):201--30, 04 2009.
 
+\bibitem{RefWorks:122}
+V.~N. Vapnik.
+\newblock An overview of statistical learning theory.
+\newblock {\em IEEE Transactions on Neural Networks}, 10(5):988--99, 1999.
+
+\bibitem{RefWorks:123}
+Edwin~K.P. Chong and Stanislaw~H. Zak.
+\newblock {\em Convex optimization problems}.
+\newblock An introduction to optimization. Wiley, Hoboken, New Jersey, 4th;
+  fourth edition, 2013.
+
+\bibitem{RefWorks:124}
+Edwin K.~P. Chong and Stainlaw~H. Zak.
+\newblock {\em Duality}.
+\newblock An introduction to optimization. Wiley, Hoboken, New Jersey, 4th;
+  fourth edition, 2013.
+\newblock Includes bibliographical references and index.; ID:
+  dedupmrg214935921.
+
+\bibitem{RefWorks:127}
+Nello Cristianini and John Shawe-Taylor.
+\newblock {\em An introduction to Support Vector Machines: and other
+  kernel-based learning methods}.
+\newblock Cambridge University Press, Cambridge, U.K. ; New York, 2000.
+\newblock Includes bibliographical references (p. 173-186) and index.; ID:
+  44IMP\_ALMA\_DS2146175590001591.
+
+\bibitem{RefWorks:126}
+Christopher~M. Bishop.
+\newblock {\em Pattern recognition and machine learning}.
+\newblock Springer, New York, 2006.
+\newblock Includes Bibliography: p. 711-728 and index; ID:
+  44IMP\_ALMA\_DS2144511690001591.
+
 \bibitem{RefWorks:115}
 C.~M.~M. Wahid, A.~B. M.~S. Ali, and K.~Tickle.
 \newblock Impact of feature selection on support vector machine using
@@ -201,6 +235,37 @@ C.~M.~M. Wahid, A.~B. M.~S. Ali, and K.~Tickle.
   Comput. Sci., CQ Univ., QLD, Australia, IEEE.
 \newblock T3: Proceedings of the 2009 Second International Conference on
   Machine Vision (ICMV 2009);.
+
+\bibitem{RefWorks:117}
+P.~K. Ammu and V.~Preeja.
+\newblock Review on feature selection techniques of dna microarray data.
+\newblock {\em International Journal of Computer Applications}, 61(12), 2013.
+
+\bibitem{RefWorks:118}
+Z.~M. Hira and D.~F. Gillies.
+\newblock A review of feature selection and feature extraction methods applied
+  on microarray data, 2015.
+\newblock ID: 44IMP\_DSP\_DS10044/1/25192.
+
+\bibitem{RefWorks:119}
+E.~K. Tang, PN~Suganthan, and Xin Yao.
+\newblock Gene selection algorithms for microarray data based on least squares
+  support vector machine.
+\newblock {\em BMC Bioinformatics}, 7:95, 2006.
+
+\bibitem{RefWorks:120}
+Li~Li, Wei Jiang, Xia Li, Kathy~L. Moser, Zheng Guo, Lei Du, Qiuju Wang,
+  Eric~J. Topol, Qing Wang, and Shaoqi Rao.
+\newblock A robust hybrid between genetic algorithm and support vector machine
+  for extracting an optimal feature gene subset.
+\newblock {\em Genomics}, 85(1):16--23, 2005.
+\newblock ID: TN\_sciversesciencedirect\_elsevierS0888-7543(04)00271-X.
+
+\bibitem{RefWorks:121}
+Andrew~R. Webb and Keith~D. Copsey.
+\newblock {\em Statistical Pattern Recognition}.
+\newblock Chichester, UK.
+\newblock ID: TN\_wilbookl10.1002/9781119952954.
 
 \bibitem{RefWorks:90}
 Michael P.~S. Brown, David Lin, Terrence~S. Furey, David Haussler,
