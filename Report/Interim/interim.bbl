@@ -69,11 +69,6 @@ Heidi Chial, Carrie Drovdlic, Maggie Koopman, Sarah~Catherine Nelson, Angela
 \newblock Available from
   \url{http://www.nature.com/scitable/ebooks/essentials-of-genetics-8}.
 
-\bibitem{RefWorks:109}
-National Human Genome~Research Institute.
-\newblock All about the human genome project, 2015.
-\newblock Available from \url{https://www.genome.gov/10001772/}.
-
 \bibitem{RefWorks:107}
 University of~Utah.
 \newblock Insights from identical twins.
@@ -225,6 +220,19 @@ Christopher~M. Bishop.
 \newblock Springer, New York, 2006.
 \newblock Includes Bibliography: p. 711-728 and index; ID:
   44IMP\_ALMA\_DS2144511690001591.
+
+\bibitem{RefWorks:128}
+Chih-Wei Hsu, Chih-Chung Chang, and Chih-Jen Lin.
+\newblock A practical guide to support vector classification.
+\newblock Technical report, 2016.
+\newblock National Taiwan University, Taipei 106, Taiwan.
+
+\bibitem{libsvm}
+Chih-Chung Chang and Chih-Jen Lin.
+\newblock {LIBSVM}: A library for support vector machines.
+\newblock {\em ACM Transactions on Intelligent Systems and Technology},
+  2:27:1--27:27, 2011.
+\newblock Software available at \url{http://www.csie.ntu.edu.tw/~cjlin/libsvm}.
 
 \bibitem{RefWorks:115}
 C.~M.~M. Wahid, A.~B. M.~S. Ali, and K.~Tickle.

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.5.22)  26 JAN 2017 23:29
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.5.22)  27 JAN 2017 14:32
 entering extended mode
 **interim.tex
 (C:\Users\Daren\Desktop\Project\Report\Interim\interim.tex
@@ -526,15 +526,15 @@ LaTeX Font Info:    ... okay on input line 22.
 * layout: <same size as paper>
 * layoutoffset:(h,v)=(0.0pt,0.0pt)
 * modes: twoside 
-* h-part:(L,W,R)=(79.49744pt, 438.513pt, 79.49744pt)
-* v-part:(T,H,B)=(79.49744pt, 686.05197pt, 79.49744pt)
+* h-part:(L,W,R)=(83.11005pt, 431.28778pt, 83.11005pt)
+* v-part:(T,H,B)=(83.11005pt, 678.82675pt, 83.11005pt)
 * \paperwidth=597.50787pt
 * \paperheight=845.04684pt
-* \textwidth=438.513pt
-* \textheight=686.05197pt
-* \oddsidemargin=7.22745pt
-* \evensidemargin=7.22745pt
-* \topmargin=-29.77255pt
+* \textwidth=431.28778pt
+* \textheight=678.82675pt
+* \oddsidemargin=10.84006pt
+* \evensidemargin=10.84006pt
+* \topmargin=-26.15994pt
 * \headheight=12.0pt
 * \headsep=25.0pt
 * \topskip=12.0pt
@@ -565,7 +565,7 @@ LaTeX Font Info:    Try loading font information for U+msb on input line 29.
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1
 
-{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}] [2]
+{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}]
 LaTeX Font Info:    Try loading font information for OMS+cmr on input line 79.
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\omscmr.fd"
@@ -573,12 +573,9 @@ File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 79.
- [3] [4] [5]
-[6] [7] [8] [9] [10] [11] [12] [13] [14]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [15]
-[16] [17] (C:\Users\Daren\Desktop\Project\Report\Interim\interim.bbl
+ [2] [3] [4]
+[5] [6] [7] [8] [9] [10] [11] [12] [13] [14] [15] [16] [17] [18]
+(C:\Users\Daren\Desktop\Project\Report\Interim\interim.bbl
 Underfull \hbox (badness 10000) in paragraph at lines 35--40
 []\OT1/cmr/m/n/12 Heidi Led-ford.  If de-pres-sion were can-cer.  \OT1/cmr/m/it
 /12 Na-ture\OT1/cmr/m/n/12 , (515):182--
@@ -590,38 +587,38 @@ Underfull \hbox (badness 10000) in paragraph at lines 35--40
 nature . com / news /$
  []
 
-[18]
-Underfull \hbox (badness 1824) in paragraph at lines 144--149
+[19]
+Underfull \hbox (badness 1199) in paragraph at lines 139--144
 \OT1/cmr/m/n/12 1997 edi-tion, 1997.  In-cludes bib-li-o-graph-i-cal ref-er-enc
 es and in-dex.; ID:
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 151--154
+Underfull \hbox (badness 10000) in paragraph at lines 146--149
 []\OT1/cmr/m/n/12 J.R. Quin-lan.  In-duc-tion of de-ci-sion trees, 1986.  ID:
  []
 
-[19]
-Underfull \hbox (badness 2495) in paragraph at lines 223--228
+[20]
+Underfull \hbox (badness 1824) in paragraph at lines 218--223
 \OT1/cmr/m/n/12 New York, 2006.  In-cludes Bib-li-og-ra-phy: p. 711-728 and in-
 dex; ID:
  []
 
-[20]
-Underfull \hbox (badness 1502) in paragraph at lines 271--279
-\OT1/cmr/m/n/12 Sug-net, Manuel Ares Jr., William No-ble Grundy, and Nello Cris
--tian-ini.
+[21]
+Underfull \hbox (badness 2065) in paragraph at lines 279--287
+[]\OT1/cmr/m/n/12 Michael P. S. Brown, David Lin, Ter-rence S. Furey, David Hau
+s-sler,
  []
 
-) [21] (C:\Users\Daren\Desktop\Project\Report\Interim\interim.aux) ) 
+) [22] (C:\Users\Daren\Desktop\Project\Report\Interim\interim.aux) ) 
 Here is how much of TeX's memory you used:
- 5464 strings out of 493921
- 79164 string characters out of 3144876
- 152406 words of memory out of 3000000
- 8651 multiletter control sequences out of 15000+200000
+ 5469 strings out of 493921
+ 79231 string characters out of 3144876
+ 152452 words of memory out of 3000000
+ 8656 multiletter control sequences out of 15000+200000
  16026 words of font info for 61 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
- 42i,13n,40p,939b,373s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 42i,13n,40p,631b,412s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program
  Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program F
 iles (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Fil
@@ -639,9 +636,9 @@ nts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts
 /type1/public/amsfonts/cm/cmti12.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/t
 ype1/public/amsfonts/cm/cmtt12.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/typ
 e1/public/amsfonts/symbols/msbm10.pfb>
-Output written on interim.pdf (21 pages, 247204 bytes).
+Output written on interim.pdf (22 pages, 253499 bytes).
 PDF statistics:
- 134 PDF objects out of 1000 (max. 8388607)
+ 137 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -8,7 +8,7 @@
 \usepackage{graphicx}
 \usepackage{mathtools}
 \usepackage{units}
-\usepackage[margin=1.1in]{geometry}
+\usepackage[margin=1.15in]{geometry}
 \usepackage{comment} 
 \usepackage{subcaption}
 \usepackage{float}
@@ -21,9 +21,9 @@
 
 \begin{document}
 
-\title{Individual Project - Interim Report}
+\title{MEng Individual Project (JMC) \\ Interim Report}
 
-\author{Daren Sin (ds2912) $|$ CID: 00732331}
+\author{Daren Sin (ds2912) \\ CID: 00732331 \\ \\ Supervisor: Panos Parpas}
 
 \date{\today}
 \maketitle
@@ -37,7 +37,9 @@
 
 Schizophrenia is a complex mental disorder that displays an array of symptoms. It is commonly perceived that schizophrenia is a hereditary disease that can be passed down within the family, but some individuals diagnosed with schizophrenia do not have a family member with the disorder \cite{RefWorks:8}. Thus, it is postulated that the heritability of schizophrenia might not be as high as what is commonly believed \cite{RefWorks:9}.
 
-Furthermore, there is a strong indication that environmental factors - such as tobacco smoke and viruses - and genetic factors have an influence on the development of psychiatric disorders in an individual \cite{RefWorks:8, RefWorks:10}. This results in a hypothesis that the epigenetics - ``any process that alters gene activity without changing the DNA sequence'' - of an individual might have a role to play in the development of schizophrenia (see Section \ref{bg_epigenetics}) \cite{RefWorks:12}. However, exactly how these two factors play a part is still unclear \cite{RefWorks:11}. What we should also note about the current research on psychiatric disorders is that studies on such disorders do not receive as much attention as other illnesses such as cancer \cite{RefWorks:82}. Thus, any insight generated from this project would be beneficial to helping us understand psychiatric disorders better.
+Furthermore, there is a strong indication that environmental factors - such as tobacco smoke and viruses - and genetic factors have an influence on the development of psychiatric disorders in an individual \cite{RefWorks:8, RefWorks:10}. This results in a hypothesis that the epigenetics (see Section \ref{bg:bio}) of an individual might have a role to play in the development of schizophrenia (see Section \ref{bg_epigenetics}) \cite{RefWorks:12}. However, exactly how these two factors play a part is still unclear \cite{RefWorks:11}.
+
+Moreover, the current research on psychiatric disorders do not receive as much attention as other illnesses such as cancer \cite{RefWorks:82}. Thus, any insight generated from this project would be beneficial to helping us understand psychiatric disorders better.
 
 Overall, this project aims to predict Schizophrenia cases on the basis of epigenetics and epivariations.
 
@@ -46,17 +48,15 @@ Overall, this project aims to predict Schizophrenia cases on the basis of epigen
 
 Using data from a recent study on epigenetics and schizophrenia (see Section \ref{bg_genetic_data}), the project aims to use machine learning to elucidate any statistical regularity in the data, in hope that any insight into the data can help geneticists and psychiatrists understand the etiology of schizophrenia - and indeed, other psychiatric disorders - better.
 
-As a starting point, simple classifiers can be used on the data, to determine the classification accuracy of the data (see Section \ref{bg_ML}). Later on, we can explore more complex classifiers - by, for example, combining different methods - and techniques - like performing numerical experiments on hyperparameters - which might produce better results.
+As a starting point, simple classifiers can be used on the data, to determine the classification accuracy of the data (see Section \ref{bg_ML}). Later on, we can explore other classifiers and techniques which might produce better results.
 
-Previous work on using machine learning on biological data (see Section \ref{bg_cancer}) has always been plagued with the ``Curse of dimensionality'', where the number of biological samples is far lesser than the number of features (or dimensions) of the data (the ``$p \gg n$'' problem \cite{RefWorks:96}). In our case, we have 847 samples (individuals) with 420374 features, resulting in about 2 gigabytes of data.
+Previous work on using machine learning on biological data (see Section \ref{bg_cancer}) has always been plagued with the \textit{curse of dimensionality}, where the number of biological samples is far lesser than the number of features (or dimensions) of the data (the ``$p \gg n$'' problem \cite{RefWorks:96}). In our case, we have 847 samples (individuals) with 420374 features, resulting in about 2 gigabytes of data.
 
-Here, we face a potential problem of a similar nature - the data has high dimensions, but not all the genes involved in the study would directly play a part in the classification of the disorder; some genes may only contribute a little to the outcome of the classification. In this case, we would need to perform feature/dimension reduction to only select features that have significant contribution to the classification outcome (see Section \ref{bg_feature_selection}).
+Here, we face a potential problem of a similar nature - the data has high dimensions, but not all the genes involved in the study would directly play a part in the classification of the disorder; some genes may only contribute a little to the outcome of the classification. In this case, we would need to perform feature selection to only select features that have significant contribution to the classification outcome (see Section \ref{bg_feature_selection}).
 
 Moreover, linear classifiers may not be able to capture the complexity of the data, as it is hypothesised that subsets of genes - rather than single genes - contribute to the genesis of the disorder \cite{RefWorks:10}.
 
-These potential problems make the project interesting, as we cannot simply use ordinary machine learning techniques to manipulate the data - we have to adapt our algorithms and classifiers to suit the complexity and context of the dataset and problem.
-
-\newpage
+These potential problems make the project interesting, as we cannot simply use ordinary machine learning techniques to manipulate the data. We have to adapt our algorithms and classifiers to suit the complexity and context of the problem.
 
 \section{Background}
 % relating it to existing published work which you read at the start of the project when your approach and methods were being considered.
@@ -72,7 +72,7 @@ These potential problems make the project interesting, as we cannot simply use o
 % Analysis is shown by explaining how the proposed solution operates in your own words as well as its benefits and consequences. Synthesis is shown through the organisation of your Related Work section and through identifying and generalising common aspects across different solutions. Critical judgement is shown by discussing the limitations of the solutions proposed both in terms of their disadvantages and limits of applicability.
 
 \subsection{Biological review}
-\subsubsection{Molecular biology and definitions}
+\subsubsection{Molecular biology and definitions} \label{bg:bio}
 This section outlines the necessary biology that will be relevant to the discussion in this project \cite{RefWorks:106, RefWorks:108, RefWorks:110, RefWorks:111}.
 
 \begin{itemize}
@@ -80,7 +80,7 @@ This section outlines the necessary biology that will be relevant to the discuss
 
 \item \textbf{DNA bases:} The hereditary information stored in DNA molecules are made up of four bases - Adenine (A), Thymine (T), Cytosine (C) and Guanine (G). These bases pair up in a specific way: A with T and C with G. Along with other types of molecules, these pairs form a nucleotide. Nucleotides are then arranged in a double helix structure.
 
-\item \textbf{Genes:} A gene is the fundamental building block of heredity. Genes consist of DNA, and encode instructions to produce proteins. It is estimated that humans have about 20000 genes \cite{RefWorks:109}. The instructions stored in genes are used to produce proteins through the process of transcription and translation (or, gene expression). This process is often called the ``central dogma'' of molecular biology.
+\item \textbf{Genes:} A gene is the fundamental building block of heredity. Genes consist of DNA, and encode instructions to produce proteins. These instructions are used to produce proteins through the process of transcription and translation. This process is often called the ``central dogma'' of molecular biology.
 
 \item \textbf{Gene expression:} Gene expressions behave like a switch to determine when and what kind of proteins are produced by cells. All cells in a human being carry the same genome. Thus, gene expression allows cells to specialise into different functionalities (e.g. differentiate between a brain cell and a skin cell).
 
@@ -103,7 +103,7 @@ Throughout this project, we shall identify the data produced from this study as 
 
 \subsection{Cancer classification} \label{bg_cancer}
 
-There is a significant amount of literature on gene expression data and cancer classification. These works primarily aim to uncover biological or medical insights using biological data obtained from microarrays, which are tools to measure the gene expression of thousands of genes simultaneously \citep{RefWorks:79}. For example, using neural networks, gene expression data can be used to distinguish between tumour types, which helps in solving cancer diagnosis problems \citep{RefWorks:80, RefWorks:88}. We can draw lessons from these studies to apply on this project.
+There is a significant amount of literature on cancer classification using gene expression data. These works primarily aim to uncover biological or medical insights using biological data obtained from microarrays, which are tools to measure the gene expression of thousands of genes simultaneously \citep{RefWorks:79}. For example, using neural networks, gene expression data can be used to distinguish between tumour types, which helps in solving cancer diagnosis problems \citep{RefWorks:80, RefWorks:88}. We can draw lessons from these studies to apply to this project.
 
 What is similar about this project and previous work on cancer classification is that the data for both cases are plagued with high dimensionality (\textit{Curse of dimensionality}). For example, in cancer studies, microarrays are used, with a large number of genes (features) but a small number of samples (observations) \cite{RefWorks:88}.
 
@@ -119,7 +119,9 @@ Eventually, we would need to select an ideal machine learning method to detect s
 \subsubsection{Decision Trees}
 In our context, the task is to classify the data according to whether a sample (individual) has a psychiatric disorder - in particular, schizophrenia - or not. In other words, the classification task is binary. An intuitive solution is to use decision trees; problems with discrete output values can be solved using decision trees \cite{RefWorks:98}.
 
-A decision tree algorithm is capable of sorting the  instances - in our context, samples with different features - down the tree until the algorithm reaches a leaf node, during which a classification is given to the node. At each level of the tree, the intermediate node is split according to some attribute. One variant of the decision tree algorithm is the ID3 algorithm \cite{RefWorks:99}. The ID3 algorithm makes use of a statistical quantitative measure, the information gain, to determine the attribute to classify the samples with. Using definitions from \cite{RefWorks:98}, let $S$ be the set of all the samples that we want to classify at a particular node. The samples can also be separated into two groups, those with a positive classification and those with a negative classification. Define the entropy of $S$ as:
+A decision tree algorithm is capable of sorting the  instances - in our context, samples with different features - down the tree until the algorithm reaches a leaf node, during which a classification is given to the node. At each level of the tree, the intermediate node is split according to some attribute.
+
+One variant of the decision tree algorithm is the ID3 algorithm \cite{RefWorks:99}. The ID3 algorithm makes use of a statistical quantitative measure, the information gain, to determine the attribute to classify the samples with. Using definitions from \cite{RefWorks:98}, let $S$ be the set of all the samples that we want to classify at a particular node. The samples can also be separated into two groups, those with a positive classification and those with a negative classification. Define the entropy of $S$ as:
 \begin{align*}
 Entropy(S) \equiv -p_{(+)} \log_2 p_{(+)} - p_{(-)} \log_2 p_{(-)}
 \end{align*}
@@ -133,29 +135,34 @@ where $Values(A)$ is the set of all possible values of attribute $A$, and $|S_v|
 
 We then classify the samples in the node according to the attribute with the highest information gain. Intuitively, we want to choose the attribute that can give the most distinct separation between the positive and negative classification (instead of choosing an attribute that, say, splits the samples into half  according to their classification).
 
-Although the decision tree algorithm is said to be robust to errors \cite{RefWorks:98} and the resulting decision tree can be easily interpreted by humans, it might be difficult to classify samples according to features that are highly correlated. This also happens to be a potential characteristic of our dataset, and we would expect some of the features to be correlated.
+Although the decision tree algorithm is said to be robust to errors \cite{RefWorks:98} and the resulting decision tree can be easily interpreted, it might be difficult to classify samples according to features that are highly correlated. This also happens to be a potential characteristic of our dataset, and we would expect some of the features to be correlated.
+
+Furthermore, the features of our dataset are vectors of real numbers. We would thus need to discretise the range of real numbers into intervals. This would then give rise to another problem of defining a suitable interval for these values.
 
 \subsubsection{Random forest}
 The random forest method \cite{RefWorks:101}, a form of ``ensemble learning'', is an extension of the decision tree algorithm described above, and it has been used in areas such as multi-class object detection in images \cite{RefWorks:100}. Overall, a random forest algorithm can be outlined as such:
 \begin{itemize}
 \item Split the dataset into distinct subsets.
 \item Using each subset, train a decision tree using a relevant algorithm, such as the ID3, as outlined above.
+\item Combine all the trees together to create a forest.
 \item Suppose we have an unseen sample $\boldsymbol x$.  Put the $\boldsymbol x$ through each tree, and obtain the resulting classification for each tree.
 \item Based on a ``majority vote'' system, determine the final classification of $\boldsymbol x$; that is, choose the classification that is the most popular among the decision trees.
 \end{itemize}
 
-Even though random forests have been shown to outperform decision trees \cite{RefWorks:103}, the limitations of decision trees as described above would still be inherent in the random forest method. Besides, Random Forest requires more parameters in general. For example, we would need to determine the number of trees to be trained, and the optimal number of trees to be trained is not obvious, as we would still need to perform numerical experiments to ascertain this optimal number.
+Even though random forests have been shown to outperform decision trees \cite{RefWorks:103}, the limitations of decision trees as described above would still be inherent in the random forest method. Besides, Random Forest requires more parameters in general. For example, we would need to determine the number of trees to be trained. This would require numerical experiments.
 
-Since the number of trees grow with the number of features that directly affect our classification (predictors) \cite{RefWorks:102}, and we do not know beforehand what these features are, we might potentially have to train a lot of trees. This might take up a lot of memory and time, and might also be computationally expensive.
+It has been shown that the number of trees grow with the number of features that directly affect the classification outcome \cite{RefWorks:102}, and we do not know beforehand what these features are. As such, we might potentially have to train a lot of trees. This might take up a lot of memory and time.
 
 So, overall, the decision tree and random forest methods might not be the best methods for our context, even though they are considered to be popular machine learning techniques \cite{RefWorks:103}.
 
 \subsubsection{Lasso and Elastic net}
 In Section \ref{intro_ML}, we discussed how, in this project, not only are we seeking low classification errors, we also have to select features/variables in the data that are relevant in producing accurate predictions. An obvious, but naive, solution is to consider all the features in different combinations. But this solution is evidently computationally expensive, much less with data as large as the one we consider in this project.
 
-One method to overcome this problem is by Lasso regression \cite{RefWorks:94}, which is a regularised least squares scheme that imposes an $l_1$-norm penalty on an error function that it tries to minimise. More importantly, in the context of big data and especially this project, the Lasso is an appealing solution because it produces a sparse solution, by shrinking the coefficients of insignificant features to 0. However, Zou and Hastie \cite{RefWorks:96} examined the limitations of the Lasso method, especially in the context of microarray data. In particular, Lasso has some limitations in variable selection, if a subset of features have high correlation with one another. This is precisely a characteristic of genes, as genes often interact with one another.
+One method to overcome this problem is by Lasso regression \cite{RefWorks:94}, which is a regularised least squares scheme that imposes an $l_1$-norm penalty on an error function that it tries to minimise. More importantly, in the context of big data and especially this project, the Lasso is an appealing solution because it produces a sparse solution, by shrinking the coefficients of insignificant features to 0.
 
-As a result, Zou and Hastie proposed the \textit{elastic net}, which imposes a linear combination (weighted) of the $l_1$-norm and the square of the $l_2$-norm. This method performs feature selection, presents a sparse solution and takes into account variables with high correlation, where groups of correlated variables are not known in advance \cite{RefWorks:93}. Furthermore, Zou and Hastie showed that the elastic net method outperforms Lasso. As such, elastic net might be used on our data set.
+However, Zou and Hastie \cite{RefWorks:96} examined the limitations of the Lasso method, especially in the context of microarray data. In particular, Lasso has some limitations in variable selection if a subset of features have high correlation with one another. This is precisely a characteristic of genes, as genes often interact with one another.
+
+As a result, Zou and Hastie proposed the \textit{elastic net}, which imposes a linear combination (weighted) of the $l_1$-norm and the square of the $l_2$-norm. This method performs feature selection, presents a sparse solution and takes into account variables with high correlation, where groups of correlated variables are not known in advance \cite{RefWorks:93}. Furthermore, Zou and Hastie showed that the elastic net method outperforms Lasso. As such, elastic net might be applicable for our data set.
 
 Besides, we can also utilise the elastic net library in \texttt{scikit-learn} implemented in Python. This allows us to experiment with elastic net easily, to see if it would be suitable for our dataset.
 
@@ -184,17 +191,17 @@ for $i = 1, \dots , n$, where, as defined above, $y_i = \pm 1$, depending on the
 \end{align*}
 
 \subsubsection{Dual representation}
-To solve the (primal) optimisation problem in (\ref{bg:svm}) subject to the condition in (\ref{bg:svm:cond}), we can formulate the following Lagrangian equation:
+To solve the (primal) optimisation problem in (\ref{bg:svm}) subject to the conditions in (\ref{bg:svm:cond}), we can formulate the following Lagrangian equation:
 \begin{align}
 L(\boldsymbol w, b, \boldsymbol a)
 = \frac{1}{2} \boldsymbol w^\top \boldsymbol w - \sum_{i=1}^n a_i (y_i(\boldsymbol w^\top \boldsymbol x_i + b) - 1) \label{bg:svm:primal:eqn}
 \end{align}
-where $\boldsymbol a$ is the $n$-dimensional vector containing the Lagrangian multipliers ($a_i \geq 0$) corresponding to the inequality condition in (\ref{bg:svm:cond}). The (primal) optimisation problem in (\ref{bg:svm:primal:eqn}) can be written as:
+where $\boldsymbol a$ is the $n$-dimensional vector containing the Lagrangian multipliers ($a_i \geq 0$) corresponding to the inequality conditions in (\ref{bg:svm:cond}). The (primal) optimisation problem in (\ref{bg:svm:primal:eqn}) can be written as:
 \begin{align}
-\min_{\boldsymbol w} \max_{\boldsymbol a \geq 0} L(\boldsymbol w, b, \vec a) \label{bg:svm:primal}
+\min_{\boldsymbol w, b} \max_{\boldsymbol a \geq 0} L(\boldsymbol w, b, \vec a) \label{bg:svm:primal}
 \end{align}
 
-The primal problem stated in (\ref{bg:svm:primal}) can be written as its dual equivalent:
+This can be written as its dual equivalent:
 \begin{align}
 \max_{\vec a \geq 0} \min_{\vec w, b} L(\vec w, b, \vec a) \label{bg:svm:dual}
 \end{align}
@@ -205,7 +212,7 @@ It can shown that:
 \item The primal (\ref{bg:svm:primal}) and dual (\ref{bg:svm:dual}) problems have the same optimal solutions, if any \cite{RefWorks:124}.
 \end{itemize}
 
-To solve the problem in (\ref{bg:svm:dual}), we must first minimise $L$ with respect to $\vec w$ and $b$ for fixed $\vec a$. To do this, we can take the derivative of $L$ with respect to $\vec w$ and $b$. The optimal $\vec w$ and $b$ would then satisfy the condition that the derivatives are 0. Doing this would result in the constraints $a_i \geq 0$ and $\sum_{i=1}^n a_i y_i = 0$.
+To solve the problem in (\ref{bg:svm:dual}), we must first minimise $L$ with respect to $\vec w$ and $b$ for fixed $\vec a$. To do this, we can take the derivative of $L$ with respect to $\vec w$ and $b$. Then, set the derivatives to 0. Doing this would result in the constraints $a_i \geq 0$ and $\sum_{i=1}^n a_i y_i = 0$.
 
 We would then obtain an expression of $L$ with respect to $\vec a$ that we wish to maximise:
 \begin{align*}
@@ -225,19 +232,19 @@ While setting the derivatives of $L$ with respect to $\vec{w}$ and setting to 0,
 \vec{w} = \sum_{i=1}^n a_i y_i \vec{x}_i
 \end{align*}
 
-Substituting this into the linear model equation (\ref{bg:svm:linear_model}), we get:
+Substituting this into the linear model equation in (\ref{bg:svm:linear_model}), we get:
 \begin{align}
 f(\vec{x}) = \sum_{i=1}^n a_i y_i \vec{x}_i^\top \vec{x} + b \label{bg:svm:decision}
 \end{align}
 
-In order to determine the classification of a new incoming point $\vec{x}$, we simply have to determine the sign of $f(\vec{x})$ in (\ref{bg:svm:decision}).
+In order to determine the classification of a new  point $\vec{x}$, we simply have to determine the sign of $f(\vec{x})$ in (\ref{bg:svm:decision}).
 
 \subsubsection{Mapping to higher dimensional space}
 When the relationship between data points in the input space is not linear, the (linear) SVM with the description above would not be able to learn these non-linear relations. This would result in underfitting.
 
 As such, we would need to map the input data points into a higher dimensional space (feature space). We can then build an SVM based on this high dimensional space such that the points in the feature space is linearly separable.
 
-We first define a mapping $\phi : X \rightarrow F$ where $\phi$ is a non-linear mapping from the input space $X$ to a higher dimensional space $F$. We then define the \textit{kernel} function $K$ such that $\forall \vec x, \vec y \in X$,
+We first define a mapping $\phi : X \rightarrow F$ where $\phi$ is a non-linear mapping from the input space $X$ to a higher dimensional feature space $F$. We then define the \textit{kernel} function $K$ such that $\forall \vec x, \vec y \in X$,
 \begin{align*}
 K(\vec x, \vec y) = \phi(\vec x)^\top \phi(\vec{y}) = \left\langle \phi(\vec x) , \phi(\vec{y}) \right\rangle
 \end{align*}
@@ -256,7 +263,7 @@ f(\vec{x}) = \sum_{i=1}^n a_i y_i K(\vec{x}_i, \vec{x}) + b = \sum_{i=1}^n a_i y
 Thus, for a new vector $\vec{x}$, we simply need to test the sign of $f(\vec{x})$. If $f(\vec{x})$ is positive, then we can classify it as class 1, and class 2 if $f(\vec{x})$ is negative.
 
 \subsubsection{Slack variables}
-We should note that real-life data may not be perfectly linearly separable in the feature space $\phi(\vec{x})$, especially due to the presence of noise \cite{RefWorks:127}. Slack variables, $\xi$, are introduced to allow some form of error when training data points are misclassified. These slack variables allow data points to be classified on the wrong side of the decision hyperplane, but the further away a point is from the decision boundary, the larger the penalty imposed. We then need one slack variable per input data point \cite{RefWorks:126}, defined as such:
+Real-life data may not be perfectly linearly separable in the feature space $\phi(\vec{x})$, especially due to the presence of noise \cite{RefWorks:127}. Slack variables, $\xi$, are introduced to allow some form of error when training data points are misclassified. These slack variables allow data points to be classified on the wrong side of the decision hyperplane, but the further away a point is from the decision boundary, the larger the penalty imposed. We then need one slack variable per input data point \cite{RefWorks:126}, defined as such:
 \begin{itemize}
 \item $\xi_i = 0$: data point is correctly classified.
 \item $0 < \xi_i \leq 1$: data point lies inside the margin, but is on the correct side of the boundary.
@@ -266,31 +273,63 @@ We should note that real-life data may not be perfectly linearly separable in th
 This is often referred to as the 1-norm soft margin constraint in the literature \cite{RefWorks:127}. Now, we would need to maximise the margin of the hyperplane, while penalising the misclassified points. We can thus formulate our problem as such:
 \begin{align}
 \min_{\vec{w}, b, \vec{\xi}} \quad &\frac{1}{2}\vec{w}^\top \vec{w} + C \sum_{i=1}^n \xi_i \label{bg:svm:slack:primal} \\
-\text{subject to} \quad &y_i(\vec{w}^\top \vec{x}_i + b) \geq 1 - \xi_i \label{bg:svm:slack:constraint} \\
-&\xi_i \geq 0, \quad \text{for $i = 1, \dots , n$}
+\text{subject to} \quad &y_i(\vec{w}^\top \vec{x}_i + b) \geq 1 - \xi_i , \quad 
+\xi_i \geq 0 \quad \text{for $i = 1, \dots , n$}\label{bg:svm:slack:constraint}
 \end{align}
-where $C>0$ is the penalty parameter. Similarly, to state the dual of (\ref{bg:svm:slack:primal}) subject to the conditions of (\ref{bg:svm:slack:constraint}), we need to compute the Lagrangian:
+where $C>0$ is the \textit{penalty parameter}. Similarly, to state the dual of (\ref{bg:svm:slack:primal}) subject to the conditions in (\ref{bg:svm:slack:constraint}), we need to compute the Lagrangian:
 \begin{align*}
-L(\vec{w}, b, \vec{\xi}, a_i, r_i) =
+L(\vec{w}, b, \xi_i, a_i, r_i) =
 \frac{1}{2} \vec{w}^\top \vec{w} + C \sum_{i=1}^n \xi_i - \sum_{i=1}^n a_i(y_i(\vec{w}^\top \vec{x}_i + b) - 1 + \xi_i) - \sum_{i=1}^n r_i\xi_i
 \end{align*}
 where $a_i \geq 0$ and $r_i \geq 0$ are the Lagrangian multipliers.
 
 Similarly, we compute the derivative of the above with respect to $\vec{w}$, $b$ and $\xi_i$ to get the following dual problem:
-\begin{align*}
-\min_{\vec{a}} \quad &L(\vec{a}) = \frac{1}{2}\vec{a}^\top \vec{K}_y \vec{a} - \vec{a}^\top \vec{1} \\
-\text{subject to} \quad &\vec{a}^\top \vec{y} = 0, \quad 0 \leq a_i \leq C
-\end{align*}
-where $K_y = [y_i \, y_j \, \vec{x}_i^\top \vec{x}_j]$.
+\begin{align}
+\min_{\vec{a}} \quad &L(\vec{a}) = \frac{1}{2}\vec{a}^\top \vec{K}_y \vec{a} - \vec{a}^\top \vec{1} \label{bg:svm:quadprob} \\
+\text{subject to} \quad &\vec{a}^\top \vec{y} = 0, \quad 0 \leq a_i \leq C 
+\end{align}
+where $K_y = [y_i \, y_j \, \vec{x}_i^\top \vec{x}_j]$ and $C$ is the penalty parameter.
 
 Now, suppose we choose to map the input space into a higher dimensional feature space, we simply modify $K$ in the above problem:
 \begin{align*}
 K_y = [y_i \, y_j \, \phi(\vec{x}_i)^\top \phi(\vec{x}_j)]
 \end{align*}
 
-\subsubsection{Kernel methods}
+We then need to solve the quadratic optimisation problem in (\ref{bg:svm:quadprob}).
 
-\subsection{Feature selection and dimensionality reduction} \label{bg_feature_selection}
+\subsubsection{Model selection}
+There are 4 widely used kernels:
+\begin{itemize}
+\item Linear kernel: $K(\vec{x}_i, \vec{x}_j) = \vec{x}_i^\top \vec{x}_j$
+\item Polynomial kernel: $K(\vec{x}_i, \vec{x}_j) = (\gamma \, \vec{x}_i^\top \vec{x}_j + r)^d$
+\item Radial basis function (RBF): $K(\vec{x}_i, \vec{x}_j) = \exp(-\gamma \, \| \vec{x}_i - \vec{x}_j \|^2)$
+\item Hyperbolic tangent kernel: $K(\vec{x}_i, \vec{x}_j) = \tanh(\gamma \, \vec{x}_i^\top \vec{x}_j + r)$
+\end{itemize}
+where $r$, $d$ and $\gamma>0$ are kernel parameters.
+
+First, we would pick a kernel before the training process. Then, using a procedure such as $k$-fold cross validation, we would then find the most optimal kernel and penalty parameters ($C$).
+
+For example, if we choose the RBF kernel, we would  perform cross validation to obtain the most optimal parameters $\gamma$ and $C$.
+
+A study in \cite{RefWorks:128} noted that the RBF kernel has less numerical difficulties than the polynomial kernel. We note that, $\forall \vec{x}_i, \vec{x}_j \in X$,
+\begin{align*}
+\| \vec{x}_i - \vec{x}_j \|^2 \geq 0 \quad \text{and} \quad \gamma > 0 \quad \Rightarrow \quad 0 < K(\vec{x}_i, \vec{x}_j) \leq 1 
+\end{align*}
+
+On the other hand, for large $d$, the polynomial kernel might go to infinity or close to 0. Furthermore, the hyperbolic tangent kernel is not valid under certain kernel parameters. We should then focus on the linear and RBF kernels.
+
+Although the RBF kernel is more commonly chosen than the rest of the kernels listed above, the study also revealed that if the number of features is large, using the linear kernel may just suffice, as the nonlinear mapping provided by the RBF kernel may not necessarily improve performance. Furthermore, using the linear kernel would mean that we only need to investigate the optimal $C$ penalty parameter value.
+
+Nevertheless, we should view this conclusion with scepticism and still proceed to investigate the better kernel method (between linear and RBF) by using cross-validation, as the conclusion made in \cite{RefWorks:128} might be data-dependent.
+
+\subsubsection{Libraries available for SVM}
+Chang and Lin \cite{libsvm} developed LIBSVM, a library for SVMs at the National Taiwan University. LIBSVM utilises the Sequential Minimal Optimisation (SMO) algorithm to solve the quadratic optimisation problem in (\ref{bg:svm:quadprob}). SMO allows the problem to be solved analytically \cite{RefWorks:126}. Furthermore, the library can be interfaced to other programming languages like Java, MATLAB and Python.
+
+The Python library \texttt{scikit-learn} also allows SVMs to be trained for classification purposes (\texttt{SVC}) and allows various kernels to be used. Furthermore, the library uses LIBSVM internally to handle computations.
+
+We can try both libraries to see if either one outperforms the other, in terms of accuracy and computation time.
+
+\subsection{Feature selection} \label{bg_feature_selection}
 As mentioned in section \ref{intro_ML}, the data suffers a \textit{curse of dimensionality}, where the number of features exceeds the number of samples available. This usually causes \textit{over-fitting} on the classifier. This refers to the situation where the classifier can classify the training data perfectly, but performs poorly with unseen data.
 
 Furthermore, there is a possibility that not all of the genes in our data set have a role to play in the classification of schizophrenia. As such, the feature selection method is necessary to select the significant features and eliminate the others. Besides, once we obtain only the relevant features, it would be less computationally expensive to train our classifier just on these features.
@@ -320,7 +359,7 @@ Wrapper methods can be classified into optimal and suboptimal search algorithms 
 \item \textbf{Sequential backward selection:} start from the whole set of features. Delete one feature at a time, until the number of features required is reached.
 \end{itemize}
 
-There are also ``floating'' versions of the above selection methods, which allows backtracking to remove features that might improve the selection criterion \cite{RefWorks:121}.
+There are also ``floating'' versions of the above selection methods, which allows backtracking to remove (or add) features that might improve the selection criterion \cite{RefWorks:121}.
 
 There also has been work that combines genetic algorithms with SVMs \cite{RefWorks:120}. However, these algorithms are deemed to be more time consuming, although it can cover more combinations of feature subsets (see Section \ref{extensions} for possible extensions).
 
@@ -333,18 +372,13 @@ In \cite{RefWorks:119}, Tang et. al suggested two novel methods for feature sele
 
 The GLGS uses a gradient-based algorithm, while the LOOCSFS incorporates the Sequential Forward Selection method and uses the leave-one-out cross validation error (LOOE) of the SVM as a selection criterion. Experiments on different datasets by Tang et. al seem to come to the conclusion that the GLGS algorithm might be a good choice for small number of samples (individuals in our context), with large $d$ and $t$, where $d$ is the number of features and $t$ is the number of features to be selected. We can take this approach in our context, and see if either method outperforms the other with our data.
 
-Furthermore, Tang et. al pointed out that the number of features to be selected our algorithm ($t$) must be defined beforehand for the algorithm to work. The experimenters set this number to be 100 for all the datasets that were explored. However, the paper later recommends different values of $t$ for two of the datasets that were used.
+Furthermore, Tang et. al pointed out that the number of features to be selected by the algorithm ($t$) must be defined beforehand for the algorithm to work. The experimenters set this number to be 100 for all the datasets that were explored. However, the paper later recommends different values of $t$ for two of the datasets that were used.
 
 This suggests that $t$ might be dependent on the dataset used. We can thus select $t$ using the approaches listed by Tang et. al:
 \begin{itemize}
 \item Terminate the algorithm if the selection criterion does not improve much when more features are added.
 \item Plot a graph of the error against $t$. We can inspect visually the most optimal value of $t$.
 \end{itemize}
-
-\subsection{Cross validation}
-% How many folds in k fold cross validation?
-
-\newpage
 
 \section{Project plan}
 % You should explain what needs to be done in order to complete the project and roughly what you expect the timetable to be.
@@ -365,7 +399,7 @@ Furthermore, in the National Center for Biotechnology Information (NCBI) databas
 We also have to convert the data that can be read by our classifier. For example, we have to convert the csv file into matrices, and convert the classification (control or case) into a (binary) vector.
 
 \subsection{Performance of classifiers}
-Similar to previous work on cancer classification, we would need to employ different types of supervised learning algorithms on the dataset. Although several experiments have shown that support vector machines (SVMs) are superior compared to other methods \cite{RefWorks:90}, we should still consider other classifiers, such as decision trees and random forests, to ascertain their suitability on the data. We then need to determine the classification accuracy of each classifier, and select the best classifier for our data.
+Similar to previous work on cancer classification, we would need to employ different types of supervised learning algorithms on the dataset. Although several experiments have shown that support vector machines (SVMs) are superior compared to other methods \cite{RefWorks:90}, we should still consider other classifiers, such as elastic net, to ascertain their suitability on the data. We then need to determine the classification accuracy obtained by each classifier, and select the best classifier for our data.
 
 The classification accuracy of each classifier can be determined using methods such as $k$-fold or leave-one-out cross validation.
 
@@ -378,10 +412,14 @@ Overall, this entire process of training the right classifier can be summarised 
 \item Classification error: accessing the performance of the classifier
 \end{itemize}
 
+In the case that we use the SVM as our ideal method, we also have to select the most appropriate kernel.
+
 \subsection{Feature selection}
 As briefly mentioned in section \ref{bg_feature_selection}, once we get the classifier working on the dataset to a satisfactory accuracy, we can then proceed to perform feature selection on the data. This allows us to select only the most informative and relevant genes. It also helps to reduce the size and amount of data needed for the classifier.
 
 I intend to start with the GLGS and LOOCSFS (see section \ref{bg_GLGS}) algorithms, as they have been proven to work well with biological data with small sample size and large number of features. We can then also find the most optimal value of $t$, which was defined as the number of features to be selected by the algorithm.
+
+We can then compare the performance of the classifier when it is training on the full data, with when it is trained only on the selected features. We can also investigate if other classifiers would perform better when the feature set is reduced.
 
 \subsection{Biological implications}
 Once the above are obtained, we can then see if we are able to select the most informative features. This has biological implications, as we can understand which part(s) of the genome has the most impact on the outcome of data (i.e. whether an individual has schizophrenia).
@@ -416,10 +454,10 @@ I would give myself the following dates to complete the following:
 \begin{itemize}
 \item \textit{Before 17 February:} Complete experiments with classifiers, determine the best one (in terms of accuracy, computational cost etc.) (3 weeks).
 \item \textit{Before 3 March:} Experiment with parameters of classifier(s); determine the most optimal set of parameters (2 weeks).
-\item \textit{Before 13 March:} Experiment with feature reduction; we can see if it is possible to select the most informative features (1+ weeks).
+\item \textit{Before 13 March:} Experiment with feature selection; we can see if it is possible to select the most informative features (1+ weeks).
 \end{itemize}
 
-The following are the fundamental components of this project. It is evident that there is plenty of time to complete this. In case any of the procedure takes a longer time than anticipated, there will be enough time to finish them. I would also need to consider the ongoing courseworks and deadlines within this period.
+The following are the fundamental components of this project. It is evident that there is plenty of time (including the Summer term) to complete this. In case any of the above steps takes a longer time than anticipated, there will be enough time to finish them. I would also need to consider the ongoing courseworks and deadlines during Spring term.
 
 Besides, I would have 1 Math exam in Summer, whose date is not finalised yet, but it should occur in the month of May. This also means that I should be able to juggle between the exam and this project fairly well during the Easter break and in Summer.
 
@@ -437,6 +475,16 @@ Moreover, we can extend our investigation into the best feature selection method
 \section{Evaluation plan}
 \subsection{An investigation into the use of epigenetic data}
 Essentially, this project is about investigating whether the use of epigenetic data is relevant in helping us to identify individuals with psychiatric disorders. In other words, the project might conclude that epigenetic data is not able to help us to predict individuals that potentially have schizophrenia. Nevertheless, this can also be seen as a beneficial development.
+
+\subsection{Extending beyond our dataset}
+The most important measure of success is that our classifier can generalise beyond the data. In other words, even if we use the classifier on other sources of data, our classifier would still give correct predictions and classify the examples with high accuracy.
+
+To achieve this, we would need to train a classifier that is independent of our current dataset, and that would be a challenge for this project.
+
+\subsection{Creating an analysis pipeline}
+If time permits (see Section \ref{extensions} on extensions) us to create an analysis pipeline for epigenetic data, we would need to ensure that it is user-friendly, and the analysis it produces is biologically relevant and useful for further analysis.
+
+To do this, we would need several experts in the field to try out the pipeline. Feedback can then be obtained from them (preferably iteratively) to improve the design of the pipeline. To make the pipeline user friendly is especially important, especially if we decide to create a GUI-based toolbox.
 
 % how you plan to measure success.
 
