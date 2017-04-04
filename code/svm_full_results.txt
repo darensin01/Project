@@ -1,0 +1,12 @@
+RBF kernel:
+[ 0.84117647  0.81176471  0.86470588  0.86390533  0.79166667]
+SVM cross validation score:
+0.834644
+
+
+Linear kernel:
+[ 0.92941176  0.9         0.95294118  0.9408284   0.92261905]
+SVM cross validation score:
+0.929160
+
+Time taken: 1347.41043186 seconds (~20 mins)

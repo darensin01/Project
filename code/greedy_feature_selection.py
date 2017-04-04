@@ -3,6 +3,7 @@ import pandas as pd
 import sys
 import time
 
+from ast import literal_eval as make_tuple
 from sklearn import preprocessing
 from sklearn.svm import SVC
 from sklearn.utils import shuffle
@@ -13,7 +14,8 @@ from multiprocessing import Pool
 STORE_NAME = 'DataStore.h5'
 LABEL_KEY = 'label'
 DATA_KEY = 'data'
-NUM_PROCESSES = 12
+NUM_PROCESSES = 1
+ITERATION = 0
 
 def getData():
     print "Getting data matrix..."
@@ -23,6 +25,7 @@ def getLabels():
     print "Getting labels..."
     return pd.read_hdf(STORE_NAME, LABEL_KEY)
 
+'''
 def sorted_one_feature_score(data, labels, clf, idx):
     (cases, features) = data.shape
     bucket = features / 10
@@ -45,8 +48,11 @@ def sorted_one_feature_score(data, labels, clf, idx):
         score_index = (score.get(), feature)
         cvScores.append(score_index)
 
+        print score_index
+
     # Sort list according to score.
     return sorted(cvScores, key=lambda(score, index):score, reverse=True)
+'''
 
 def cv_score_single_feature(labels, classifier, data):
     scaled_data = preprocessing.scale(data)
@@ -59,6 +65,7 @@ def writeShuffledDataToStore(data, labels):
     labels.to_hdf(store, 'shuffledLabels')
     store.close()
 
+'''
 def one_feature_scoring():
 
     if len(sys.argv > 1):
@@ -89,13 +96,31 @@ def one_feature_scoring():
 
     f.write('Time taken: %f' % (endTime - startTime))
     f.close()
+'''
+
+def getBestIndicesFromFiles():
+    allPreviousBestFeatures = []
+
+    # Iterates from [2, ITERATION - 1].
+    # Get best paired feature from previous results file.
+    # Reads just the first line of the file and appends it to the list.
+    for i in range(2, ITERATION):
+        print i
+        filename = "all_" + str(i) + "_feature_results.txt"
+        f = open(filename, 'r')
+        firstLine = f.readline()
+        allPreviousBestFeatures.append(make_tuple(firstLine)[0])
+        f.close()
+
+    return allPreviousBestFeatures
 
 if __name__ == "__main__":
 
-    if len(sys.argv > 1):
+    if len(sys.argv) > 1:
         idx = int(sys.argv[1])
+        ITERATION = int(sys.argv[2])
 
-    #idx = 0
+    print idx, ITERATION
 
     store = pd.HDFStore(STORE_NAME)
 
@@ -108,43 +133,54 @@ if __name__ == "__main__":
     startTime = time.time()
     (cases, features) = shuffledData.shape
     labels = shuffledLabels.values
-    featureIndices = oneFeatureScores.axes[0]
-    bestFeature = featureIndices[0]
 
-    bestFeatureValues = shuffledData.iloc[:, bestFeature]
-    bestFeatureValues = bestFeatureValues.values.reshape((cases, 1))
+    # Get all the ranked feature scores.
+    featureIndices = oneFeatureScores.axes[0]
+
+    # Find best feature from one_feature_scores.
+    # Find previous best scores from files, and append best feature to front of
+    # the list.
+    bestFeature = featureIndices[0]
+    otherFeatures = getBestIndicesFromFiles()
+    otherFeatures.insert(0, bestFeature)
+
+    bestFeatureValues = shuffledData.iloc[:, otherFeatures]
+    bestFeatureValues = bestFeatureValues.values.reshape((cases, ITERATION - 1))
 
     p = Pool(processes=NUM_PROCESSES)
     clf = SVC()
     cvScores = []
 
-    reducedFeatures = features / 2
-    bucket = reducedFeatures / 10
+    reducedFeatures = features / ITERATION
+    bucket = reducedFeatures / 5
 
-    # bucket = 21018, reducedFeatures = 210187
-    # maximum idx = 10.
-    # In this case, we have [210180, 210187) OR [210180, 210186].
     for i in range(idx * bucket, min((idx + 1) * bucket, reducedFeatures)):
-
-        if idx == 0 and i == 0:
+        # We check if the ith feature is already part of the list.
+        if featureIndices[i] in otherFeatures:
             continue
 
-        secondFeature = shuffledData.iloc[:, featureIndices[i]]
-        secondFeature = secondFeature.values.reshape((cases, 1))
-        newData = np.column_stack((bestFeatureValues, secondFeature))
+        # Concatenate the feature to be tested, with the rest of the previous
+        # indices, by using column_stack.
+        featureToBeTested = shuffledData.iloc[:, featureIndices[i]]
+        featureToBeTested = featureToBeTested.values.reshape((cases, 1))
+        newData = np.column_stack((bestFeatureValues, featureToBeTested))
+
+        # Find the cross validation score.
         score = p.apply_async(cv_score_single_feature, args=[labels, clf, newData])
 
         indexScore = (featureIndices[i], score.get())
+        print indexScore
         cvScores.append(indexScore)
 
     endTime = time.time()
 
-    filename = 'two_features_selection_results_' + str(idx) + ".txt"
+    print "Writing to file..."
+    name = str(ITERATION) + '_feature_selection_results_' + str(idx) + ".txt"
 
-    f = open(filename, 'w')
+    f = open(name, 'w')
     for i in range(len(cvScores)):
         (index, score) = cvScores[i]
-        f.write('%i ; %f' % (index, score))
+        f.write('%i ; %10.8f' % (index, score))
         f.write("\n")
 
     f.write('Time taken: %f' % (endTime - startTime))

@@ -38,14 +38,14 @@ sorted_scores = map(lambda (index, score):score, sorted_list)
 
 results_series = pd.Series(sorted_scores, index=sorted_indices)
 
-#for pair in sorted_list:
-#    f.write(str(pair) + "\n")
+for pair in sorted_list:
+    f.write(str(pair) + "\n")
 
 f.close()
 
-STORE_NAME = 'C:\Users\Daren\Desktop\Project\code\DataStore.h5'
+STORE_NAME = 'DataStore.h5'
 store = pd.HDFStore(STORE_NAME)
-#results_series.to_hdf(store, 'sorted_one_feature_scores')
+results_series.to_hdf(store, 'sorted_one_feature_scores')
 
 store.close()
 

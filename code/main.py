@@ -7,6 +7,8 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import cross_val_score
 from sklearn.feature_selection import RFE
 import numpy as np
+import time
+from sklearn import preprocessing
 
 # Constant terms.
 STORE_NAME = 'DataStore.h5'
@@ -68,12 +70,17 @@ def trainWithENet(data, labels):
 # Default gamma for RBF kernel: 1/n_features.
 def trainWithSVM(data, labels):    
     print "Training SVM..."
-    clf = SVC()
-    return getCVScore(clf, data, labels)
+    clf = SVC(kernel='linear')
+    start = time.time()
+    scores = getCVScore(clf, data, labels)
+    end = time.time()
+    print end - start
+    print scores
+    return np.mean(scores)
 
-# Default number of folds for cross validation: 3.
 def getCVScore(classifier, data, labels):
-    return cross_val_score(classifier, data, y=labels, n_jobs=-1, cv=5)
+    scaled_data = preprocessing.scale(data)
+    return cross_val_score(classifier, scaled_data, y=labels, cv=5, scoring='accuracy')
 
 # Main method
 
@@ -86,11 +93,11 @@ if __name__ == "__main__":
     print "Done getting store!\n"
 
     # Returns a series representing the labels (needed for supervised learning).
-    labels = getLabels()
+    labelsShuffled = pd.read_hdf(STORE_NAME, 'shuffledLabels')
 
     # Get the data matrix. Need to transpose the dataframe to make the dimensions
     # compatible with the labels vector.
-    data = getData()
+    dataShuffled = pd.read_hdf(STORE_NAME, 'shuffledData')
 
     # df = pd.read_csv('first100Rows.csv', header=0, index_col=0)
     # df.to_hdf(store, 'dataTop100')
@@ -102,7 +109,7 @@ if __name__ == "__main__":
     # Shuffle the data and the labels, so that the bias associated with the training
     # would be alleviated. Set random_state=0 for reproducibility.
     print "Shuffling data and labels...\n"
-    dataShuffled, labelsShuffled = shuffle(data.T, labels, random_state=0)
+    #dataShuffled, labelsShuffled = shuffle(data.T, labels, random_state=0)
 
     # eNetCVScore = trainWithENet(dataShuffled, labelsShuffled)
     # rfCVScore = trainWithRandomForest(dataShuffled, labelsShuffled)
@@ -110,7 +117,8 @@ if __name__ == "__main__":
 
     f = open("results.txt", 'w')
     f.write("SVM cross validation score:\n")
-    f.write(svmCVScore)
+    f.write('%f' % svmCVScore)
+    f.write("\n")
     f.close()
 
 
