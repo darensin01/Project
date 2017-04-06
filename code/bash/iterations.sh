@@ -2,8 +2,10 @@
 
 declare -a ids
 
-START=19
-END=24
+START=40
+END=50
+
+cp $WORK/project/feature_serial.sh $TMPDIR
 
 for ((i=${START}; i<${END}; i++))
 do
