@@ -25,34 +25,6 @@ def getLabels():
     print "Getting labels..."
     return pd.read_hdf(STORE_NAME, LABEL_KEY)
 
-'''
-def sorted_one_feature_score(data, labels, clf, idx):
-    (cases, features) = data.shape
-    bucket = features / 10
-
-    cvScores = []
-    labels = labels.values
-
-    # Create a multiprocessing pool.
-    p = Pool(processes=NUM_PROCESSES)
-
-    for feature in range(idx * bucket, min((idx + 1) * bucket, features)):
-        # Select 1 feature at a time.
-        oneFeatData = data.iloc[:, feature]
-
-        # cross_val_score only accepts 2D data array.
-        thread_data = oneFeatData.values.reshape((cases, 1))
-        score = p.apply_async(cv_score_single_feature, args=[labels, clf, thread_data])
-
-        # Need to keep track of index too.
-        score_index = (score.get(), feature)
-        cvScores.append(score_index)
-
-        print score_index
-
-    # Sort list according to score.
-    return sorted(cvScores, key=lambda(score, index):score, reverse=True)
-'''
 
 def cv_score_single_feature(labels, classifier, data):
     scaled_data = preprocessing.scale(data)
@@ -64,39 +36,6 @@ def writeShuffledDataToStore(data, labels):
     data.to_hdf(store, 'shuffledData')
     labels.to_hdf(store, 'shuffledLabels')
     store.close()
-
-'''
-def one_feature_scoring():
-
-    if len(sys.argv > 1):
-        idx = int(sys.argv[1])
-
-    store = pd.HDFStore(STORE_NAME)
-    data = getData()
-    labels = getLabels()
-    store.close()
-
-    print "Shuffling data and labels...\n"
-    dataShuffled, labelsShuffled = shuffle(data.T, labels, random_state=0)
-
-    clf = SVC()
-
-    print "Obtaining single feature scores..."
-    startTime = time.time()
-    oneFeatureCVScores = sorted_one_feature_score(dataShuffled, labelsShuffled, clf, idx)
-    endTime = time.time()
-
-    filename = 'one_feature_selection_results_' + str(idx) + ".txt"
-
-    f = open(filename, 'w')
-    for i in range(len(oneFeatureCVScores)):
-        (score, index) = oneFeatureCVScores[i]
-        f.write('Score: %10.8f ; Index: %i' % (score, index))
-        f.write("\n")
-
-    f.write('Time taken: %f' % (endTime - startTime))
-    f.close()
-'''
 
 def getBestIndicesFromFiles():
     allPreviousBestFeatures = []
@@ -115,12 +54,6 @@ def getBestIndicesFromFiles():
     return allPreviousBestFeatures
 
 if __name__ == "__main__":
-
-    if len(sys.argv) > 1:
-        idx = int(sys.argv[1])
-        ITERATION = int(sys.argv[2])
-
-    print idx, ITERATION
 
     store = pd.HDFStore(STORE_NAME)
 
@@ -152,7 +85,7 @@ if __name__ == "__main__":
     cvScores = []
 
     reducedFeatures = features / ITERATION
-    bucket = reducedFeatures / 5
+    bucket = reducedFeatures / 3
 
     for i in range(idx * bucket, min((idx + 1) * bucket, reducedFeatures)):
         # We check if the ith feature is already part of the list.
