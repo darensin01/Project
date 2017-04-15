@@ -8,7 +8,7 @@
 \usepackage{graphicx}
 \usepackage{mathtools}
 \usepackage{units}
-\usepackage[margin=1.1in]{geometry}
+\usepackage[margin=1.0in]{geometry}
 \usepackage{comment} 
 \usepackage{subcaption}
 \usepackage{float}
@@ -47,7 +47,7 @@
 
 Schizophrenia is a complex mental disorder that displays an array of symptoms. It is commonly perceived that schizophrenia is a hereditary disease that can be passed down within the family, but some individuals diagnosed with schizophrenia do not have a family member with the disorder \cite{RefWorks:8}. Thus, it is postulated that the heritability of schizophrenia might not be as high as what is commonly believed \cite{RefWorks:9}.
 
-Furthermore, there is a strong indication that environmental factors - such as tobacco smoke and viruses - and genetic factors have an influence on the development of psychiatric disorders in an individual \cite{RefWorks:8, RefWorks:10}. This results in a hypothesis that the epigenetics (see Section \ref{bg:bio}) of an individual might have a role to play in the development of schizophrenia (see Section \ref{bg_epigenetics}) \cite{RefWorks:12}. However, exactly how these two factors play a part is still unclear \cite{RefWorks:11}.
+Furthermore, there is a strong indication that environmental factors - such as tobacco smoke and viruses - and genetic factors have an influence on the development of psychiatric disorders in an individual \cite{RefWorks:8, RefWorks:10}. This results in a hypothesis that the epigenetics (section \ref{bg:bio}) of an individual might have a role to play in the development of schizophrenia (section \ref{bg_epigenetics}) \cite{RefWorks:12}. However, exactly how these two factors play a part is still unclear \cite{RefWorks:11}.
 
 Moreover, the current research on psychiatric disorders do not receive as much attention as other illnesses such as cancer \cite{RefWorks:82}. Thus, any insight generated from this project would be beneficial to helping us understand psychiatric disorders better.
 
@@ -56,13 +56,13 @@ Overall, this project aims to predict Schizophrenia cases on the basis of epigen
 
 \subsection{Using machine learning to predict Schizophrenia cases} \label{intro_ML}
 
-Using data from a recent study on epigenetics and schizophrenia (see Section \ref{bg_genetic_data}), the project aims to use machine learning to elucidate any statistical regularity in the data, in hope that any insight into the data can help geneticists and psychiatrists understand the etiology of schizophrenia - and indeed, other psychiatric disorders - better.
+Using data from a recent study on epigenetics and schizophrenia (section \ref{bg_genetic_data}), the project aims to use machine learning to elucidate any statistical regularity in the data, in hope that any insight into the data can help geneticists and psychiatrists understand the etiology of schizophrenia - and indeed, other psychiatric disorders - better.
 
-As a starting point, simple classifiers can be used on the data, to determine the classification accuracy of the data (see Section \ref{bg_ML}). Later on, we can explore other classifiers and techniques which might produce better results.
+As a starting point, simple classifiers can be used on the data, to determine the classification accuracy of the data (section \ref{bg_ML}). Later on, we can explore other classifiers and techniques which might produce better results.
 
-Previous work on using machine learning on biological data (see Section \ref{bg_cancer}) has always been plagued with the \textit{curse of dimensionality}, where the number of biological samples is far lesser than the number of features (or dimensions) of the data (the ``$p \gg n$'' problem \cite{RefWorks:96}). In our case, we have 847 samples (individuals) with 420374 features, resulting in about 2 gigabytes of data.
+Previous work on using machine learning on biological data (section \ref{bg:cancer}) has always been plagued with the \textit{curse of dimensionality}, where the number of biological samples is far lesser than the number of features (or dimensions) of the data (the ``$p \gg n$'' problem \cite{RefWorks:96}). In our case, we have 847 samples (individuals) with 420374 features, resulting in about 2 gigabytes of data.
 
-Here, we face a potential problem of a similar nature - the data has high dimensions, but not all the genes involved in the study would directly play a part in the classification of the disorder; some genes may only contribute a little to the outcome of the classification. In this case, we would need to perform feature selection to only select features that have significant contribution to the classification outcome (see Section \ref{bg_feature_selection}).
+Here, we face a potential problem of a similar nature - the data has high dimensions, but not all the genes involved in the study would directly play a part in the classification of the disorder; some genes may only contribute a little to the outcome of the classification. In this case, we would need to perform feature selection to only select features that have significant contribution to the classification outcome (section \ref{bg:feature_selection}).
 
 Moreover, linear classifiers may not be able to capture the complexity of the data, as it is hypothesised that subsets of genes - rather than single genes - contribute to the genesis of the disorder \cite{RefWorks:10}.
 
@@ -128,7 +128,7 @@ For example, the ``\textit{Diagnostic and statistical manual of mental disorders
 \subsection{Review and comparison of machine learning classifiers} \label{bg_ML}
 Even though the project focuses on the feature selection process, the choice of the machine learning classifier is important as well. This section reviews machine learning classifiers that might be relevant for this project.
 
-\subsubsection{Decision Trees}
+\subsubsection{Decision Trees} \label{bg:ml:decisionTree}
 In our context, the task is to classify the data according to whether a sample (individual) has a psychiatric disorder - in particular, schizophrenia - or not. In other words, the classification task is binary. An intuitive solution is to use decision trees; problems with discrete output values can be solved using decision trees \cite{RefWorks:98}.
 
 A decision tree algorithm is capable of sorting the  instances - in our context, samples with different features - down the tree until the algorithm reaches a leaf node, during which a classification is given to the node. At each level of the tree, the intermediate node is split according to some attribute.
@@ -354,27 +354,29 @@ As mentioned in section \ref{intro_ML}, the data suffers a \textit{curse of dime
 
 Overall, there are several benefits associated with feature selection:
 \begin{itemize}
-  \item \textbf{Savings in computational cost.} By reducing the dimensions of our features, we can reduce the computational cost of our classification. In particular, training an SVM with a data set that has less dimensions would be faster.
+  \item \textbf{Savings in computational cost.} By reducing the dimensions of our features, we can reduce the computational cost of our algorithm, which includes the cost incurred for training a classifier, and using the classifier to perform predictions.
   \item \textbf{Interpretable results.} In contrast with feature extraction, feature selection retains the properties of the original features, instead of returning a combination of these features (see section \ref{bg:fs:extraction}). For this project, ideally, we want to be able to obtain a compact subset of features from which we can draw biological conclusions.
-  \item \textbf{Improvements in classification accuracy.} More features might, due to experimental faults, lead to more noise in our data set. Furthermore, including more features might cause our classifier to have a poorer performance \cite{RefWorks:174}.
+  \item \textbf{Improvements in classification accuracy.} More features might, due to experimental faults, lead to more noise in our data set. Having a more compact subset to train our classifier might allow us to improve the performance the classifier \cite{RefWorks:174}.
 \end{itemize}
 
 \subsubsection{Feature selection versus feature extraction} \label{bg:fs:extraction}
 
-In contrast to feature selection, feature extraction techniques, such as principal component analysis (PCA), result in a set of features that is a transformation of the original features. In other words, the original features are transformed into a space with lower dimensions. For example, PCA employs a transformation to map features to a space spanned by its principal components.
+In contrast to feature selection, feature extraction techniques, such as principal component analysis (PCA) and Linear Discriminant Analysis (LDA), result in a set of features that is a transformation of the original features. In other words, the original features are transformed into a space with lower dimensions. For example, PCA employs a transformation to map features to a space spanned by its principal components.
 
-Although feature extraction helps us by reducing the dimension of the data we have, the interpretation of the original features is lost through the transformation. This is a particularly pertinent problem to this project, as the project should strive to obtain features that are biologically relevant, and can be interpreted by an expert. Furthermore, the original features in the data might contain data that are irrelevant to the target class, or that might be redundant (more in section \ref{bg:fs:relevance}). In contrast, feature selection methods preserve the original features by selecting just the important ones. This allows us to interpret the result of applying classifiers to the reduced set of features \cite{RefWorks:142}.
+Although feature extraction helps us by reducing the dimension of the data we have, the interpretation of the original features is lost through the transformation. This is a particularly pertinent problem to this project, as the project should strive to obtain features that are biologically relevant, and can be interpreted by an expert. Furthermore, the original features in the data might contain data that are irrelevant to the target class, or that might be redundant (more in section \ref{bg:fs:relevance}). Such features should ideally be removed.
+
+In contrast, feature selection methods preserve the original features. This allows us to interpret the result of applying classifiers to the reduced set of features \cite{RefWorks:142}.
 
 \subsubsection{Classification of feature selection methods}
 
 \subsubsection{Exhaustive versus heuristic search}
 
-One obvious (but naive) way to find $S$ would be to exhaustively consider all possible subsets of the original feature space.
+One obvious (but naive) way to find $S$ would be to exhaustively consider all possible subsets of the original feature space, and select the one that gives the best classification performance.
 
 Suppose we have $M$ features. An exhaustive search that searches through the space of all possible subsets of features would iterate through $2^M$ of these subsets. Intuitively, for each feature in $M$, it can either be inside the selected subset, or not. We can prove this formally via induction.
 
 \begin{proof}
-The exhaustive search would require us to search through the space of all subsets, where for each subset (call it $S$), $|S| \in \left[ 0, M \right]$.  The trivial cases of $|S|=0$ means that all $M$ features do not contribute to the result of the classification task, and $|S|=M$ means that all $M$ features are important. Then, we want to prove that the number of subsets searched is $2^M$:
+The exhaustive search would require us to search through the space of all subsets, where for each subset (call it $S$), $|S| \in \left[ 0, M \right]$. For completeness, we include the trivial cases of $|S|=0$ (all $M$ features do not contribute to the result of the classification task) and $|S|=M$ (all $M$ features are important). Then, we want to prove that the number of subsets searched is $2^M$:
 \begin{align*}
 {{M}\choose{0}} + {{M}\choose{1}} + \dots + {{M}\choose{M}} = 2^M
 \end{align*}
@@ -406,7 +408,7 @@ where in the second line, the following results were used:
 \end{align*}
 \end{proof}
 
-Evidently, although an exhaustive search would guarantee an optimal subset, its runtime complexity would be too prohibitively high. Thus, most of the algorithms in the literature of feature selection involve some kind(s) of heuristic to guide the search for $S$. Some of examples would be discussed in the following sections.
+Evidently, although an exhaustive search would guarantee an optimal subset, its runtime complexity would be too prohibitively high. Thus, most of the algorithms in the literature of feature selection involve some kind(s) of heuristic to guide the search for $S$. Some examples would be discussed in the following sections.
 
 \subsubsection{Feature relevance and feature redundancy} \label{bg:fs:relevance}
 
@@ -420,11 +422,13 @@ Relevance and redundancy play important roles in the literature of feature selec
 
 Furthermore, there is a possibility that not all of the genes in our data set have a role to play in the classification of schizophrenia. As such, the feature selection method is necessary to select the significant features and eliminate the others. Besides, once we obtain only the relevant features, it would be less computationally expensive to train our classifier just on these features.
 
-\subsubsection{Previous work in feature selection methods} \label{bg:fs:previous}
+The best $k$ features are not the $k$ best features \cite{RefWorks:182}.
 
-As mentioned in section \ref{bg:fs:purpose}, the cost of an exhaustive search on all possible subsets of all $M$ features is exponential with $M$. Even though the exhaustive search guarantees an optimal solution, its computational cost does not scale with more features. As a result, researchers have proposed several algorithms that involve heuristics to guide the search for the optimal subset $S$.
+\subsubsection{Greedy search}
 
-The \textit{sequential forward selection} (SFS) \cite{RefWorks:177} is a wrapper method that involves a greedy search strategy. The method starts with $S=\emptyset$. For each feature $m$, we evaluate the classification error incurred by the learner from just using $m$ alone (i.e. only 1 feature). The errors are then sorted, and the feature (call it $f_1$) with the lowest error is selected. $f_1$ is then paired with each of the remaining features to form a subset, and the classification errors using just 2 features are obtained and sorted. $f_2$ is the feature where the set $S= \left\lbrace f_1, f_2 \right\rbrace$ has the lowest classification error. The process continues until we have our desired $k$ features.
+As mentioned in section \ref{bg:fs:purpose}, the cost of an exhaustive search on all possible subsets of all $M$ features is exponential with $M$. Even though the exhaustive search guarantees an optimal solution, its computational cost does not scale with more features. As a result, researchers have proposed several algorithms that involve heuristics to guide the search for the optimal subset $S$. These methods present a trade-off between optimality and computational cost.
+
+The \textit{sequential forward selection} (SFS) \cite{RefWorks:177} is a wrapper method that involves a greedy search strategy. The method starts with $S=\emptyset$. For each feature $m$, we compute an evaluation function, $J(\cdot)$, which, in this context, is the classification error incurred by the learner from just using $m$ alone (i.e. only 1 feature). The errors are then sorted, and the feature (call it $f_1$) with the lowest error is selected. $f_1$ is then paired with each of the remaining features to form a subset, and the classification errors using just 2 features are obtained and sorted. $f_2$ is the feature where the set $S= \left\lbrace f_1, f_2 \right\rbrace$ has the lowest classification error. The process continues until we have our desired $k$ features.
   
 A variant is the \textit{sequential backward selection} (SBS), which starts with all $M$ features instead and sequentially removing one feature. However, we note that SBS starts with the full set of $M$ features and works backwards. This suggests that SBS will take a longer time than SFS to give us our desired number of features $k$, especially when $k$ is a small number.
 
@@ -433,10 +437,86 @@ Another variant is the \textit{floating forward/backward search} strategy propos
 Deng \cite{deng1998omega} also proposed the \textit{Restricted Forward Selection} (RFS), which is an even greedier variant of SFS. Suppose we have a sorted list of the classification scores when each feature is considered singly. Suppose the corresponding features are $\left\lbrace f_1, f_2, \dots , f_N \right\rbrace$. $f_1$ would be selected as the first feature. Then we consider $\left\lbrace f_1, f_2 \right\rbrace, \left\lbrace f_1, f_3 \right\rbrace$ all the way to $\left\lbrace f_1, f_{M/2} \right\rbrace$. That is, we only consider $M/2$ of the sorted features. The pseudocode of RFS is listed in algorithm \ref{RFSAlgo}. RFS is performed on our data set, and is discussed is more detail in section \ref{body:rfs}.
 
 
-These methods present a trade-off between optimality and computational cost. Some notable heuristic methods include (floating) forward/backward sequential search and its variants and search that incorporates Genetic Algorithms.
+\begin{algorithm}
+\DontPrintSemicolon
+\KwIn{Data set $D$ with $M$ features.}
+\KwOut{Subset $S$ ($S \subset D$) of the $M$ features such that $|S|=k$, $k \ll M$.}
+\BlankLine
+\Begin{
+Initialise empty list $L \longleftarrow [\,]$\;
+Initialise empty list $S \longleftarrow [\,]$ \;
+\For{$i=1 \longrightarrow M$}{
+$s \longleftarrow$ CV score for $i$th feature. \;
+$L \longleftarrow L \cup \left\lbrace s \right\rbrace$ \;
+}
+$w \longleftarrow $ feature that corresponds to $\max L$. \;
+$S \longleftarrow S \cup \left\lbrace w \right\rbrace$ \;
+\BlankLine
+\For{$i=2 \longrightarrow k$}{
+$num\_iterations \longleftarrow M / i$ \;
+Initialise empty list $scores \longleftarrow [\,]$ \;
+$j \longleftarrow 0$ \;
+\While{$|scores| \leq num\_iterations$} {
+\If{$L[j] \in S$} {
+$j \longleftarrow j + 1$ \;
+\textbf{continue}
+}
+\BlankLine
+$S_j \longleftarrow S \cup \left\lbrace L[j] \right\rbrace$ \;
+$s \longleftarrow $ CV score for $S_j$. \; 
+$scores \longleftarrow scores \cup \left\lbrace s \right\rbrace$. \;
+$j \longleftarrow j + 1$ \;
+}
+$w \longleftarrow $ feature that corresponds to $\max scores$. \;
+$S \longleftarrow S \cup \left\lbrace w \right\rbrace$
+}
+}
+\caption{Restricted Forward Selection($D$, $k$) \label{RFSAlgo}}
+\end{algorithm}
 
-It is worth mentioning the work of Narendra and Keinosuke \cite{RefWorks:176}, who proposed a branch-and-bound algorithm to demonstrate that the optimal solution can still be obtained without an exhaustive search. Even though the paper showed that substantial savings were made in terms of number of subsets evaluated, the algorithm does not scale to high-dimensional data \cite{RefWorks:178} such as the data used in this project. In particular, the paper demonstrated the use of the branch-and-bound algorithm to choose 12 features from 24.
 
+It is also worth mentioning the work of Narendra and Keinosuke \cite{RefWorks:176}, who proposed a branch-and-bound algorithm to demonstrate that the optimal solution can still be obtained without an exhaustive search. Even though the paper showed that substantial savings were made in terms of number of subsets evaluated, the algorithm does not scale to high-dimensional data \cite{RefWorks:178} such as the data used in this project. For example, the paper demonstrated the use of the branch-and-bound algorithm to choose 12 features from 24.
+
+\subsubsection{Use of mutual information in feature selection}
+
+A common heuristic to quantify relevance and redundancy is mutual information (MI) \cite{RefWorks:98}. MI can be interpreted as a measure that quantifies the dependence between variables \cite{RefWorks:180} and the amount of information $X$ carries about $Y$ \cite{RefWorks:181}. 
+
+For discrete random variables $X$ and $Y$, the MI between them, $I(X, Y)$ is given by:
+\begin{align} \label{bg:fs:mi:dis}
+I(X, Y) = \sum_{x \in X} \sum_{y \in Y} p(x, y) \log_2 \left(\frac{p(x, y)}{p(x) \, p(y)} \right) 
+\end{align}
+
+For continuous variables, the sum will simply change to an integral:
+\begin{align} \label{bg:fs:mi:cont}
+I(X, Y) = \int_{x \in X} \int_{y \in Y} p(x, y) \log_2 \left( \frac{p(x, y)}{p(x) \, p(y)} \right) dy \, dx
+\end{align}
+
+For a combination of discrete and continuous random variables, we would simply use the sum or integral respectively. For example, we can calculate the MI between a target class $C$ and a continuous feature $X$ by evaluating:
+\begin{align} \label{bg:fs:mi:contDis}
+I(X, C) = \int_{x \in X} \sum_{c \in C} p(x, c) \log_2 \left( \frac{p(x, y)}{p(x) \, p(c)} \right) dx
+\end{align}
+
+For example, the \textit{minimal-redundancy maximal relevance} (mRMR) scheme \cite{RefWorks:182} makes use of MI extensively to select features. This scheme maximises relevance between a feature set $S$ and target class $c$ by maximising the MI between them. That is,
+\begin{align*}
+\max \, D(S, c) = \frac{1}{|S|} \sum_{x_i \in S} I(x_i, c)
+\end{align*}
+
+Furthermore, mRMR minimises redundancy between features in the feature set $S$ by minimising the MI between features in $S$. That is,
+\begin{align*}
+\min \, R(S) = \frac{1}{|S|^2} \sum_{x_i, x_j \in S} I(x_i, x_j)
+\end{align*}
+
+However, the main difficulty in using MI is the estimation of the joint and marginal probabilities ($p(x, y)$ and $p(x)$ or $p(y)$ respectively in equations \ref{bg:fs:mi:dis} and \ref{bg:fs:mi:cont}). For discrete or categorical variables, the estimation of the probabilities would simply be obtained from frequency counts \cite{RefWorks:183}, although the estimation would only be accurate if we have enough samples. Yet, with more classes and more states in each class, the estimation of the joint probability would become more difficult \cite{RefWorks:140}.
+
+In the case of continuous variables, the estimation of the probabilities would be even harder \cite{RefWorks:185}. We should also note that the features in the data for this project are continuous. One way to estimate the probabilities of continuous variables is by discretising the values into bins. A histogram can be created to investigate the distribution of the bins. However, we still have to determine the width of the intervals, and the widths (or the number of bins) will influence the estimates significantly \cite{RefWorks:186}.
+
+Another method to estimate the probabilities in equations \ref{bg:fs:mi:cont} and \ref{bg:fs:mi:contDis} is by using the Parzen Window method, as proposed by Kwak and Choi in \cite{RefWorks:183}. Although the work has shown that using the Parzen Window leads to better performances when combined with certain feature selection algorithms, one still has to specify certain parameters associated with the Parzen Window, such as the window function and the window width. These need to be correctly specified for the estimated densities to converge to the true density \cite{RefWorks:184}. Kwak and Choi used the Gaussian window and a specified window width. However, these choices were not explained. If time is not of the essence, one could perform a search to find the most optimal window width using different window functions.
+
+Consequently, works such as \cite{RefWorks:187} avoid the complexity of estimating MI between continuous variables by proposing other measures to quantify relevance and redundancy. As the measures used in this work will be used on our data set, more details will be discussed in section \ref{mrmmc}.
+
+\subsubsection{Genetic algorithms in feature selection}
+
+\subsubsection{Previous work in feature selection methods} \label{bg:fs:previous}
 
 Feature selection methods can be classified as \cite{RefWorks:117, RefWorks:118}:
 \begin{itemize}
@@ -515,46 +595,11 @@ This suggests that $t$ might be dependent on the dataset used. We can thus selec
 % Heuristic search.
 % Less optimal than sequential forward search, but justifiable for amount of data?
 
-The RFS algorithm is listed in Algorithm \ref{RFSAlgo}.
+The RFS algorithm is listed in Algorithm \ref{RFSAlgo} on page \pageref{RFSAlgo}.
 
-\begin{algorithm}
-\DontPrintSemicolon
-\KwIn{Data set with $M$ features. $k$ features would be extracted from the data.}
-\KwOut{Subset $S$ of the $M$ features such that $|S|=k$.}
-\BlankLine
-\Begin{
-Initialise empty list $L \longleftarrow [\,]$\;
-Initialise empty list $S \longleftarrow [\,]$ \;
-\For{$i=1 \longrightarrow M$}{
-$s \longleftarrow$ CV score for $i$th feature. \;
-$L \longleftarrow L \cup \left\lbrace s \right\rbrace$ \;
-}
-$w \longleftarrow $ feature that corresponds to $\max L$. \;
-$S \longleftarrow S \cup \left\lbrace w \right\rbrace$ \;
-\BlankLine
-\For{$i=2 \longrightarrow k$}{
-$num\_iterations \longleftarrow M / i$ \;
-Initialise empty list $scores \longleftarrow [\,]$ \;
-$j \longleftarrow 0$ \;
-\While{$|scores| \leq num\_iterations$} {
-\If{$L[j] \in S$} {
-$j \longleftarrow j + 1$ \;
-\textbf{continue}
-}
-\BlankLine
-$S_j \longleftarrow S \cup \left\lbrace L[j] \right\rbrace$ \;
-$s \longleftarrow $ CV score for $S_j$. \; 
-$scores \longleftarrow scores \cup \left\lbrace s \right\rbrace$. \;
-$j \longleftarrow j + 1$ \;
-}
-$w \longleftarrow $ feature that corresponds to $\max scores$. \;
-$S \longleftarrow S \cup \left\lbrace w \right\rbrace$
-}
-}
-\caption{Restricted Forward Selection($k$) \label{RFSAlgo}}
-\end{algorithm}
 
-\subsection{Maximum relevance minimum multi-collinearity (MRmMC)}
+
+\subsection{Maximum relevance minimum multi-collinearity (MRmMC)} \label{mrmmc}
 
 % Use of conditional expectation to measure relevance.
 % Use of coefficient of determination to measure redundancy.
