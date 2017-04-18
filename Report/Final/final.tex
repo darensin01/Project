@@ -18,8 +18,11 @@
 \usepackage{url}
 \usepackage{amsthm}
 \usepackage[ruled,vlined]{algorithm2e}
+\usepackage{xfrac}
+\usepackage{multirow}
 
 \def\vec{\boldsymbol}
+\def\var{\text{var}}
 \DeclareMathOperator*{\argmax}{arg\,max}
 \newcommand{\secref}[1]{\S\ref{#1}}
 
@@ -126,7 +129,7 @@ However, what is fundamentally different about studies on psychiatric disorders 
 For example, the ``\textit{Diagnostic and statistical manual of mental disorders}'' discusses culture-related diagnostic issues of schizophrenia: ``the assessment of disorganized speech may be made difficult by linguistic variation in narrative styles across cultures''. Furthermore, ``ideas that appear to be delusional in one culture (e.g. witchcraft) may be commonly held in another'' \cite{RefWorks:114}. These highlight how diagnosing a psychiatric disorder like schizophrenia is not at all easy.
 
 \subsection{Review and comparison of machine learning classifiers} \label{bg_ML}
-Even though the project focuses on the feature selection process, the choice of the machine learning classifier is important as well. This section reviews machine learning classifiers that might be relevant for this project.
+Even though this project focuses on the feature selection process, the choice of the machine learning classifier is relevant as well. This section reviews machine learning classifiers and how some might not be useful for the purposes of this project.
 
 \subsubsection{Decision Trees} \label{bg:ml:decisionTree}
 In our context, the task is to classify the data according to whether a sample (individual) has a psychiatric disorder - in particular, schizophrenia - or not. In other words, the classification task is binary. An intuitive solution is to use decision trees; problems with discrete output values can be solved using decision trees \cite{RefWorks:98}.
@@ -149,7 +152,7 @@ We then classify the samples in the node according to the attribute with the hig
 
 Although the decision tree algorithm is said to be robust to errors \cite{RefWorks:98} and the resulting decision tree can be easily interpreted, it might be difficult to classify samples according to features that are highly correlated. This also happens to be a potential characteristic of our dataset, and we would expect some of the features to be correlated.
 
-Furthermore, the features of our dataset are vectors of real numbers. We would thus need to discretise the range of real numbers into intervals. This would then give rise to another problem of defining a suitable interval for these values.
+Furthermore, the features of our dataset are vectors of real numbers. We would thus need to discretise the range of real numbers into intervals. This would then give rise to another problem of defining a suitable interval for these values. This is similar to the problem of using mutual information in feature selection, which will be discussed in section \ref{bg:fs:mi}.
 
 \subsubsection{Random forest}
 The random forest method \cite{RefWorks:101}, a form of ``ensemble learning'', is an extension of the decision tree algorithm described above, and it has been used in areas such as multi-class object detection in images \cite{RefWorks:100}. Overall, a random forest algorithm can be outlined as such:
@@ -180,7 +183,7 @@ Besides, we can also utilise the elastic net library in \texttt{scikit-learn} im
 
 
 \subsection{Support vector machines}
-This section explains and discusses Support Vector Machines\footnote{Most of the Mathematics here is with reference to notes from the Department of Computing, course CO496 - Mathematics for Inference and Machine Learning.}.
+This section explains and discusses Support Vector Machines\footnote{Most of the Mathematics here is with reference to course notes from the Department of Computing, course CO496 - Mathematics for Inference and Machine Learning.}.
 
 Consider our dataset that comprises $m$ features and $n$ samples. Then, the data can be written as a set: $\left\lbrace (\boldsymbol{x}_1, y_1), \dots, (\boldsymbol{x}_n, y_n) \right\rbrace$, where $\boldsymbol{x}_i \in \mathbb{R}^m$ is an $m$ dimensional vector that corresponds to the $i$-th sample. Moreover, $y_i = \pm 1$ is the label of the $i$-th sample: $y_i = 1$ if the classification is positive (e.g. sample does not have schizophrenia) and $y_i = -1$ otherwise, for $i = 1, \dots , n$.
 
@@ -309,7 +312,7 @@ K_y = [y_i \, y_j \, \phi(\vec{x}_i)^\top \phi(\vec{x}_j)]
 
 We then need to solve the quadratic optimisation problem in (\ref{bg:svm:quadprob}).
 
-\subsubsection{Model selection}
+\subsubsection{Model selection} \label{bg:ml:svm:model}
 There are 4 widely used kernels:
 \begin{itemize}
 \item Linear kernel: $K(\vec{x}_i, \vec{x}_j) = \vec{x}_i^\top \vec{x}_j$
@@ -334,12 +337,10 @@ Although the RBF kernel is more commonly chosen than the rest of the kernels lis
 
 Nevertheless, we should view this conclusion with scepticism and still proceed to investigate the better kernel method (between linear and RBF) by using cross-validation, as the conclusion made in \cite{RefWorks:128} might be data-dependent.
 
-\subsubsection{Libraries available for SVM}
-Chang and Lin \cite{libsvm} developed LIBSVM, a library for SVMs at the National Taiwan University. LIBSVM utilises the Sequential Minimal Optimisation (SMO) algorithm to solve the quadratic optimisation problem in (\ref{bg:svm:quadprob}). SMO allows the problem to be solved analytically \cite{RefWorks:126}. Furthermore, the library can be interfaced to other programming languages like Java, MATLAB and Python.
+\subsubsection{Implementing classification with SVM}
+Chang and Lin \cite{libsvm} developed LIBSVM, a library for SVMs. LIBSVM utilises the Sequential Minimal Optimisation (SMO) algorithm to solve the quadratic optimisation problem in (\ref{bg:svm:quadprob}). SMO allows the problem to be solved analytically \cite{RefWorks:126}. Furthermore, the library can be interfaced to other programming languages like Java, MATLAB and Python.
 
 The Python library \texttt{scikit-learn} also allows SVMs to be trained for classification purposes (\texttt{SVC}) and allows various kernels to be used. Furthermore, the library uses LIBSVM internally to handle computations.
-
-We can try both libraries to see if either one outperforms the other, in terms of accuracy and computation time.
 
 \subsection{Feature selection} \label{bg:feature_selection}
 
@@ -363,7 +364,7 @@ Overall, there are several benefits associated with feature selection:
 
 In contrast to feature selection, feature extraction techniques, such as principal component analysis (PCA) and Linear Discriminant Analysis (LDA), result in a set of features that is a transformation of the original features. In other words, the original features are transformed into a space with lower dimensions. For example, PCA employs a transformation to map features to a space spanned by its principal components.
 
-Although feature extraction helps us by reducing the dimension of the data we have, the interpretation of the original features is lost through the transformation. This is a particularly pertinent problem to this project, as the project should strive to obtain features that are biologically relevant, and can be interpreted by an expert. Furthermore, the original features in the data might contain data that are irrelevant to the target class, or that might be redundant (more in section \ref{bg:fs:relevance}). Such features should ideally be removed.
+Although feature extraction helps us by reducing the dimension of the data we have, the interpretation of the original features is lost through the transformation. This is a particularly pertinent problem to this project, as the project should strive to obtain features that are biologically relevant, and can be interpreted by an expert \cite{RefWorks:192}. Furthermore, the original features in the data might contain data that are irrelevant to the target class, or that might be redundant (more in section \ref{bg:fs:relevance}). Such features should ideally be removed.
 
 In contrast, feature selection methods preserve the original features. This allows us to interpret the result of applying classifiers to the reduced set of features \cite{RefWorks:142}.
 
@@ -373,7 +374,7 @@ In contrast, feature selection methods preserve the original features. This allo
 
 One obvious (but naive) way to find $S$ would be to exhaustively consider all possible subsets of the original feature space, and select the one that gives the best classification performance.
 
-Suppose we have $M$ features. An exhaustive search that searches through the space of all possible subsets of features would iterate through $2^M$ of these subsets. Intuitively, for each feature in $M$, it can either be inside the selected subset, or not. We can prove this formally via induction.
+Suppose we have $M$ features. An exhaustive search that searches through the space of all possible subsets of features would iterate through $2^M$ of these subsets \cite{RefWorks:182}. Intuitively, for each feature in $M$, it can either be inside the selected subset, or not. We can prove this formally via induction.
 
 \begin{proof}
 The exhaustive search would require us to search through the space of all subsets, where for each subset (call it $S$), $|S| \in \left[ 0, M \right]$. For completeness, we include the trivial cases of $|S|=0$ (all $M$ features do not contribute to the result of the classification task) and $|S|=M$ (all $M$ features are important). Then, we want to prove that the number of subsets searched is $2^M$:
@@ -408,7 +409,7 @@ where in the second line, the following results were used:
 \end{align*}
 \end{proof}
 
-Evidently, although an exhaustive search would guarantee an optimal subset, its runtime complexity would be too prohibitively high. Thus, most of the algorithms in the literature of feature selection involve some kind(s) of heuristic to guide the search for $S$. Some examples would be discussed in the following sections.
+Evidently, although an exhaustive search would guarantee an optimal subset, its runtime complexity would be prohibitively high. As Sima and Dougherty put it, \textit{``A major impediment to feature selection is the combinatorial nature of the problem''} \cite{RefWorks:191}. Thus, most of the algorithms in the literature of feature selection involve some kind(s) of heuristic to guide the search for $S$. Some examples would be discussed in the following sections.
 
 \subsubsection{Feature relevance and feature redundancy} \label{bg:fs:relevance}
 
@@ -424,17 +425,17 @@ Furthermore, there is a possibility that not all of the genes in our data set ha
 
 The best $k$ features are not the $k$ best features \cite{RefWorks:182}.
 
-\subsubsection{Greedy search}
+\subsubsection{Greedy search} \label{bg:fs:greedy}
 
-As mentioned in section \ref{bg:fs:purpose}, the cost of an exhaustive search on all possible subsets of all $M$ features is exponential with $M$. Even though the exhaustive search guarantees an optimal solution, its computational cost does not scale with more features. As a result, researchers have proposed several algorithms that involve heuristics to guide the search for the optimal subset $S$. These methods present a trade-off between optimality and computational cost.
+As mentioned in section \ref{bg:fs:purpose}, the cost of an exhaustive search on all possible subsets of all $M$ features is exponential with $M$. Even though the exhaustive search guarantees an optimal solution, its computational cost does not scale with more features. As a result, researchers have proposed several algorithms that involve heuristics to guide the search for the optimal subset $S$. Although none of the methods which use heuristics can guarantee an optimal solution \cite{RefWorks:182}, these methods improve the computational cost of optimal solutions, which is very beneficial in the context of high dimensional data.
 
-The \textit{sequential forward selection} (SFS) \cite{RefWorks:177} is a wrapper method that involves a greedy search strategy. The method starts with $S=\emptyset$. For each feature $m$, we compute an evaluation function, $J(\cdot)$, which, in this context, is the classification error incurred by the learner from just using $m$ alone (i.e. only 1 feature). The errors are then sorted, and the feature (call it $f_1$) with the lowest error is selected. $f_1$ is then paired with each of the remaining features to form a subset, and the classification errors using just 2 features are obtained and sorted. $f_2$ is the feature where the set $S= \left\lbrace f_1, f_2 \right\rbrace$ has the lowest classification error. The process continues until we have our desired $k$ features.
+For example, the \textit{sequential forward selection} (SFS) \cite{RefWorks:177} is a wrapper method that involves a greedy search strategy. The method starts with $S=\emptyset$. For each feature $m$, we compute an evaluation function, $J(\cdot)$, which, in this context, is the classification score of the learner from just using $m$ alone (i.e. only 1 feature). The scores are then sorted, and the feature (call it $f_1$) with the highest score is selected. $f_1$ is then paired sequentially with each of the remaining features to form a subset, and classification scores using just 2 features are obtained and sorted. Let $f_2$ be the feature where the set $S= \left\lbrace f_1, f_2 \right\rbrace$ has the highest classification score. The process continues until we have our desired $k$ features.
   
-A variant is the \textit{sequential backward selection} (SBS), which starts with all $M$ features instead and sequentially removing one feature. However, we note that SBS starts with the full set of $M$ features and works backwards. This suggests that SBS will take a longer time than SFS to give us our desired number of features $k$, especially when $k$ is a small number.
+A variant is the \textit{sequential backward selection} (SBS), which starts with all $M$ features instead and SBS sequentially removes one feature. However, we note that SBS starts with the full set of $M$ features and works backwards. This suggests that SBS will take a longer time than SFS to give us our desired number of features $k$, especially when $k$ is a small number \cite{RefWorks:190}.
 
 Another variant is the \textit{floating forward/backward search} strategy proposed by Pudil \cite{RefWorks:178}. Pudil noted that both SFS and SBS suffered from a ``nesting effect'', where previously selected or discarded features cannot be considered again in SFS and SBS respectively. This floating variant tackles this problem.
 
-Deng \cite{deng1998omega} also proposed the \textit{Restricted Forward Selection} (RFS), which is an even greedier variant of SFS. Suppose we have a sorted list of the classification scores when each feature is considered singly. Suppose the corresponding features are $\left\lbrace f_1, f_2, \dots , f_N \right\rbrace$. $f_1$ would be selected as the first feature. Then we consider $\left\lbrace f_1, f_2 \right\rbrace, \left\lbrace f_1, f_3 \right\rbrace$ all the way to $\left\lbrace f_1, f_{M/2} \right\rbrace$. That is, we only consider $M/2$ of the sorted features. The pseudocode of RFS is listed in algorithm \ref{RFSAlgo}. RFS is performed on our data set, and is discussed is more detail in section \ref{body:rfs}.
+Lastly, Deng \cite{deng1998omega} proposed the \textit{Restricted Forward Selection} (RFS), which is an even greedier variant of SFS. Suppose we have a sorted list of the classification scores when each feature is considered singly. Suppose the corresponding features are $\left\lbrace f_1, f_2, \dots , f_N \right\rbrace$. That is, $J(f_1) > J(f_2) > \dots > J(f_N)$. $f_1$ would be selected as the first feature. Then we consider $\left\lbrace f_1, f_2 \right\rbrace, \left\lbrace f_1, f_3 \right\rbrace$ all the way to $\left\lbrace f_1, f_{M/2} \right\rbrace$. That is, we only consider $M/2$ of the sorted features. The fact that RFS considers only part of the sorted features makes it a greedy variant of SFS. The pseudocode of RFS is listed in algorithm \ref{RFSAlgo}. RFS is performed on our data set, and will be discussed is more detail in section \ref{body:rfs}.
 
 
 \begin{algorithm}
@@ -474,10 +475,10 @@ $S \longleftarrow S \cup \left\lbrace w \right\rbrace$
 \caption{Restricted Forward Selection($D$, $k$) \label{RFSAlgo}}
 \end{algorithm}
 
+\subsubsection{Optimal search by branch-and-bound}
+It is also worth mentioning the work of Narendra and Keinosuke \cite{RefWorks:176}, who proposed a branch-and-bound algorithm to demonstrate that an optimal solution can still be obtained without an exhaustive search. Even though the paper showed that substantial savings were made in terms of number of subsets evaluated, the algorithm does not scale to high-dimensional data \cite{RefWorks:178} due to its exponential time complexity \cite{RefWorks:190, RefWorks:189}. For example, the paper demonstrated the use of the branch-and-bound algorithm to choose only 12 features from 24.
 
-It is also worth mentioning the work of Narendra and Keinosuke \cite{RefWorks:176}, who proposed a branch-and-bound algorithm to demonstrate that the optimal solution can still be obtained without an exhaustive search. Even though the paper showed that substantial savings were made in terms of number of subsets evaluated, the algorithm does not scale to high-dimensional data \cite{RefWorks:178} such as the data used in this project. For example, the paper demonstrated the use of the branch-and-bound algorithm to choose 12 features from 24.
-
-\subsubsection{Use of mutual information in feature selection}
+\subsubsection{Use of mutual information in feature selection} \label{bg:fs:mi}
 
 A common heuristic to quantify relevance and redundancy is mutual information (MI) \cite{RefWorks:98}. MI can be interpreted as a measure that quantifies the dependence between variables \cite{RefWorks:180} and the amount of information $X$ carries about $Y$ \cite{RefWorks:181}. 
 
@@ -506,11 +507,11 @@ Furthermore, mRMR minimises redundancy between features in the feature set $S$ b
 \min \, R(S) = \frac{1}{|S|^2} \sum_{x_i, x_j \in S} I(x_i, x_j)
 \end{align*}
 
-However, the main difficulty in using MI is the estimation of the joint and marginal probabilities ($p(x, y)$ and $p(x)$ or $p(y)$ respectively in equations \ref{bg:fs:mi:dis} and \ref{bg:fs:mi:cont}). For discrete or categorical variables, the estimation of the probabilities would simply be obtained from frequency counts \cite{RefWorks:183}, although the estimation would only be accurate if we have enough samples. Yet, with more classes and more states in each class, the estimation of the joint probability would become more difficult \cite{RefWorks:140}.
+However, the main difficulty in using MI is the estimation of the joint and marginal probabilities ($p(x, y)$ and $p(x)$ or $p(y)$ respectively in equations \ref{bg:fs:mi:dis} and \ref{bg:fs:mi:cont}, partly due to a small sample size \cite{RefWorks:182}. For discrete or categorical variables, the estimation of the probabilities would simply be obtained from frequency counts \cite{RefWorks:183}, although the estimation would only be accurate if we have enough samples. Yet, with more classes and more states in each class, the estimation of the joint probability would become more difficult \cite{RefWorks:140}.
 
-In the case of continuous variables, the estimation of the probabilities would be even harder \cite{RefWorks:185}. We should also note that the features in the data for this project are continuous. One way to estimate the probabilities of continuous variables is by discretising the values into bins. A histogram can be created to investigate the distribution of the bins. However, we still have to determine the width of the intervals, and the widths (or the number of bins) will influence the estimates significantly \cite{RefWorks:186}.
+In the case of continuous variables, the computation of MI would be even harder \cite{RefWorks:185}, as we would need to compute the integral of the continuous probabilities \cite{RefWorks:192}. We should also note that the features in the data for this project are continuous. One way to estimate the probabilities of continuous variables is by discretising the values into \textit{bins}. A histogram can be created to investigate the distribution of the bins. However, we will have to determine the width of the intervals, and the widths (or the number of bins) will influence the estimates significantly \cite{RefWorks:186}.
 
-Another method to estimate the probabilities in equations \ref{bg:fs:mi:cont} and \ref{bg:fs:mi:contDis} is by using the Parzen Window method, as proposed by Kwak and Choi in \cite{RefWorks:183}. Although the work has shown that using the Parzen Window leads to better performances when combined with certain feature selection algorithms, one still has to specify certain parameters associated with the Parzen Window, such as the window function and the window width. These need to be correctly specified for the estimated densities to converge to the true density \cite{RefWorks:184}. Kwak and Choi used the Gaussian window and a specified window width. However, these choices were not explained. If time is not of the essence, one could perform a search to find the most optimal window width using different window functions.
+Another method to estimate the probabilities in equations \ref{bg:fs:mi:cont} and \ref{bg:fs:mi:contDis} is by using the \textit{Parzen Window} method, as proposed by Kwak and Choi in \cite{RefWorks:183}. Although the work has shown that using the Parzen Window leads to better performances when combined with certain feature selection algorithms, one still has to specify certain parameters associated with the Parzen Window, such as the window function and the window width. These need to be correctly specified for the estimated densities to converge to the true density \cite{RefWorks:184}. Kwak and Choi used the Gaussian window with a specified window width. However, these choices were not explained. They have also made certain assumptions about the covariance matrix of the variables concerned, but these assumptions might not hold for all types of data sets. Nevertheless, if time is not of the essence, one could perform a search to find the most optimal window width using different window functions.
 
 Consequently, works such as \cite{RefWorks:187} avoid the complexity of estimating MI between continuous variables by proposing other measures to quantify relevance and redundancy. As the measures used in this work will be used on our data set, more details will be discussed in section \ref{mrmmc}.
 
@@ -582,10 +583,24 @@ This suggests that $t$ might be dependent on the dataset used. We can thus selec
 \subsection{Problems faced with raw data}
 % Trouble opening the file on basic programs like Microsoft Excel --> pandas and HDFStore used to mitigate.
 
+\subsection{Using SVM's}
+
+For all numerical experiments involving the different methods described below, the SVM will be used should there be a need for a classifier. For example, if the method used is a wrapper method, the cross validation error of fitting an SVM would be used to evaluate the algorithm. In contrast, in a filter method, the SVM would not come into play.
+
+The SVM is fitted using the \textit{scikit-learn} Python software \cite{scikit-learn}. Calling the \texttt{SVC()} method would create a classifier based on libsvm \cite{libsvm} with default parameters, such as the default Radial Basis Function (RBF) kernel, and the error parameter $C=1.0$ (see section \ref{bg:ml:svm:model}). However, a practical guide by Hsu et. al in \cite{RefWorks:128} explains that when the number of features is much larger than the number of samples, using a linear kernel would suffice; in other words, we might not need to map our data into higher dimensions.
+
+This hypothesis was tested on our data set. Indeed, using the RBF kernel with all the features, the cross validation score obtained was 0.834644, while with the linear kernel, the score was 0.929160. The cross validation scores can be obtained via the method \texttt{sklearn.model\_selection.cross\_val\_score}. The number of folds performed performed is 5. These settings will be used throughout the experiments in this project.
+
+Furthermore, it is not sufficient to simply assume the default penalty parameter $C=1.0$. Instead, as Hsu et. al suggested, performing a grid search on $C$ would allow us to find the optimal $C$. However, due to time constraints, the following experiments would stick to the default value of $C$. Moreover, this proejct focuses on the feature selection algorithms, not the parameters of the SVM.
+
 \subsection{Data preprocessing}
 % Shuffling the data (random_state) + rationale
 % Normalise data before training on SVM classifier.
 % Store shuffled data in data store.
+
+Hsu et. al also described the importance of scaling our data before fitting an SVM on the data. In particular, scaling the data would prevent features with large values from dominating those with smaller values. Restricting the values of features such that each feature has zero mean and unit variance is recommended when using the \texttt{SVC()} package. This was done with the \texttt{sklearn.preprocessing} package in \textit{scikit-learn}.
+
+Furthermore, as the raw data was sorted based on the classification (target label) of each sample, it is sensible to shuffle the data such that the target labels would not be in a particular order. The cross validation method also partitions the data set into folds, and the process of fitting a classifier on a fold would be affected if all the target labels are the same. The shuffling was done using the \texttt{sklearn.utils.shuffle} method. The method also allows us to set the reproducibility of the shuffling. Furthermore, once the entire data set and labels are shuffled, these are stored in the DataStore, and retrieved if needed.
 
 \section{Description of methods used}
 
@@ -595,19 +610,279 @@ This suggests that $t$ might be dependent on the dataset used. We can thus selec
 % Heuristic search.
 % Less optimal than sequential forward search, but justifiable for amount of data?
 
-The RFS algorithm is listed in Algorithm \ref{RFSAlgo} on page \pageref{RFSAlgo}.
+The pseudocode of the RFS algorithm is listed in algorithm \ref{RFSAlgo} on page \pageref{RFSAlgo}. THE RFS is a greedy heuristic search that searches through part of the space of features that are the most promising; that is, it only considers features that give the best cross validation results.
 
+Suppose there are $M$ features in total. Firstly, RFS iterates through each feature and records the cross validation result by fitting an SVM with just one feature. A list is used to keep track of these scores. It is then sorted. The feature with the best cross validation result is selected as the first feature (call it $f_1$). Then, in the second iteration, RFS iterates through this sorted list and pairs each remaining feature with $f_1$ to form a pair, and an SVM is fitted using this pair of features. RFS then continues down this list until $M/2$ features are formed. In the third round, RFS will iterate through $M/3$ of these features and so on.
+
+While the sequential forward search (SFS - section \ref{bg:fs:greedy}) incrementally selects the best feature to include in the existing set of features $S$ by considering \textit{all} remaining features that are not in $S$, RFS only considers a part of these remaining features. The features that RFS considers in each iteration are those that produce the best cross validation results individually.
+
+\subsubsection{Runtime analysis}
+In the first ``round'' of the algorithm, all $M$ features are evaluated. In the second ``round'', $M/2$ features are evaluated. Suppose this continues for $2^n$ rounds.
+
+Then, we can calculate the number of evaluations the algorithm performs:
+\begin{align*}
+M+\frac{M}{2}+\frac{M}{3}+\dots+\frac{M}{2^n} = M\left[ 1+\frac{1}{2}+\dots+\frac{1}{2^n} \right]=M \sum_{j=1}^{2^n} \frac{1}{j}
+\end{align*}
+
+It is a well-known result that the series $\sum_{i=1}^{\infty} \sfrac{1}{i}$ diverges. Yet, we can attempt to obtain an upper bound of the sum above. We can split the sum above into $n$ groups, where the number of elements in the $p$-th group is $2^{p-1}$.
+
+\begin{align*}
+\sum_{j=1}^{2^n} \frac{1}{j}
+&= 1 + \underbrace{\left[ \frac{1}{2} + \frac{1}{3} \right]}_{\text{Group 2}} + \underbrace{\left[ \frac{1}{4} + \frac{1}{5} + \frac{1}{6} + \frac{1}{7} \right]}_{\text{Group 3}} + \dots + \underbrace{\left[ \frac{1}{2^{n-1}} + \frac{1}{2^{n-1}+1} \dots + \frac{1}{2^{n}-1} \right]}_{\text{Group $n$}} + \frac{1}{2^n} \\
+&< 1 + \left[ \frac{1}{2} + \frac{1}{2} \right] + \left[ \frac{1}{4} + \frac{1}{4} + \frac{1}{4} + \frac{1}{4} \right] + \dots + \left[ \frac{1}{2^{n-1}} + \dots + \frac{1}{2^{n-1}} \right] + \frac{1}{2^n} \\
+&= 1+1+1+ \dots + 1 + \frac{1}{2^n} \\
+&= n + \frac{1}{2^n}
+\end{align*}
+
+Now, let $k=2^n$, so $n=\log k$ (the logarithm here implicitly has base 2).
+\begin{align*}
+\sum_{j=1}^k \frac{1}{j} < \log k+ \frac{1}{k} < \log k
+\end{align*}
+
+Thus, the total number of evaluations made by RFS is
+\begin{align*}
+M \sum_{j=1}^k \frac{1}{j} < M \log k
+\end{align*}
+where $k$ in this context is the number of features that we want to retain from the full feature set. So, the RFS algorithm is executed in $O(M\log k)$ (ignoring the complexity of the SVM classification).
+
+In contrast, the SFS algorithm iterates through the whole feature set in each ``round''. So, its complexity would be $O(Mk)$.
+
+It is evident that since RFS is a greedier variant (it iterates only a fraction of the features each time) of SFS, the solution returned by RFS would most likely be less optimal than that by SFS. However, we need to find a balance between computational complexity and optimality of our solution. As $M$ is large in this case, the time complexity of the RFS would be helpful in selecting $k$ features within a manageable amount of time, although we have to be aware that the optimality of RFS is not guaranteed.
 
 
 \subsection{Maximum relevance minimum multi-collinearity (MRmMC)} \label{mrmmc}
 
+\subsubsection{Relevance}
 % Use of conditional expectation to measure relevance.
 % Use of coefficient of determination to measure redundancy.
 % Coefficient of determination
 
-\begin{definition}[Test]
+MRmMC uses a correlation coefficient, first used in \cite{RefWorks:188}, to quantify the relevance of each feature to the target class. This correlation coefficient is:
+\begin{align} \label{mrmmc:eq:relevance}
+r_{qn}(X, Y) = \left( 1 - \frac{E[\var(X|Y)]}{\var(X)} \right)^{\sfrac{1}{2}}
+\end{align}
+
+
+To understand the rationale behind this measure, we will need to lay out several definitions and properties of conditional probabilities:
+
+%\theoremstyle{definition}
+\newtheorem{mydef}{Definition}[subsubsection]
+
+\begin{mydef}[Marginal expectation]
+\label{mrmmc:def:margex}
+The marginal expectation of a discrete random variable $X$, in terms of its conditional expectation given another discrete random variable $Y$ is:
+\begin{align*}
+E[X] = \sum_{y \in Y} P(Y=y) E_X[X \, | \, Y=y]
+\end{align*}
+where $E_X$ denotes the expectation with respect to $X$. That is,
+\begin{align*}
+E_X[X \, | \,Y=y] = \sum_{x\in X} x \, P(X=x \, | \, Y=y)
+\end{align*}
+\end{mydef}
+
+\begin{mydef}[Marginal variance]
+\label{mrmmc:def:margvar}
+The marginal variance of $X$ is:
+\begin{align*}
+\var(X) = E[X^2] - \left( E[X] \right) ^2
+\end{align*}
+\end{mydef}
+
+\begin{mydef}[Conditional variance]
+The conditional variance of $X$, given $Y$ is:
+\begin{align*}
+\var(X \, | \, Y) = E[X^2 \, | \, Y] - \left( E[X \, | \, Y] \right)^2
+\end{align*}
+\end{mydef}
+
+We also note that the conditional variance is a random variable with respect to $Y$, and so we can find the expectation of the quantity. That is,
+\begin{align*}
+E_Y [ \var(X \, | \, Y) ] = E_YE_X[X^2 \, | \, Y] - E_Y [ E_X(X\,|\,Y) ] ^2
+\end{align*}
+
+By definition of the marginal expectation (equation \ref{mrmmc:def:margex}), we can show the following:
+\begin{align}
+E_YE_X[X \, | \, Y] &= \sum_{y \in Y} P(Y=y) \, E_X[X \, | \, Y=y] = E[X] \label{mrmmc:eq:exp1} \\
+\Rightarrow E_Y [ \var(X \, | \, Y) ] &= E[X^2] - E_Y [ E_X(X\,|\,Y) ] ^2 \label{mrmmc:eq:exp2}
+\end{align}
+
+Now, we consider the variance of the conditional expectation with respect to $Y$:
+\begin{align}
+\var_Y (E[X \, | \, Y]) &= E_Y \left( E_X[X \, | \, Y]\right)^2 - \left( E_YE_X[X \, | \, Y] \right)^2 \\
+&= E_Y \left( E_X[X \, | \, Y]\right)^2 - \left( E[X] \right)^2 \label{mrmmc:eq:exp3}
+\end{align}
+where the result from equation \ref{mrmmc:eq:exp1} is used. Then rearranging equation \ref{mrmmc:eq:exp3} and combining with equation \ref{mrmmc:eq:exp2}, we get:
+\begin{align*}
+E_Y [ \var(X \, | \, Y) ] &= E[X^2] - \var_Y (E[X \, | \, Y]) - \left( E[X] \right)^2 \\
+&= \var_X(X) - \var_Y (E[X \, | \, Y]) \\
+\Rightarrow \var_X(X) &= \var_Y (E[X \, | \, Y]) + E_Y [ \var(X \, | \, Y) ]
+\end{align*}
+where we used the definition of marginal variance in definition \ref{mrmmc:def:margvar}.
+
+Thus, as discussed in \cite{RefWorks:187}, the variance of the random variable $X$ is made of two parts: 
+\begin{itemize}
+  \item $\var_Y (E[X \, | \, Y])$ describes the variability between the targets (or outcomes).
+  \item $E_Y [ \var(X \, | \, Y) ]$ describes the average variability among the targets.
+\end{itemize}
+
+The latter quantity is used in measuring the relevance of a feature and a target class in MRmMC in equation \ref{mrmmc:eq:relevance}, where the expected variability of $X$ is compared to its variance.
+
+A property of the correlation coefficient,
+\begin{align*}
+r_{qn}(X, Y) = \left( 1 - \frac{E_Y[\var_X(X|Y)]}{\var(X)} \right)^{\sfrac{1}{2}}
+\end{align*}
+
+is that $0 \leq r_{qn}(X, Y) \leq 1$. First, we define independence between two variables:
+
+\begin{mydef}
+Two random variables $X$ and $Y$ are independent iff
+\begin{align}
+P(X, Y) = P(X) \, P(Y) \label{mrmmc:eq:indep}
+\end{align}
+where $P(X, Y)$ denotes the joint probability of $X$ and $Y$.
+\end{mydef}
+
+Looking at the terms in $r_{qn}$,
+\begin{align*}
+E_Y[\var_X(X|Y)]
+&= E_Y [E_X(X^2|Y)-\left( E_X(X|Y) \right)^2 ] \\
+&= E_YE_X(X^2|Y) - E_Y\left( E_X(X|Y) \right)^2 \\
+&= E[X^2] - \sum_{y\in Y} P(Y=y) \left[ E_X(X|Y=y) \right]^2 \quad \text{(by eqn \ref{mrmmc:eq:exp1})} \\
+&= E[X^2] - \sum_{y\in Y} P(Y=y) \left[ \sum_{x \in X} x \, P(X=x|Y=y) \right]^2 \\
+&= E[X^2] - \sum_{y\in Y} P(Y=y) \left[ \sum_{x \in X} x \, \frac{P(X=x, Y=y)}{P(Y=y)} \right]^2
+\end{align*}
+
+Assuming $X$ and $Y$ are independent, we can apply equation \ref{mrmmc:eq:indep}:
+\begin{align*}
+E_Y[\var_X(X|Y)]
+&= E[X^2] - \sum_{y\in Y} P(Y=y) \left[ \sum_{x \in X} x \, \frac{P(X=x) \, P(Y=y)}{P(Y=y)} \right]^2 \\
+&= E[X^2] - \sum_{y\in Y} P(Y=y) \left[ \sum_{x \in X} x \, P(X=x) \right]^2 \\
+&= E[X^2] - \sum_{y\in Y} P(Y=y) \left[ E(X) \right]^2 \\
+&= E[X^2] - \left[ E(X) \right]^2 \, \underbrace{\sum_{y\in Y} P(Y=y)}_{=1} \\
+&= \var(X)
+\end{align*}
+
+So, $r_{qn}(X, Y)$ attains its lower bound (i.e. $r_{qn}(X, Y)=0$) when $X$ and $Y$ are independent. On the other hand, $r_{qn}(X, Y)$ approaches 1 when $X$ and $Y$ are strongly correlated.
+
+As such, MRmMC aims to find features in the feature set $F$, that are strongly relevant (correlated) to the target class, by \textit{maximising} $r_{qn}$ between each feature, $f$, and the target class labels, $c$. That is,
+\begin{align*}
+\argmax_{f \in F} r_{qn}(f, c)
+\end{align*}
+
+\subsubsection{Computing relevance}
+Now, we need to investigate how the terms in $r_{qn}$ can be computed using the raw data. From equation \ref{mrmmc:eq:exp2},
+\begin{align*}
+E_Y [ \var(X \, | \, Y) ]
+&= E[X^2] - E_Y [ E_X(X\,|\,Y) ] ^2 \\
+&= E[X^2] - \sum_{y \in Y} P(Y=y) \left[ E_X(X|Y=y) \right]^2 
+\end{align*}
+
+For our data in particular, where binary target classes are used (i.e. $Y= \left\lbrace 0,1 \right\rbrace$), we can expand the above:
+\begin{align*}
+E_Y [ \var(X \, | \, Y) ]
+= E[X^2] &- P(Y=1) \left[ E_X(X|Y=1) \right]^2 - P(Y=0) \left[ E_X(X|Y=0) \right]^2 
+\end{align*}
+
+The expectations above and the variance term in the denominator of $r_{qn}$ can be computed using unbiased estimators of expectation and variance respectively:
+\begin{align*}
+E(X) \approx \frac{1}{n} \sum_{x \in X} x \quad \text{and} \quad \var(X) \approx \frac{1}{n-1} \sum_{x \in X} (x- \bar{x})^2
+\end{align*}
+
+To compute the conditional expectation $E_X(X|Y=y)$, we simply compute the expectation of those realisations of $X$ for which the corresponding realisation of $Y$ is $y$. To compute $P(Y=y)$, we simply have to count how frequent $y$ appears as a realisation of $Y$ throughout the cases.
+
+A simple example below shows how we could compute the probabilities discussed above:
+
+\begin{center}
+    \begin{tabular}{| c | c | c |}
+    \hline
+     Case & $X$ & $Y$ \\ \hline
+     1 & 0.5 & 1 \\ \hline
+     2 & 0.2 & 0 \\ \hline
+     3 & 0.1 & 1 \\ \hline
+    \end{tabular}
+\end{center}
+
+In this case,
+\begin{align*}
+E_X(X|Y=1) &= \frac{1}{2} \,  (0.5+0.1) = 0.3 \\
+P(Y=1) &= \frac{2}{3} \\
+E[X^2] &= \frac{1}{3} \, (0.5^2+0.2^2+0.1^2) = 0.1 \\
+E[X] &= \frac{1}{3} \, (0.5+0.2+0.1) \approx 0.2666 \\
+\var(X) &= E[X^2] - (E[X])^2 \approx 0.07111
+\end{align*}
+
+As such, we can employ the same computation method to compute the necessary expectations and variance for our data.
+
+\subsubsection{Redundancy}
+
+Now, we investigate how the MRmMC algorithm seeks to minimise the redundancy within the set of selected features.
+
+\begin{mydef}[Multicollinearity]
 Test
-\end{definition}
+\end{mydef}
+
+The MRmMC algorithm uses the squared multiple correlation coefficient (call it $R^2$). to compute the degree of redundancy between features. The $R^2$ term between a dependent variable and an independent variable can be interpreted as the proportion of the variance of the dependent variable explained by the independent variable \cite{RefWorks:193}.  In other words, if $R^2$ is high, then a high proportion of the variance of the dependent variable can be extracted from the independent variable. Therefore, the dependent variable is redundant.
+
+Another useful property of $R^2$ is that, in the presence of several independent variables, if these variables are pairwise orthogonal, then the $R^2$ term between a dependent variable and the independent variables is the sum of $R^2$ between each independent variable and the dependent variable \cite{RefWorks:193}.
+
+In \cite{RefWorks:187}, the $R^2$ term used in MRmMC is defined as such: Suppose there exists a feature set $S$ with features $\left\lbrace f_1 , \dots , f_{k-1} \right\rbrace$, with corresponding orthogonal components $Q= \left\lbrace q_1, \dots , q_{k-1} \right\rbrace$, where $f_i, q_i \in \mathbb{R}^n$ for $i=1, \dots, k-1$. Suppose we are considering a new feature $f_k$. Then, for any orthogonal component $q \in Q$,
+\begin{align}
+R^2(f_k, q) = \frac{\left( \sum_{i=1}^n f_iq_i \right)^2}{\left(\sum_{i=1}^n f_i^2 \right) \left( \sum_{i=1}^n q_i^2 \right)} \label{mrmmc:r2}
+\end{align}
+
+Since the components of $Q$ are pairwise orthogonal, the squared multiple correlation coefficient of the new vector $f_k$ and all the components of $Q$ would be the sum of the $R^2$ terms:
+\begin{align*}
+R^2(f_k, Q) = \sum_{i=1}^{k-1} R^2(f_k, q_i), \quad q_i \in Q
+\end{align*}
+
+Furthermore, the $R^2$ term can be interpreted as the square of the \textit{Pearson correlation coefficient} of vectors $x,y \in \mathbb{R}^n$:
+\begin{align*}
+\rho(x, y) = \frac{\sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^n (x_i-\bar{x})^2}\sqrt{\sum_{i=1}^n (y_i-\bar{y})^2}}
+\end{align*}
+where $\bar{x}$ and $\bar{y}$ denote the mean of $x$ and $y$ respectively. We can see that the square of $\rho$ would equal to the $R^2$ term in equation \ref{mrmmc:r2} when the means of $f_k$ and $q$ are zero. Thus, we need to ensure that $f_k$ and $q$ have zero mean so that the above interpretation can work.
+
+As mentioned above, since we would like to reduce the redundancy between features, we would need to minimise $R^2$ between $f_k$ and the previously selected features.
+
+
+\subsubsection{Computing redundancy}
+
+The only challenging aspect of computing $R^2$ is the orthogonalisation of the features. The MRmMC paper \cite{RefWorks:187} derives the orthogonal vector $q_k$ of $f_k$ with respect to a set of orthogonal vectors $Q$ via:
+\begin{align*}
+q_k = f_k  - \frac{f_k^\top q_1}{q_1^\top q_1}q_1  - \frac{f_k^\top q_2}{q_2^\top q_2}q_2 - \dots - \frac{f_k^\top q_{k-1}}{q_{k-1}^\top q_{k-1}}q_{k-1}
+\end{align*}
+which is evidently the \textit{classical Gram-Schmidt} (CGS) process. However, CGS is notable for its numerical instability because there is usually a loss of orthogonality among the resulting $q_k$ vectors \cite{RefWorks:195}. Instead, the \textit{modified Gram-Schmidt} (MGS) is preferred. Although there are several algorithms in the literature of linear algebra that solves the problem of instability of CGS such as Householder transformations, this project will not delve further into these algorithms, but instead simply use MGS to compute the set of orthogonal vectors $Q$. \cite{RefWorks:194} also notes that MGS is almost as numerically stable as algorithms that use Householder reflectors.
+
+The pseudocode in algorithm \ref{MGS}, taken from \cite{RefWorks:195}, outlines the procedure for MGS. We also note that MGS produces an upper triangular matrix $\boldsymbol R$ that does not play a role in computing $R^2$. Furthermore, the original matrix $A$ in algorithm \ref{MGS} is overwritten by \textit{orthonormal} columns, which are orthogonal columns with the added constraint that they have a magnitude (2-norm) of 1. This would not affect the results, as proven below:
+
+\begin{proof}
+Suppose we have an arbitrary vector $q \in \mathbb{R}^n$ and a normalised vector $\tilde{q} \in \mathbb{R}^n$ such that $\tilde{q} = \sfrac{q}{\| q \|_2}$. Then,
+\begin{align*}
+R^2(f, \tilde{q}) = \frac{\left( \sum_{i=1}^n f_i \tilde{q}_i \right)^2}{\left(\sum_{i=1}^n f_i^2 \right) \left( \sum_{i=1}^n \tilde{q}_i^2 \right)}
+= \frac{\left( f^\top \tilde{q} \right)^2}{(f^\top f)(\tilde{q}^\top \tilde{q})}
+= \frac{\frac{1}{\| q \|^2_2} \left( f^\top q \right)^2}{(f^\top f) \cdot \frac{1}{\| q \|^2_2} \left( q^\top q \right)} = R^2(f, q)
+\end{align*}
+\end{proof}
+
+Thus, the computation of the $R^2$ term using orthonormal vectors will still be valid.
+
+
+\begin{algorithm}
+\DontPrintSemicolon
+\KwIn{Matrix $A\in \mathbb{R}^{m \times n}$, with columns $A_k$ where $k \in [1,n]$.}
+\KwOut{Matrix $A\in \mathbb{R}^{m \times n}$ with orthonormal columns.}
+\BlankLine
+\Begin{
+\For{$k=1 \longrightarrow n$}{
+$R(k, k) = \| A_k \|_2$ \;
+$Q_k = \sfrac{A_k}{R(k, k)}$ \;
+\For{$j=k+1 \longrightarrow n$}{
+$R(k, j)  =  Q_k^\top A_j$ \;
+$A_j = A_j - Q_k \times R(k, j) $ \;
+}
+}
+}
+\caption{Modified Gram-Schmidt Orthogonalisation($A$) \label{MGS}}
+\end{algorithm}
 
 
 
