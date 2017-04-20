@@ -84,7 +84,7 @@ These potential problems make the project interesting, as we cannot simply use o
 
 % Analysis is shown by explaining how the proposed solution operates in your own words as well as its benefits and consequences. Synthesis is shown through the organisation of your Related Work section and through identifying and generalising common aspects across different solutions. Critical judgement is shown by discussing the limitations of the solutions proposed both in terms of their disadvantages and limits of applicability.
 
-\subsection{Biological review}
+\subsection{Biological overview}
 \subsubsection{Molecular biology and definitions} \label{bg:bio}
 This section outlines the necessary biology that will be relevant to the discussion in this project \cite{RefWorks:106, RefWorks:108, RefWorks:110, RefWorks:111}.
 
@@ -118,7 +118,7 @@ Throughout this project, we shall identify the data produced from this study as 
 
 \subsection{Relations with cancer classification} \label{bg:cancer}
 
-There is a significant amount of literature on cancer classification using gene expression data. These works primarily aim to uncover biological or medical insights using biological data obtained from microarrays, which are tools to measure the gene expression of thousands of genes simultaneously \citep{RefWorks:79}. For example, using neural networks, gene expression data can be used to distinguish between tumour types, which helps in cancer diagnosis \citep{RefWorks:80, RefWorks:88}. We can draw lessons from these studies to apply to this project.
+There is a significant amount of literature on cancer classification using gene expression data. These works primarily aim to uncover biological or medical insights using biological data obtained from microarrays, which are tools to measure the gene expression of thousands of genes simultaneously \citep{RefWorks:79}. For example, using neural networks, gene expression data can be used to distinguish between tumour types, which helps in cancer diagnosis \citep{RefWorks:80, RefWorks:88}. \cite{RefWorks:196} has even identified genes that can potentially predict outcomes based on survival data. We can draw lessons from these studies to apply to this project.
 
 What is similar about this project and previous work on cancer classification is that the data for both cases are plagued with high dimensionality (\textit{Curse of dimensionality}). For example, in cancer studies, microarrays produce data with a large number of genes (features) but a small number of samples (observations) \cite{RefWorks:88}.
 
@@ -347,7 +347,7 @@ The Python library \texttt{scikit-learn} also allows SVMs to be trained for clas
 \subsubsection{Purpose and motivation} \label{bg:fs:purpose}
 % Overview of purpose of FS.
 
-Discriminant analysis, which is common in microarray data analysis and cancer classification (as covered in section \ref{bg:cancer}), is the key idea behind this project. One of the main concerns behind discriminant analysis is feature selection: instead of using all of the features or dimensions to predict the result of the classification, we use only a (small) subset of the features. These features should be representative of all the features.
+Discriminant analysis, which is common in microarray data analysis and cancer classification (see section \ref{bg:cancer}), is the key idea behind this project. In the context of data with high dimensions, one of the main concerns of discriminant analysis is feature selection: instead of using all of the features or dimensions to predict the result of the classification, we use only a (small) subset of the features. These features should be representative of all the features.
 
 The process of feature selection can be described as finding a subset $S$ of the original $M$ features, such that the cardinality of $S$, $|S|=k$, where $k \ll M$. Furthermore, classification accuracy using these $k$ features should not be significantly lower than using all $M$ features. Finding ways to obtain $S$ is the main concern of feature selection.
 
@@ -610,7 +610,7 @@ Furthermore, as the raw data was sorted based on the classification (target labe
 % Heuristic search.
 % Less optimal than sequential forward search, but justifiable for amount of data?
 
-The pseudocode of the RFS algorithm is listed in algorithm \ref{RFSAlgo} on page \pageref{RFSAlgo}. THE RFS is a greedy heuristic search that searches through part of the space of features that are the most promising; that is, it only considers features that give the best cross validation results.
+The pseudocode of the RFS algorithm \cite{deng1998omega} is listed in algorithm \ref{RFSAlgo} on page \pageref{RFSAlgo}. THE RFS is a greedy heuristic search that searches through part of the space of features that are the most promising; that is, it only considers features that give the best cross validation results.
 
 Suppose there are $M$ features in total. Firstly, RFS iterates through each feature and records the cross validation result by fitting an SVM with just one feature. A list is used to keep track of these scores. It is then sorted. The feature with the best cross validation result is selected as the first feature (call it $f_1$). Then, in the second iteration, RFS iterates through this sorted list and pairs each remaining feature with $f_1$ to form a pair, and an SVM is fitted using this pair of features. RFS then continues down this list until $M/2$ features are formed. In the third round, RFS will iterate through $M/3$ of these features and so on.
 
@@ -651,6 +651,8 @@ It is evident that since RFS is a greedier variant (it iterates only a fraction 
 
 
 \subsection{Maximum relevance minimum multi-collinearity (MRmMC)} \label{mrmmc}
+
+Recently, the MRmMC method was proposed as a filter method \cite{RefWorks:187}. The authors recognised the drawbacks and computational efforts required when using mutual information as a heuristic to quantify relevance and redundancy. Furthermore, MRmMC does not require any parameter (with the exception of $k$, the number of features to select), and also does not need the algorithm to enforce a threshold. Relevance is quantified using conditional expectations, and redundancy is measured with correlation coefficients.
 
 \subsubsection{Relevance}
 % Use of conditional expectation to measure relevance.
@@ -793,9 +795,9 @@ To compute the conditional expectation $E_X(X|Y=y)$, we simply compute the expec
 A simple example below shows how we could compute the probabilities discussed above:
 
 \begin{center}
-    \begin{tabular}{| c | c | c |}
+    \begin{tabular}{| c || c | c |}
     \hline
-     Case & $X$ & $Y$ \\ \hline
+     Case & $X$ & $Y$ \\ \hline \hline
      1 & 0.5 & 1 \\ \hline
      2 & 0.2 & 0 \\ \hline
      3 & 0.1 & 1 \\ \hline
@@ -846,13 +848,13 @@ As mentioned above, since we would like to reduce the redundancy between feature
 
 \subsubsection{Computing redundancy}
 
-The only challenging aspect of computing $R^2$ is the orthogonalisation of the features. The MRmMC paper \cite{RefWorks:187} derives the orthogonal vector $q_k$ of $f_k$ with respect to a set of orthogonal vectors $Q$ via:
+The only challenging aspect of computing $R^2$ is the orthogonalisation of the features. The MRmMC paper \cite{RefWorks:187} derives the orthogonal vector $q_k$ of $f_k$ with respect to a set of orthogonal vectors $Q = \left\lbrace q_i: i \in [1, k-1] \right\rbrace$ via:
 \begin{align*}
 q_k = f_k  - \frac{f_k^\top q_1}{q_1^\top q_1}q_1  - \frac{f_k^\top q_2}{q_2^\top q_2}q_2 - \dots - \frac{f_k^\top q_{k-1}}{q_{k-1}^\top q_{k-1}}q_{k-1}
 \end{align*}
 which is evidently the \textit{classical Gram-Schmidt} (CGS) process. However, CGS is notable for its numerical instability because there is usually a loss of orthogonality among the resulting $q_k$ vectors \cite{RefWorks:195}. Instead, the \textit{modified Gram-Schmidt} (MGS) is preferred. Although there are several algorithms in the literature of linear algebra that solves the problem of instability of CGS such as Householder transformations, this project will not delve further into these algorithms, but instead simply use MGS to compute the set of orthogonal vectors $Q$. \cite{RefWorks:194} also notes that MGS is almost as numerically stable as algorithms that use Householder reflectors.
 
-The pseudocode in algorithm \ref{MGS}, taken from \cite{RefWorks:195}, outlines the procedure for MGS. We also note that MGS produces an upper triangular matrix $\boldsymbol R$ that does not play a role in computing $R^2$. Furthermore, the original matrix $A$ in algorithm \ref{MGS} is overwritten by \textit{orthonormal} columns, which are orthogonal columns with the added constraint that they have a magnitude (2-norm) of 1. This would not affect the results, as proven below:
+The pseudocode in algorithm \ref{MGS}, taken from \cite{RefWorks:195}, outlines the procedure for MGS. We also note that MGS produces an upper triangular matrix $\boldsymbol R$ that does not play a role in computing $R^2$. Furthermore, the original matrix $A$ in algorithm \ref{MGS} is overwritten by \textit{orthonormal} columns, which are orthogonal columns with the added constraint that they have a magnitude (2-norm) of 1. This would not affect the results:
 
 \begin{proof}
 Suppose we have an arbitrary vector $q \in \mathbb{R}^n$ and a normalised vector $\tilde{q} \in \mathbb{R}^n$ such that $\tilde{q} = \sfrac{q}{\| q \|_2}$. Then,
