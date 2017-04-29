@@ -1,4 +1,4 @@
-\documentclass[12pt, twoside, a4paper]{article}
+\documentclass[12pt, twoside, a4paper]{report}
 
 \usepackage{parskip}
 \usepackage[english]{babel}
@@ -21,6 +21,14 @@
 \usepackage{xfrac}
 \usepackage{multirow}
 
+\usepackage{fancyhdr}
+
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[RE,LO]{\nouppercase{\rightmark}}
+\fancyfoot[C]{\thepage}
+
 \def\vec{\boldsymbol}
 \def\var{\text{var}}
 \DeclareMathOperator*{\argmax}{arg\,max}
@@ -37,16 +45,24 @@
 \date{\today}
 \maketitle
 
+\pagenumbering{roman}
+
+\chapter*{Abstract}
+
+\chapter*{Acknowledgements}
+
 \tableofcontents
 
 \newpage
 
-\section{Introduction}
+\pagenumbering{arabic}
+
+\chapter{Introduction}
 
 % Short, succinct, summary of the project's main objectives
 % What is the problem, why is it interesting and what's your main idea for solving it?
 
-\subsection{Schizophrenia, etiology and genes}
+\section{Schizophrenia, etiology and genes}
 
 Schizophrenia is a complex mental disorder that displays an array of symptoms. It is commonly perceived that schizophrenia is a hereditary disease that can be passed down within the family, but some individuals diagnosed with schizophrenia do not have a family member with the disorder \cite{RefWorks:8}. Thus, it is postulated that the heritability of schizophrenia might not be as high as what is commonly believed \cite{RefWorks:9}.
 
@@ -57,7 +73,7 @@ Moreover, the current research on psychiatric disorders do not receive as much a
 Overall, this project aims to predict Schizophrenia cases on the basis of epigenetics and epivariations.
 
 
-\subsection{Using machine learning to predict Schizophrenia cases} \label{intro_ML}
+\section{Using machine learning to predict Schizophrenia cases} \label{intro_ML}
 
 Using data from a recent study on epigenetics and schizophrenia (section \ref{bg_genetic_data}), the project aims to use machine learning to elucidate any statistical regularity in the data, in hope that any insight into the data can help geneticists and psychiatrists understand the etiology of schizophrenia - and indeed, other psychiatric disorders - better.
 
@@ -71,7 +87,7 @@ Moreover, linear classifiers may not be able to capture the complexity of the da
 
 These potential problems make the project interesting, as we cannot simply use ordinary machine learning techniques to manipulate the data. We have to adapt our algorithms and classifiers to suit the complexity and context of the problem.
 
-\section{Background research}
+\chapter{Background}
 % relating it to existing published work which you read at the start of the project when your approach and methods were being considered.
 
 % Describe and evaluate as many alternative approaches as possible.
@@ -84,8 +100,7 @@ These potential problems make the project interesting, as we cannot simply use o
 
 % Analysis is shown by explaining how the proposed solution operates in your own words as well as its benefits and consequences. Synthesis is shown through the organisation of your Related Work section and through identifying and generalising common aspects across different solutions. Critical judgement is shown by discussing the limitations of the solutions proposed both in terms of their disadvantages and limits of applicability.
 
-\subsection{Biological overview}
-\subsubsection{Molecular biology and definitions} \label{bg:bio}
+\section{Molecular biology and definitions} \label{bg:bio}
 This section outlines the necessary biology that will be relevant to the discussion in this project \cite{RefWorks:106, RefWorks:108, RefWorks:110, RefWorks:111}.
 
 \begin{itemize}
@@ -102,12 +117,12 @@ This section outlines the necessary biology that will be relevant to the discuss
 \item \textbf{DNA methylation:} A common chemical modification is DNA methylation, where methyl groups ($-$CH$_3$) are attached to the bases of DNA at specific places. These methyl groups switch off the gene which they are attached to in the DNA, and thus no protein can be generated from that gene.
 \end{itemize}
 
-\subsubsection{Relationship between epigenetics and disease} \label{bg_epigenetics}
+\section{Relationship between epigenetics and disease} \label{bg_epigenetics}
 Studies that involve monozygotic twins (twins who share the same set of genomes) are useful to discover the effect of epigenetics on the phenotypes (observable, physical characteristics) of these twins \cite{RefWorks:104}.
 
 A study that focuses on monozygotic twins and their susceptibility to disease found that the genes that make up an individual cannot fully explain how likely he/she would be diagnosed with a disease \cite{RefWorks:105}. It is thus interesting to ascertain, using epigenetics data and machine learning, whether epigenetics has any influence on being diagnosed with psychiatric disorders, by detecting any statistical regularity in the data.
 
-\subsection{The dataset} \label{bg_genetic_data}
+\section{The dataset} \label{bg_genetic_data}
 This project makes use of data from a recent genetic-epigenetic analysis of schizophrenia, conducted in 2016 \cite{RefWorks:78}. There are high-throughput methods that enable genomics researchers to perform epigenome-wide association studies (EWAS).
 
 In this study in particular, the researchers involved aimed to use these methods to identify positions in the genome that display DNA methylations associated with environmental exposure and disease. It turns out that there are significant differences in DNA methylation between individuals diagnosed with schizophrenia, and those who were not (controls).
@@ -116,7 +131,7 @@ In particular, we are interested in the data offered in ``phase 2'' of the study
 
 Throughout this project, we shall identify the data produced from this study as \textit{the data}.
 
-\subsection{Relations with cancer classification} \label{bg:cancer}
+\section{Comparison with cancer classification} \label{bg:cancer}
 
 There is a significant amount of literature on cancer classification using gene expression data. These works primarily aim to uncover biological or medical insights using biological data obtained from microarrays, which are tools to measure the gene expression of thousands of genes simultaneously \citep{RefWorks:79}. For example, using neural networks, gene expression data can be used to distinguish between tumour types, which helps in cancer diagnosis \citep{RefWorks:80, RefWorks:88}. \cite{RefWorks:196} has even identified genes that can potentially predict outcomes based on survival data. We can draw lessons from these studies to apply to this project.
 
@@ -128,25 +143,33 @@ However, what is fundamentally different about studies on psychiatric disorders 
 
 For example, the ``\textit{Diagnostic and statistical manual of mental disorders}'' discusses culture-related diagnostic issues of schizophrenia: ``the assessment of disorganized speech may be made difficult by linguistic variation in narrative styles across cultures''. Furthermore, ``ideas that appear to be delusional in one culture (e.g. witchcraft) may be commonly held in another'' \cite{RefWorks:114}. These highlight how diagnosing a psychiatric disorder like schizophrenia is not at all easy.
 
-\subsection{Review and comparison of machine learning classifiers} \label{bg_ML}
-Even though this project focuses on the feature selection process, the choice of the machine learning classifier is relevant as well. This section reviews machine learning classifiers and how some might not be useful for the purposes of this project.
+\section{Overview and comparison of machine learning classifiers} \label{bg_ML}
+Even though this project focuses on the feature selection process, the choice of the machine learning classifier is relevant as well. This section reviews machine learning classifiers and how some might or might not be useful for the purposes of this project.
 
-\subsubsection{Decision Trees} \label{bg:ml:decisionTree}
+\subsection{Decision Trees} \label{bg:ml:decisionTree}
 In our context, the task is to classify the data according to whether a sample (individual) has a psychiatric disorder - in particular, schizophrenia - or not. In other words, the classification task is binary. An intuitive solution is to use decision trees; problems with discrete output values can be solved using decision trees \cite{RefWorks:98}.
 
 A decision tree algorithm is capable of sorting the  instances - in our context, samples with different features - down the tree until the algorithm reaches a leaf node, during which a classification is given to the node. At each level of the tree, the intermediate node is split according to some attribute.
 
-One variant of the decision tree algorithm is the ID3 algorithm \cite{RefWorks:99}. The ID3 algorithm makes use of a statistical quantitative measure, the information gain, to determine the attribute to classify the samples with. Using definitions from \cite{RefWorks:98}, let $S$ be the set of all the samples that we want to classify at a particular node. The samples can also be separated into two groups, those with a positive classification and those with a negative classification. Define the entropy of $S$ as:
+One variant of the decision tree algorithm is the ID3 algorithm \cite{RefWorks:99}. The ID3 algorithm makes use of a statistical quantitative measure, the \textit{information gain}, to determine the attribute to classify the samples with. Using definitions from \cite{RefWorks:98}, let $S$ be the set of all the samples that we want to classify at a particular node. The samples can also be separated into two groups, those with a positive classification and those with a negative classification.
+
+%\theoremstyle{definition}
+\newtheorem{mydef}{Definition}[subsection]
+
+\begin{mydef}[Entropy]
 \begin{align*}
-Entropy(S) \equiv -p_{(+)} \log_2 p_{(+)} - p_{(-)} \log_2 p_{(-)}
+Entropy(S) = -p_{(+)} \log_2 p_{(+)} - p_{(-)} \log_2 p_{(-)}
 \end{align*}
 where $p_{(+)}$ and $p_{(-)}$ represents the proportion of samples with positive and negative classification respectively.
+\end{mydef}
 
-Then, the information gain with respect to the set $S$ and an attribute (feature) $A$ is defined as:
+\begin{mydef}[Information gain]
+The information gain with respect to the set $S$ and an attribute (feature) $A$ is defined as:
 \begin{align*}
 Gain(S, A) \equiv Entropy(S) - \sum_{v \in Values(A)} \frac{|S_v|}{|S|} \, Entropy(S_v)
 \end{align*}
 where $Values(A)$ is the set of all possible values of attribute $A$, and $|S_v|$ is the number of elements in the set $S$ with value $v$ for its attribute $A$.
+\end{mydef}
 
 We then classify the samples in the node according to the attribute with the highest information gain. Intuitively, we want to choose the attribute that can give the most distinct separation between the positive and negative classification (instead of choosing an attribute that, say, splits the samples into half  according to their classification).
 
@@ -154,7 +177,7 @@ Although the decision tree algorithm is said to be robust to errors \cite{RefWor
 
 Furthermore, the features of our dataset are vectors of real numbers. We would thus need to discretise the range of real numbers into intervals. This would then give rise to another problem of defining a suitable interval for these values. This is similar to the problem of using mutual information in feature selection, which will be discussed in section \ref{bg:fs:mi}.
 
-\subsubsection{Random forest}
+\subsection{Random forest}
 The random forest method \cite{RefWorks:101}, a form of ``ensemble learning'', is an extension of the decision tree algorithm described above, and it has been used in areas such as multi-class object detection in images \cite{RefWorks:100}. Overall, a random forest algorithm can be outlined as such:
 \begin{itemize}
 \item Split the dataset into distinct subsets.
@@ -170,7 +193,7 @@ It has been shown that the number of trees grow with the number of features that
 
 So, overall, the decision tree and random forest methods might not be the best methods for our context, even though they are considered to be popular machine learning techniques \cite{RefWorks:103}.
 
-\subsubsection{Lasso and Elastic net}
+\subsection{Lasso and Elastic net}
 In Section \ref{intro_ML}, we discussed how, in this project, not only are we seeking low classification errors, we also have to select features/variables in the data that are relevant in producing accurate predictions. An obvious, but naive, solution is to consider all the features in different combinations. But this solution is evidently computationally expensive, much less with data as large as the one we consider in this project.
 
 One method to overcome this problem is by Lasso regression \cite{RefWorks:94}, which is a regularised least squares scheme that imposes an $l_1$-norm penalty on an error function that it tries to minimise. More importantly, in the context of big data and especially this project, the Lasso is an appealing solution because it produces a sparse solution, by shrinking the coefficients of insignificant features to 0.
@@ -182,7 +205,7 @@ As a result, Zou and Hastie proposed the \textit{elastic net}, which imposes a l
 Besides, we can also utilise the elastic net library in \texttt{scikit-learn} implemented in Python. This allows us to experiment with elastic net easily, to see if it would be suitable for our dataset.
 
 
-\subsection{Support vector machines}
+\section{Support vector machines}
 This section explains and discusses Support Vector Machines\footnote{Most of the Mathematics here is with reference to course notes from the Department of Computing, course CO496 - Mathematics for Inference and Machine Learning.}.
 
 Consider our dataset that comprises $m$ features and $n$ samples. Then, the data can be written as a set: $\left\lbrace (\boldsymbol{x}_1, y_1), \dots, (\boldsymbol{x}_n, y_n) \right\rbrace$, where $\boldsymbol{x}_i \in \mathbb{R}^m$ is an $m$ dimensional vector that corresponds to the $i$-th sample. Moreover, $y_i = \pm 1$ is the label of the $i$-th sample: $y_i = 1$ if the classification is positive (e.g. sample does not have schizophrenia) and $y_i = -1$ otherwise, for $i = 1, \dots , n$.
@@ -205,7 +228,7 @@ for $i = 1, \dots , n$, where, as defined above, $y_i = \pm 1$, depending on the
 \boldsymbol w^\top \boldsymbol x_i + b \leq -1 \quad &\text{if $y_i = -1$}
 \end{align*}
 
-\subsubsection{Dual representation}
+\subsection{Dual representation}
 To solve the (primal) optimisation problem in (\ref{bg:svm}) subject to the conditions in (\ref{bg:svm:cond}), we can formulate the following Lagrangian equation:
 \begin{align}
 L(\boldsymbol w, b, \boldsymbol a)
@@ -254,7 +277,7 @@ f(\vec{x}) = \sum_{i=1}^n a_i y_i \vec{x}_i^\top \vec{x} + b \label{bg:svm:decis
 
 In order to determine the classification of a new  point $\vec{x}$, we simply have to determine the sign of $f(\vec{x})$ in (\ref{bg:svm:decision}).
 
-\subsubsection{Mapping to higher dimensional space}
+\subsection{Mapping to higher dimensional space}
 When the relationship between data points in the input space is not linear, the (linear) SVM with the description above would not be able to learn these non-linear relations. This would result in underfitting.
 
 As such, we would need to map the input data points into a higher dimensional space (feature space). We can then build an SVM based on this high dimensional space such that the points in the feature space is linearly separable.
@@ -277,7 +300,7 @@ f(\vec{x}) = \sum_{i=1}^n a_i y_i K(\vec{x}_i, \vec{x}) + b = \sum_{i=1}^n a_i y
 
 Thus, for a new vector $\vec{x}$, we simply need to test the sign of $f(\vec{x})$. If $f(\vec{x})$ is positive, then we can classify it as class 1, and class 2 if $f(\vec{x})$ is negative.
 
-\subsubsection{Slack variables}
+\subsection{Slack variables}
 Real-life data may not be perfectly linearly separable in the feature space $\phi(\vec{x})$, especially due to the presence of noise \cite{RefWorks:127}. Slack variables, $\xi$, are introduced to allow some form of error when training data points are misclassified. These slack variables allow data points to be classified on the wrong side of the decision hyperplane, but the further away a point is from the decision boundary, the larger the penalty imposed. We then need one slack variable per input data point \cite{RefWorks:126}, defined as such:
 \begin{itemize}
 \item $\xi_i = 0$: data point is correctly classified.
@@ -312,7 +335,7 @@ K_y = [y_i \, y_j \, \phi(\vec{x}_i)^\top \phi(\vec{x}_j)]
 
 We then need to solve the quadratic optimisation problem in (\ref{bg:svm:quadprob}).
 
-\subsubsection{Model selection} \label{bg:ml:svm:model}
+\subsection{Model selection} \label{bg:ml:svm:model}
 There are 4 widely used kernels:
 \begin{itemize}
 \item Linear kernel: $K(\vec{x}_i, \vec{x}_j) = \vec{x}_i^\top \vec{x}_j$
@@ -337,17 +360,17 @@ Although the RBF kernel is more commonly chosen than the rest of the kernels lis
 
 Nevertheless, we should view this conclusion with scepticism and still proceed to investigate the better kernel method (between linear and RBF) by using cross-validation, as the conclusion made in \cite{RefWorks:128} might be data-dependent.
 
-\subsubsection{Implementing classification with SVM}
+\subsection{Implementing classification with SVM}
 Chang and Lin \cite{libsvm} developed LIBSVM, a library for SVMs. LIBSVM utilises the Sequential Minimal Optimisation (SMO) algorithm to solve the quadratic optimisation problem in (\ref{bg:svm:quadprob}). SMO allows the problem to be solved analytically \cite{RefWorks:126}. Furthermore, the library can be interfaced to other programming languages like Java, MATLAB and Python.
 
 The Python library \texttt{scikit-learn} also allows SVMs to be trained for classification purposes (\texttt{SVC}) and allows various kernels to be used. Furthermore, the library uses LIBSVM internally to handle computations.
 
-\subsection{Feature selection} \label{bg:feature_selection}
+\section{Feature selection} \label{bg:feature_selection}
 
-\subsubsection{Purpose and motivation} \label{bg:fs:purpose}
+\subsection{Purpose and motivation} \label{bg:fs:purpose}
 % Overview of purpose of FS.
 
-Discriminant analysis, which is common in microarray data analysis and cancer classification (see section \ref{bg:cancer}), is the key idea behind this project. In the context of data with high dimensions, one of the main concerns of discriminant analysis is feature selection: instead of using all of the features or dimensions to predict the result of the classification, we use only a (small) subset of the features. These features should be representative of all the features.
+Discriminant analysis, which is common in microarray data analysis and cancer classification (see section \ref{bg:cancer}), is the key idea behind this project. In the context of data with high dimensions, one of the main concerns of discriminant analysis is feature selection: instead of using all of the features or dimensions to predict the result of the classification, we use only a (small) subset of the features. These features should be representative of all the features. Feature selection is also an important step in other areas such as text categorisation \cite{RefWorks:197}.
 
 The process of feature selection can be described as finding a subset $S$ of the original $M$ features, such that the cardinality of $S$, $|S|=k$, where $k \ll M$. Furthermore, classification accuracy using these $k$ features should not be significantly lower than using all $M$ features. Finding ways to obtain $S$ is the main concern of feature selection.
 
@@ -357,10 +380,10 @@ Overall, there are several benefits associated with feature selection:
 \begin{itemize}
   \item \textbf{Savings in computational cost.} By reducing the dimensions of our features, we can reduce the computational cost of our algorithm, which includes the cost incurred for training a classifier, and using the classifier to perform predictions.
   \item \textbf{Interpretable results.} In contrast with feature extraction, feature selection retains the properties of the original features, instead of returning a combination of these features (see section \ref{bg:fs:extraction}). For this project, ideally, we want to be able to obtain a compact subset of features from which we can draw biological conclusions.
-  \item \textbf{Improvements in classification accuracy.} More features might, due to experimental faults, lead to more noise in our data set. Having a more compact subset to train our classifier might allow us to improve the performance the classifier \cite{RefWorks:174}.
+  \item \textbf{Improvements in classification accuracy.} More features might, due to experimental faults or the nature of the data \cite{RefWorks:197}, lead to more noise in our data set. Having a more compact subset to train our classifier might improve the performance of the classifier \cite{RefWorks:174}.
 \end{itemize}
 
-\subsubsection{Feature selection versus feature extraction} \label{bg:fs:extraction}
+\subsection{Feature selection versus feature extraction} \label{bg:fs:extraction}
 
 In contrast to feature selection, feature extraction techniques, such as principal component analysis (PCA) and Linear Discriminant Analysis (LDA), result in a set of features that is a transformation of the original features. In other words, the original features are transformed into a space with lower dimensions. For example, PCA employs a transformation to map features to a space spanned by its principal components.
 
@@ -368,9 +391,9 @@ Although feature extraction helps us by reducing the dimension of the data we ha
 
 In contrast, feature selection methods preserve the original features. This allows us to interpret the result of applying classifiers to the reduced set of features \cite{RefWorks:142}.
 
-\subsubsection{Classification of feature selection methods}
+\subsection{Classification of feature selection methods}
 
-\subsubsection{Exhaustive versus heuristic search}
+\subsection{Exhaustive versus heuristic search}
 
 One obvious (but naive) way to find $S$ would be to exhaustively consider all possible subsets of the original feature space, and select the one that gives the best classification performance.
 
@@ -409,9 +432,9 @@ where in the second line, the following results were used:
 \end{align*}
 \end{proof}
 
-Evidently, although an exhaustive search would guarantee an optimal subset, its runtime complexity would be prohibitively high. As Sima and Dougherty put it, \textit{``A major impediment to feature selection is the combinatorial nature of the problem''} \cite{RefWorks:191}. Thus, most of the algorithms in the literature of feature selection involve some kind(s) of heuristic to guide the search for $S$. Some examples would be discussed in the following sections.
+Evidently, although an exhaustive search would guarantee an optimal subset, its runtime complexity would be prohibitively high. As Sima and Dougherty put it, \textit{``A major impediment to feature selection is the combinatorial nature of the problem''} \cite{RefWorks:191}. Thus, most of the algorithms in the literature of feature selection trade the optimality guaranteed in exhaustive search for computational cost. These methods involve some kind(s) of heuristic to guide the search for $S$. Some examples would be discussed in the following sections.
 
-\subsubsection{Feature relevance and feature redundancy} \label{bg:fs:relevance}
+\subsection{Feature relevance and feature redundancy} \label{bg:fs:relevance}
 
 Relevance and redundancy play important roles in the literature of feature selection.
 
@@ -425,7 +448,7 @@ Furthermore, there is a possibility that not all of the genes in our data set ha
 
 The best $k$ features are not the $k$ best features \cite{RefWorks:182}.
 
-\subsubsection{Greedy search} \label{bg:fs:greedy}
+\subsection{Greedy search} \label{bg:fs:greedy}
 
 As mentioned in section \ref{bg:fs:purpose}, the cost of an exhaustive search on all possible subsets of all $M$ features is exponential with $M$. Even though the exhaustive search guarantees an optimal solution, its computational cost does not scale with more features. As a result, researchers have proposed several algorithms that involve heuristics to guide the search for the optimal subset $S$. Although none of the methods which use heuristics can guarantee an optimal solution \cite{RefWorks:182}, these methods improve the computational cost of optimal solutions, which is very beneficial in the context of high dimensional data.
 
@@ -475,10 +498,10 @@ $S \longleftarrow S \cup \left\lbrace w \right\rbrace$
 \caption{Restricted Forward Selection($D$, $k$) \label{RFSAlgo}}
 \end{algorithm}
 
-\subsubsection{Optimal search by branch-and-bound}
+\subsection{Optimal search by branch-and-bound}
 It is also worth mentioning the work of Narendra and Keinosuke \cite{RefWorks:176}, who proposed a branch-and-bound algorithm to demonstrate that an optimal solution can still be obtained without an exhaustive search. Even though the paper showed that substantial savings were made in terms of number of subsets evaluated, the algorithm does not scale to high-dimensional data \cite{RefWorks:178} due to its exponential time complexity \cite{RefWorks:190, RefWorks:189}. For example, the paper demonstrated the use of the branch-and-bound algorithm to choose only 12 features from 24.
 
-\subsubsection{Use of mutual information in feature selection} \label{bg:fs:mi}
+\subsection{Use of mutual information in feature selection} \label{bg:fs:mi}
 
 A common heuristic to quantify relevance and redundancy is mutual information (MI) \cite{RefWorks:98}. MI can be interpreted as a measure that quantifies the dependence between variables \cite{RefWorks:180} and the amount of information $X$ carries about $Y$ \cite{RefWorks:181}. 
 
@@ -502,22 +525,58 @@ For example, the \textit{minimal-redundancy maximal relevance} (mRMR) scheme \ci
 \max \, D(S, c) = \frac{1}{|S|} \sum_{x_i \in S} I(x_i, c)
 \end{align*}
 
+This heuristic maximises the discriminative power of each feature.
+
 Furthermore, mRMR minimises redundancy between features in the feature set $S$ by minimising the MI between features in $S$. That is,
 \begin{align*}
 \min \, R(S) = \frac{1}{|S|^2} \sum_{x_i, x_j \in S} I(x_i, x_j)
 \end{align*}
 
-However, the main difficulty in using MI is the estimation of the joint and marginal probabilities ($p(x, y)$ and $p(x)$ or $p(y)$ respectively in equations \ref{bg:fs:mi:dis} and \ref{bg:fs:mi:cont}, partly due to a small sample size \cite{RefWorks:182}. For discrete or categorical variables, the estimation of the probabilities would simply be obtained from frequency counts \cite{RefWorks:183}, although the estimation would only be accurate if we have enough samples. Yet, with more classes and more states in each class, the estimation of the joint probability would become more difficult \cite{RefWorks:140}.
+However, the main difficulty in using MI is the estimation of the joint and marginal probabilities ($p(x, y)$ and $p(x)$ or $p(y)$ respectively in equations \ref{bg:fs:mi:dis} and \ref{bg:fs:mi:cont}). For discrete or categorical variables, the estimation of the probabilities would simply be obtained from frequency counts \cite{RefWorks:183}, although the estimation would only be accurate if we have enough samples \cite{RefWorks:182}. Yet, with more classes and more states in each class, the estimation of the joint probability would become more difficult \cite{RefWorks:140}.
 
-In the case of continuous variables, the computation of MI would be even harder \cite{RefWorks:185}, as we would need to compute the integral of the continuous probabilities \cite{RefWorks:192}. We should also note that the features in the data for this project are continuous. One way to estimate the probabilities of continuous variables is by discretising the values into \textit{bins}. A histogram can be created to investigate the distribution of the bins. However, we will have to determine the width of the intervals, and the widths (or the number of bins) will influence the estimates significantly \cite{RefWorks:186}.
+In the case of continuous variables, the computation of MI would be even harder \cite{RefWorks:185}, as we would need to compute the integral of the continuous probabilities \cite{RefWorks:192}. We should also note that the features in the data for this project are continuous. One possible way to estimate the probabilities of continuous variables is by discretising the values into \textit{bins} (discrete intervals). A histogram can be created to investigate the distribution of the bins. However, we will have to determine the width of the intervals, and the widths (or the number of bins) will influence the estimates significantly \cite{RefWorks:186}.
 
-Another method to estimate the probabilities in equations \ref{bg:fs:mi:cont} and \ref{bg:fs:mi:contDis} is by using the \textit{Parzen Window} method, as proposed by Kwak and Choi in \cite{RefWorks:183}. Although the work has shown that using the Parzen Window leads to better performances when combined with certain feature selection algorithms, one still has to specify certain parameters associated with the Parzen Window, such as the window function and the window width. These need to be correctly specified for the estimated densities to converge to the true density \cite{RefWorks:184}. Kwak and Choi used the Gaussian window with a specified window width. However, these choices were not explained. They have also made certain assumptions about the covariance matrix of the variables concerned, but these assumptions might not hold for all types of data sets. Nevertheless, if time is not of the essence, one could perform a search to find the most optimal window width using different window functions.
+Another method to estimate the probabilities in equations \ref{bg:fs:mi:cont} and \ref{bg:fs:mi:contDis} is by using the \textit{Parzen Window} method, as proposed by Kwak and Choi in \cite{RefWorks:183}. Although the work has shown that using the Parzen Window leads to better performances when combined with certain feature selection algorithms, one still has to specify certain parameters associated with the Parzen Window, such as the window function and the window width. These need to be correctly specified for the estimated densities to converge to the true density \cite{RefWorks:184}. Kwak and Choi used the Gaussian window with a fixed window width. However, these choices were not explained sufficiently. They have also made certain assumptions about the covariance matrix of the variables, but these assumptions might not hold for all types of data sets. Nevertheless, if time is not of the essence, one could perform a search to find the most optimal window width using different window functions.
 
-Consequently, works such as \cite{RefWorks:187} avoid the complexity of estimating MI between continuous variables by proposing other measures to quantify relevance and redundancy. As the measures used in this work will be used on our data set, more details will be discussed in section \ref{mrmmc}.
+Consequently, methods such as \textit{maximum relevance minimum multi-collinearity} (MRmMC) \cite{RefWorks:187} avoid the complexity of estimating MI between continuous variables by proposing other measures to quantify relevance and redundancy. As the measures used in this work will be used on our data set, more details will be discussed in section \ref{mrmmc}.
 
-\subsubsection{Genetic algorithms in feature selection}
+\subsection{Genetic algorithms in feature selection}
 
-\subsubsection{Previous work in feature selection methods} \label{bg:fs:previous}
+Genetic algorithms (GA's) are frequently used as a heuristic search method to explore solutions by repeatedly changing and combining them. It is based on the theory of evolution and its concept of natural selection and \textit{survival of the fittest} \cite{RefWorks:205}. GA's also use genetic operators that have an element of randomness, such as crossover, mutation and selection of the fittest solution(s) to avoid local optimas \cite{RefWorks:207}.
+
+The following terms are often used in the context of GA's:
+\begin{itemize}
+  \item A \textit{chromosome} describes a solution \cite{RefWorks:205}. Usually, a chromosome uses a binary encoding to represent a solution. In the context of feature selection, an array, say $A$, can be used to store a chromosome, and each element in the array, $A[i]$, is either 0 or 1, which means a feature is not selected or a feature is selected, respectively.
+  
+  \item The $i$th \textit{generation} describes the $i$th iteration of the GA.
+  
+  \item A \textit{population} is the set of chromosomes (solutions) in a generation.
+\end{itemize}
+
+The following terms are inspired by evolution, and characterise the probabilistic aspect of a GA. These operators are responsible for evolving a population:
+\begin{itemize}
+  \item \textit{Fitness} quantifies how desirable a chromosome is with respect to the problem the GA is trying to solve. For example, \cite{RefWorks:204} uses classification error as its fitness criteria, \cite{RefWorks:200} uses both the classification error and the dimension of a chromosome to quantify its fitness, while \cite{RefWorks:201} uses correlation, which might not be feasible when we need to measure the correlation between a discrete and a continuous variable.
+  
+  \item Two parents can perform a \textit{crossover} to produce a pair of potentially fitter offsprings. There are several strategies for the crossover operator, such as one-point \cite{RefWorks:201}, two-point \cite{RefWorks:202, RefWorks:204} and uniform crossover.
+  
+  \item The \textit{mutation} operator probabilistically selects and changes one or more elements of a chromosome. For example, \cite{RefWorks:201, RefWorks:204} use a uniform distribution to select these elements.
+
+  \item The \textit{selection} process selects the fittest chromosome(s) of a population. Depending on the strategy that one employs, the selected chromosome(s) will either be selected as parents for crossover, or they will be retained and moved to the next generation (\textit{elitism/cloning}  strategy \cite{RefWorks:202}). One can also select the chromosomes with the worst fitness for crossover, in hope that this will raise the overall fitness of the population \cite{RefWorks:203}.
+  
+\end{itemize}
+
+There are several ways to implement GA's, and each has its own merits and drawbacks. The ``traditional'' way of implementing a GA, such as the method described by Mitchell in \cite{RefWorks:205}, generates $p$ (defined by the user) solutions at random. For example, this method is used in \cite{RefWorks:206}, where 20 solutions are randomly generated to form the initial population of the GA. However, we note that the GA in \cite{RefWorks:206} was performed on a dataset of only 9 features. In the context of our project, storing 20 arrays of size 400000 each might impose a large memory demand.
+
+In contrast, several works such as \cite{RefWorks:197, RefWorks:198, RefWorks:199, RefWorks:200, RefWorks:203} utilise a GA in a ``two-stage'' process. First, a filtering step removes features that might be irrelevant to the target class or redundant with respect to other features. For example, \cite{RefWorks:197, RefWorks:198, RefWorks:203} use mutual information to conduct an initial filter on all the features. \cite{RefWorks:201} argues that the reduced search space still contains features that are the most promising. Second, the set of filtered features is then passed on to a GA to explore solutions in the reduced space. It uses probabilistic operators to evolve the selected features from the first phase.
+
+This two-stage process offers an improvement in terms of memory demand, as the filter process shrinks the dimensions of the solution space for the GA. Instead of storing all 400000 features, we only need to keep track of the binary strings encoded for the reduced search space. However, as we only consider features deemed to be potentially important by the filter process, the GA implemented this way might suffer from a compromise in optimality.
+
+Furthermore, one drawback of GA's is the number of parameters and strategies that need to be tuned. For example, in performing the \textit{crossover}, the parents can either be  the solutions with the worst fitness \cite{RefWorks:203}, or randomly selected from the population \cite{RefWorks:205}. The \textit{mutation} rate, which often takes a small value (e.g. 1 to 15\%) \cite{RefWorks:206}, say $k$, will uniformly choose $k$ percent of a chromosome, and these elements would have their bits inverted. One would need to take the time to investigate what parameters and/or strategies would work best for the data set.
+
+Nevertheless, it is interesting to investigate if incorporating a GA with the MRmMC method, briefly discussed in section \ref{bg:fs:mi}, will improve the classification score. This will be discussed in detail in section \ref{ga:mrmmc}.
+
+
+\subsection{Previous work in feature selection methods} \label{bg:fs:previous}
 
 Feature selection methods can be classified as \cite{RefWorks:117, RefWorks:118}:
 \begin{itemize}
@@ -531,12 +590,12 @@ Several reviews of feature selection methods on microarray data \cite{RefWorks:1
 
 Furthermore, since embedded methods are executed together with the training process of the classifier, the resulting optimal set of features is coupled with the classifier that is trained. In other words, this set of features is classifier dependent \cite{RefWorks:118}. Since we want the classifier to eventually generalise to other epigenetic datasets, we might want to avoid this class of methods. 
 
-%\subsubsection{Filters}
+%\subsection{Filters}
 Assign heuristic score to each feature. See if the feature contributes significantly to classification/prediction. Including chi-square, mutual information etc. Pick high scoring features to keep. Does not take into account interactions between features.
 
 ``Could use ``light'' filtering as an efficient initial step if running time is an issues.''	
 
-%\subsubsection{Wrappers}
+%\subsection{Wrappers}
 
 Learning algorithm is a black box. Simply using it to compute objective function, then search. Exhaustive search expensive, greedy search common and effective.
 
@@ -557,7 +616,7 @@ There are also ``floating'' versions of the above selection methods, which allow
 
 There also has been work that combines genetic algorithms with SVMs \cite{RefWorks:120}. However, these algorithms are deemed to be more time consuming, although it can cover more combinations of feature subsets.
 
-\subsubsection{Novel methods in feature selection} \label{bg_GLGS}
+\subsection{Novel methods in feature selection} \label{bg_GLGS}
 In \cite{RefWorks:119}, Tang et. al suggested two novel methods for feature selection:
 \begin{itemize}
 \item Gradient-based leave-one-out gene selection (GLGS) algorithm
@@ -574,16 +633,18 @@ This suggests that $t$ might be dependent on the dataset used. We can thus selec
 \item Plot a graph of the error against $t$. We can inspect visually the most optimal value of $t$.
 \end{itemize}
 
-\section{Data exploration}
+\chapter{Data exploration}
 % What I did to explore the data?
 % What frame work was used?
 % What needed to be done to render data usable for classifiers? (e.g. normalise, shuffle)
 % Describe use of data store and how it helps in getting data faster.
 
-\subsection{Problems faced with raw data}
+\section{Problems faced with raw data}
 % Trouble opening the file on basic programs like Microsoft Excel --> pandas and HDFStore used to mitigate.
 
-\subsection{Using SVM's}
+\section{Using SVM's}
+
+% popular method for most FS algorithms
 
 For all numerical experiments involving the different methods described below, the SVM will be used should there be a need for a classifier. For example, if the method used is a wrapper method, the cross validation error of fitting an SVM would be used to evaluate the algorithm. In contrast, in a filter method, the SVM would not come into play.
 
@@ -593,7 +654,7 @@ This hypothesis was tested on our data set. Indeed, using the RBF kernel with al
 
 Furthermore, it is not sufficient to simply assume the default penalty parameter $C=1.0$. Instead, as Hsu et. al suggested, performing a grid search on $C$ would allow us to find the optimal $C$. However, due to time constraints, the following experiments would stick to the default value of $C$. Moreover, this proejct focuses on the feature selection algorithms, not the parameters of the SVM.
 
-\subsection{Data preprocessing}
+\section{Data preprocessing}
 % Shuffling the data (random_state) + rationale
 % Normalise data before training on SVM classifier.
 % Store shuffled data in data store.
@@ -602,21 +663,26 @@ Hsu et. al also described the importance of scaling our data before fitting an S
 
 Furthermore, as the raw data was sorted based on the classification (target label) of each sample, it is sensible to shuffle the data such that the target labels would not be in a particular order. The cross validation method also partitions the data set into folds, and the process of fitting a classifier on a fold would be affected if all the target labels are the same. The shuffling was done using the \texttt{sklearn.utils.shuffle} method. The method also allows us to set the reproducibility of the shuffling. Furthermore, once the entire data set and labels are shuffled, these are stored in the DataStore, and retrieved if needed.
 
-\section{Description of methods used}
+\chapter{Description of methods used}
 
-\subsection{Restricted Forward Selection (RFS)} \label{body:rfs}
+\section{Restricted Forward Selection (RFS)} \label{body:rfs}
 
 % Proposed by Deng.
 % Heuristic search.
 % Less optimal than sequential forward search, but justifiable for amount of data?
 
-The pseudocode of the RFS algorithm \cite{deng1998omega} is listed in algorithm \ref{RFSAlgo} on page \pageref{RFSAlgo}. THE RFS is a greedy heuristic search that searches through part of the space of features that are the most promising; that is, it only considers features that give the best cross validation results.
+The pseudocode of the RFS algorithm \cite{deng1998omega} is listed in algorithm \ref{RFSAlgo} on page \pageref{RFSAlgo}. The RFS is a greedy heuristic search that searches through part of the space of features that are the most promising; that is, it only considers features that give the best cross validation results.
 
 Suppose there are $M$ features in total. Firstly, RFS iterates through each feature and records the cross validation result by fitting an SVM with just one feature. A list is used to keep track of these scores. It is then sorted. The feature with the best cross validation result is selected as the first feature (call it $f_1$). Then, in the second iteration, RFS iterates through this sorted list and pairs each remaining feature with $f_1$ to form a pair, and an SVM is fitted using this pair of features. RFS then continues down this list until $M/2$ features are formed. In the third round, RFS will iterate through $M/3$ of these features and so on.
 
+Since the RFS algorithm uses the SVM to determine the classification score, it can be classified as a \textit{wrapper} method.
+
 While the sequential forward search (SFS - section \ref{bg:fs:greedy}) incrementally selects the best feature to include in the existing set of features $S$ by considering \textit{all} remaining features that are not in $S$, RFS only considers a part of these remaining features. The features that RFS considers in each iteration are those that produce the best cross validation results individually.
 
-\subsubsection{Runtime analysis}
+\subsection{Relevance and redundancy}
+% Explain how RFS takes into account relevance and redundancy.
+
+\subsection{Runtime analysis}
 In the first ``round'' of the algorithm, all $M$ features are evaluated. In the second ``round'', $M/2$ features are evaluated. Suppose this continues for $2^n$ rounds.
 
 Then, we can calculate the number of evaluations the algorithm performs:
@@ -650,11 +716,11 @@ In contrast, the SFS algorithm iterates through the whole feature set in each ``
 It is evident that since RFS is a greedier variant (it iterates only a fraction of the features each time) of SFS, the solution returned by RFS would most likely be less optimal than that by SFS. However, we need to find a balance between computational complexity and optimality of our solution. As $M$ is large in this case, the time complexity of the RFS would be helpful in selecting $k$ features within a manageable amount of time, although we have to be aware that the optimality of RFS is not guaranteed.
 
 
-\subsection{Maximum relevance minimum multi-collinearity (MRmMC)} \label{mrmmc}
+\section{Maximum relevance minimum multi-collinearity (MRmMC)} \label{mrmmc}
 
 Recently, the MRmMC method was proposed as a filter method \cite{RefWorks:187}. The authors recognised the drawbacks and computational efforts required when using mutual information as a heuristic to quantify relevance and redundancy. Furthermore, MRmMC does not require any parameter (with the exception of $k$, the number of features to select), and also does not need the algorithm to enforce a threshold. Relevance is quantified using conditional expectations, and redundancy is measured with correlation coefficients.
 
-\subsubsection{Relevance}
+\subsection{Relevance}
 % Use of conditional expectation to measure relevance.
 % Use of coefficient of determination to measure redundancy.
 % Coefficient of determination
@@ -666,9 +732,6 @@ r_{qn}(X, Y) = \left( 1 - \frac{E[\var(X|Y)]}{\var(X)} \right)^{\sfrac{1}{2}}
 
 
 To understand the rationale behind this measure, we will need to lay out several definitions and properties of conditional probabilities:
-
-%\theoremstyle{definition}
-\newtheorem{mydef}{Definition}[subsubsection]
 
 \begin{mydef}[Marginal expectation]
 \label{mrmmc:def:margex}
@@ -771,7 +834,7 @@ As such, MRmMC aims to find features in the feature set $F$, that are strongly r
 \argmax_{f \in F} r_{qn}(f, c)
 \end{align*}
 
-\subsubsection{Computing relevance}
+\subsection{Computing relevance}
 Now, we need to investigate how the terms in $r_{qn}$ can be computed using the raw data. From equation \ref{mrmmc:eq:exp2},
 \begin{align*}
 E_Y [ \var(X \, | \, Y) ]
@@ -815,7 +878,7 @@ E[X] &= \frac{1}{3} \, (0.5+0.2+0.1) \approx 0.2666 \\
 
 As such, we can employ the same computation method to compute the necessary expectations and variance for our data.
 
-\subsubsection{Redundancy}
+\subsection{Redundancy}
 
 Now, we investigate how the MRmMC algorithm seeks to minimise the redundancy within the set of selected features.
 
@@ -846,7 +909,7 @@ where $\bar{x}$ and $\bar{y}$ denote the mean of $x$ and $y$ respectively. We ca
 As mentioned above, since we would like to reduce the redundancy between features, we would need to minimise $R^2$ between $f_k$ and the previously selected features.
 
 
-\subsubsection{Computing redundancy}
+\subsection{Computing redundancy}
 
 The only challenging aspect of computing $R^2$ is the orthogonalisation of the features. The MRmMC paper \cite{RefWorks:187} derives the orthogonal vector $q_k$ of $f_k$ with respect to a set of orthogonal vectors $Q = \left\lbrace q_i: i \in [1, k-1] \right\rbrace$ via:
 \begin{align*}
@@ -888,21 +951,19 @@ $A_j = A_j - Q_k \times R(k, j) $ \;
 
 
 
-\subsection{Integrating genetic algorithms with MRmMC}
+\section{Integrating genetic algorithms with MRmMC} \label{ga:mrmmc}
 
-\subsection{Use of high performance computing}
+\section{Use of high performance computing}
 
-\section{Results}
+\chapter{Results}
+% Include insights and discussions.
 
-\section{Comparison with standard datasets}
+\chapter{Comparison with standard datasets}
 
-\section{Insights and discussion of results}
-
+\chapter{Conclusion}
 \section{Further work}
 
-\section{Conclusion}
-
-\section{Notes}
+\chapter{Notes}
 \begin{itemize}
     \item The \texttt{pandas} library was used to store the large csv file. Long time to read csv file, but we do not want to take the time to read the csv file each time we run the code.
     
