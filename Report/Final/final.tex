@@ -1,5 +1,4 @@
 \documentclass[12pt, twoside, a4paper]{report}
-
 \usepackage{parskip}
 \usepackage[english]{babel}
 \usepackage[utf8]{inputenc}
@@ -20,8 +19,9 @@
 \usepackage[ruled,vlined]{algorithm2e}
 \usepackage{xfrac}
 \usepackage{multirow}
-
+\usepackage{epstopdf}
 \usepackage{fancyhdr}
+\usepackage{titling}
 
 
 \pagestyle{fancy}
@@ -36,20 +36,73 @@
 
 \newtheorem{definition}{Definition}[subsection]
 
-\begin{document}
 
 \title{MEng Individual Project (JMC) \\ Project Report}
 
-\author{Daren Sin (ds2912) \\ CID: 00732331 \\ \\ Supervisor: Panos Parpas}
+\author{Daren Sin \\  Supervisor: Dr. Panos Parpas}
 
 \date{\today}
-\maketitle
+
+
+\begin{document}
+
+\begin{titlingpage}
+
+\vspace*{4cm}
+
+\begin{center}
+\includegraphics[height=3cm]{imperial}
+\end{center}
+
+\vspace{3cm}
+
+\begin{center}
+\LARGE \textsc{\thetitle}
+\end{center}
+
+\vspace{2cm}
+
+\begin{center}
+\Large \textit{Author:} \textsc{Daren Sin}
+
+\textit{Supervisor:} \textsc{Dr. Panos Parpas}
+
+\textit{Second marker:} \textsc{Dr. Ruth Misener}
+\end{center}
+
+\vspace{4cm}
+
+\begin{center}
+\large \textsc{\thedate}
+\end{center}
+
+
+
+
+
+\end{titlingpage}
+
+
+
+
+
+
+%\maketitle
 
 \pagenumbering{roman}
 
 \chapter*{Abstract}
 
 \chapter*{Acknowledgements}
+
+I would like to thank:
+\begin{itemize}
+  \item Dr. Panos Parpas
+  \item Dr. Karim Malki
+  \item Dr. Ruth Misener
+  \item Dr. Fariba Sadri, my personal tutor, for her guidance and advice, especially in my last year of studies.
+\end{itemize}
+
 
 \tableofcontents
 
@@ -454,7 +507,7 @@ As mentioned in section \ref{bg:fs:purpose}, the cost of an exhaustive search on
 
 For example, the \textit{sequential forward selection} (SFS) \cite{RefWorks:177} is a wrapper method that involves a greedy search strategy. The method starts with $S=\emptyset$. For each feature $m$, we compute an evaluation function, $J(\cdot)$, which, in this context, is the classification score of the learner from just using $m$ alone (i.e. only 1 feature). The scores are then sorted, and the feature (call it $f_1$) with the highest score is selected. $f_1$ is then paired sequentially with each of the remaining features to form a subset, and classification scores using just 2 features are obtained and sorted. Let $f_2$ be the feature where the set $S= \left\lbrace f_1, f_2 \right\rbrace$ has the highest classification score. The process continues until we have our desired $k$ features.
   
-A variant is the \textit{sequential backward selection} (SBS), which starts with all $M$ features instead and SBS sequentially removes one feature. However, we note that SBS starts with the full set of $M$ features and works backwards. This suggests that SBS will take a longer time than SFS to give us our desired number of features $k$, especially when $k$ is a small number \cite{RefWorks:190}.
+A variant is the \textit{sequential backward selection} (SBS), which starts with all $M$ features instead and SBS sequentially removes one feature. However, we note that SBS starts with the full set of $M$ features and works backwards. This suggests that SBS will take a longer time than SFS to give us our desired number of features $k$, especially when $k$ is a small number \cite{RefWorks:190}. Furthermore, SBS might give us a better result, but we might end up with larger feature subsets and longer computational time \cite{RefWorks:208}.
 
 Another variant is the \textit{floating forward/backward search} strategy proposed by Pudil \cite{RefWorks:178}. Pudil noted that both SFS and SBS suffered from a ``nesting effect'', where previously selected or discarded features cannot be considered again in SFS and SBS respectively. This floating variant tackles this problem.
 
@@ -546,7 +599,7 @@ Genetic algorithms (GA's) are frequently used as a heuristic search method to ex
 
 The following terms are often used in the context of GA's:
 \begin{itemize}
-  \item A \textit{chromosome} describes a solution \cite{RefWorks:205}. Usually, a chromosome uses a binary encoding to represent a solution. In the context of feature selection, an array, say $A$, can be used to store a chromosome, and each element in the array, $A[i]$, is either 0 or 1, which means a feature is not selected or a feature is selected, respectively.
+  \item A \textit{chromosome} describes a solution \cite{RefWorks:205, RefWorks:209}. Usually, a chromosome uses a binary encoding to represent a solution. In the context of feature selection, an array, say $A$, can be used to store a chromosome, and each element in the array, $A[i]$, is either 0 or 1, which means a feature is not selected or a feature is selected, respectively.
   
   \item The $i$th \textit{generation} describes the $i$th iteration of the GA.
   
@@ -564,6 +617,8 @@ The following terms are inspired by evolution, and characterise the probabilisti
   \item The \textit{selection} process selects the fittest chromosome(s) of a population. Depending on the strategy that one employs, the selected chromosome(s) will either be selected as parents for crossover, or they will be retained and moved to the next generation (\textit{elitism/cloning}  strategy \cite{RefWorks:202}). One can also select the chromosomes with the worst fitness for crossover, in hope that this will raise the overall fitness of the population \cite{RefWorks:203}.
   
 \end{itemize}
+
+GA's encapsulate the concept of \textit{survival of the fittest}, as the fitter a chromosome is, the more likely it is either copied to the next generation, or selected as a parent for crossover \cite{RefWorks:209}. Furthermore, Kudo and Sklansky also recommends using GA's for ``large-scale'' problems that involve more than 50 features \cite{RefWorks:210}.
 
 There are several ways to implement GA's, and each has its own merits and drawbacks. The ``traditional'' way of implementing a GA, such as the method described by Mitchell in \cite{RefWorks:205}, generates $p$ (defined by the user) solutions at random. For example, this method is used in \cite{RefWorks:206}, where 20 solutions are randomly generated to form the initial population of the GA. However, we note that the GA in \cite{RefWorks:206} was performed on a dataset of only 9 features. In the context of our project, storing 20 arrays of size 400000 each might impose a large memory demand.
 
