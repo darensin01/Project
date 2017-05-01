@@ -22,6 +22,18 @@
 \usepackage{epstopdf}
 \usepackage{fancyhdr}
 \usepackage{titling}
+\usepackage{afterpage}
+\usepackage{tikz}
+\usetikzlibrary{arrows, shapes.geometric, positioning}
+
+\tikzstyle{arrow} = [thick,->,>=stealth, text width=5em, text centered]
+\tikzstyle{node} = [rectangle, rounded corners, thick, minimum width=2cm, minimum height=1cm,text centered,text width=3cm, draw=black]
+
+\newcommand\blankpage{%
+    \null
+    \thispagestyle{empty}%
+    \addtocounter{page}{-1}%
+    \newpage}
 
 
 \pagestyle{fancy}
@@ -37,7 +49,7 @@
 \newtheorem{definition}{Definition}[subsection]
 
 
-\title{MEng Individual Project (JMC) \\ Project Report}
+\title{MEng Individual Project (JMC)}
 
 \author{Daren Sin \\  Supervisor: Dr. Panos Parpas}
 
@@ -48,61 +60,69 @@
 
 \begin{titlingpage}
 
-\vspace*{4cm}
+\vspace*{3cm}
 
 \begin{center}
-\includegraphics[height=3cm]{imperial}
+\includegraphics[height=3cm]{images/imperial}
 \end{center}
 
-\vspace{3cm}
-
+\vspace{2cm}
 \begin{center}
-\LARGE \textsc{\thetitle}
+\Large \textsc{Imperial College London}
+
+\textsc{Department of Computing}
 \end{center}
 
 \vspace{2cm}
 
 \begin{center}
-\Large \textit{Author:} \textsc{Daren Sin}
+\Large \textsc{\thetitle}
+
+\textbf{THE TITLE}
+\end{center}
+
+\vspace{2cm}
+
+\begin{center}
+\large \textit{Author:} \textsc{Daren Sin}
 
 \textit{Supervisor:} \textsc{Dr. Panos Parpas}
 
 \textit{Second marker:} \textsc{Dr. Ruth Misener}
 \end{center}
 
-\vspace{4cm}
+\vspace{2cm}
 
 \begin{center}
-\large \textsc{\thedate}
+\normalsize \textsc{\thedate}
 \end{center}
-
-
-
-
 
 \end{titlingpage}
 
-
-
-
-
-
-%\maketitle
-
 \pagenumbering{roman}
 
+\afterpage{\blankpage}
+
 \chapter*{Abstract}
+
+\afterpage{\blankpage}
 
 \chapter*{Acknowledgements}
 
 I would like to thank:
 \begin{itemize}
   \item Dr. Panos Parpas
-  \item Dr. Karim Malki
-  \item Dr. Ruth Misener
-  \item Dr. Fariba Sadri, my personal tutor, for her guidance and advice, especially in my last year of studies.
+  \item Dr. Karim Malki, for his help in getting me acquainted to the background of this project.
+  \item Dr. Ruth Misener, for her constructive feedback on the project.
+  \item Dr. Fariba Sadri, my personal tutor, for her patient guidance and sagely advice, especially in my last year of studies.
+  \item The High Performance Computing (HPC) team at Imperial College, for providing prompt help and valuable guidance in using the HPC facilities.
+  \item The Singapore community at Imperial College, for making my time at Imperial so memorable.
+  \item My friends, family and project mates, for their support throughout my 4 years of education at Imperial.
 \end{itemize}
 
+I would also like to acknowledge the scholarship of the \textit{Defence Science and Technology Agency, Singapore}, for the opportunity to receive an excellent education at the Department of Computing.
+
+\afterpage{\blankpage}
 
 \tableofcontents
 
@@ -263,7 +283,7 @@ This section explains and discusses Support Vector Machines\footnote{Most of the
 
 Consider our dataset that comprises $m$ features and $n$ samples. Then, the data can be written as a set: $\left\lbrace (\boldsymbol{x}_1, y_1), \dots, (\boldsymbol{x}_n, y_n) \right\rbrace$, where $\boldsymbol{x}_i \in \mathbb{R}^m$ is an $m$ dimensional vector that corresponds to the $i$-th sample. Moreover, $y_i = \pm 1$ is the label of the $i$-th sample: $y_i = 1$ if the classification is positive (e.g. sample does not have schizophrenia) and $y_i = -1$ otherwise, for $i = 1, \dots , n$.
 
-Suppose we have data points that correspond to either class 1 or class 2. The Support Vector Machine (SVM) \cite{RefWorks:122} uses a separating hyperplane to distinguish between data points that belong to class 1 and class 2. Using Statistical Learning Theory, by Vapnik et. al \cite{RefWorks:122}, the SVM finds the hyperplane with the largest margin between the two classes.
+Suppose we have data points that correspond to either class 1 or class 2. The Support Vector Machine (SVM) \cite{RefWorks:122} uses a separating hyperplane to distinguish between data points that belong to class 1 and class 2. Using Statistical Learning Theory, by Vapnik \textit{et. al} \cite{RefWorks:122}, the SVM finds the hyperplane with the largest margin between the two classes.
 
 The hyperplane is parameterised with weight vector $\boldsymbol w$ and a bias $b$. We thus solve classification problems using linear models:
 \begin{align}
@@ -420,6 +440,14 @@ The Python library \texttt{scikit-learn} also allows SVMs to be trained for clas
 
 \section{Feature selection} \label{bg:feature_selection}
 
+This section would explore the literature of feature selection, and discuss certain algorithms and methodologies employed in the literature. The following terms will be used throughout this paper:
+\begin{itemize}
+  \item $D$: Original data set.
+  \item $M$: Number of features in $D$. That is, $|D| = M$.
+  \item $S$: Reduced subset of features.
+  \item $k$: Number of features in $S$, where $k \ll M$. That is, $|S| = k$.
+\end{itemize}
+
 \subsection{Purpose and motivation} \label{bg:fs:purpose}
 % Overview of purpose of FS.
 
@@ -431,9 +459,18 @@ As mentioned in section \ref{intro_ML}, the data suffers a \textit{curse of dime
 
 Overall, there are several benefits associated with feature selection:
 \begin{itemize}
-  \item \textbf{Savings in computational cost.} By reducing the dimensions of our features, we can reduce the computational cost of our algorithm, which includes the cost incurred for training a classifier, and using the classifier to perform predictions.
+  \item \textbf{Savings in computational cost.} Reducing the dimensions of our features by removing what Kudo and Sklansky call \textit{garbage features} \cite{RefWorks:210} can improve the computational cost of our algorithm, which includes the cost incurred for training a classifier, and using the classifier to perform predictions.
   \item \textbf{Interpretable results.} In contrast with feature extraction, feature selection retains the properties of the original features, instead of returning a combination of these features (see section \ref{bg:fs:extraction}). For this project, ideally, we want to be able to obtain a compact subset of features from which we can draw biological conclusions.
   \item \textbf{Improvements in classification accuracy.} More features might, due to experimental faults or the nature of the data \cite{RefWorks:197}, lead to more noise in our data set. Having a more compact subset to train our classifier might improve the performance of the classifier \cite{RefWorks:174}.
+\end{itemize}
+
+\subsection{Implementing feature selection algorithms}
+
+Feature selection algorithms can be implemented in three ways \cite{RefWorks:210}:
+\begin{itemize}
+  \item \textbf{Specifying $k$}: The algorithm stops when the number of features we desire in our reduced subset is obtained.
+  \item \textbf{Best performance}: The algorithm terminates when the performance of the reduced subset exceeds a specified threshold.
+  \item \textbf{Balance between performance and subset size}: The last method combines the above two, for example, by maximising performance and minimising $k$.
 \end{itemize}
 
 \subsection{Feature selection versus feature extraction} \label{bg:fs:extraction}
@@ -593,42 +630,67 @@ Another method to estimate the probabilities in equations \ref{bg:fs:mi:cont} an
 
 Consequently, methods such as \textit{maximum relevance minimum multi-collinearity} (MRmMC) \cite{RefWorks:187} avoid the complexity of estimating MI between continuous variables by proposing other measures to quantify relevance and redundancy. As the measures used in this work will be used on our data set, more details will be discussed in section \ref{mrmmc}.
 
-\subsection{Genetic algorithms in feature selection}
+\subsection{Genetic algorithms in feature selection} \label{bg:fs:ga}
 
-Genetic algorithms (GA's) are frequently used as a heuristic search method to explore solutions by repeatedly changing and combining them. It is based on the theory of evolution and its concept of natural selection and \textit{survival of the fittest} \cite{RefWorks:205}. GA's also use genetic operators that have an element of randomness, such as crossover, mutation and selection of the fittest solution(s) to avoid local optimas \cite{RefWorks:207}.
+Genetic algorithms (GA's) are frequently used as a heuristic search method to explore solutions by repeatedly changing and combining them. It is based on the theory of evolution and its concept of natural selection and \textit{survival of the fittest} \cite{RefWorks:205}. GA's search through a space of potential solutions by using probabilistic genetic operators to avoid local optimas and produce better solutions \cite{RefWorks:210, RefWorks:207, RefWorks:211}.
 
 The following terms are often used in the context of GA's:
 \begin{itemize}
-  \item A \textit{chromosome} describes a solution \cite{RefWorks:205, RefWorks:209}. Usually, a chromosome uses a binary encoding to represent a solution. In the context of feature selection, an array, say $A$, can be used to store a chromosome, and each element in the array, $A[i]$, is either 0 or 1, which means a feature is not selected or a feature is selected, respectively.
+  \item A \textbf{chromosome} describes a solution \cite{RefWorks:205, RefWorks:209}. Usually, a chromosome uses a binary encoding to represent a solution. In the context of feature selection, an array, say $A$, can be used to store a chromosome, and each element in the array, $A[i]$, is either 0 or 1, which means a feature is not selected or a feature is selected, respectively.
   
-  \item The $i$th \textit{generation} describes the $i$th iteration of the GA.
+  \item The $i$th \textbf{generation} describes the $i$th iteration of the GA.
   
-  \item A \textit{population} is the set of chromosomes (solutions) in a generation.
+  \item A \textbf{population} is the set of chromosomes (solutions) in a generation.
 \end{itemize}
 
 The following terms are inspired by evolution, and characterise the probabilistic aspect of a GA. These operators are responsible for evolving a population:
 \begin{itemize}
-  \item \textit{Fitness} quantifies how desirable a chromosome is with respect to the problem the GA is trying to solve. For example, \cite{RefWorks:204} uses classification error as its fitness criteria, \cite{RefWorks:200} uses both the classification error and the dimension of a chromosome to quantify its fitness, while \cite{RefWorks:201} uses correlation, which might not be feasible when we need to measure the correlation between a discrete and a continuous variable.
+  \item \textbf{Fitness} quantifies how desirable a chromosome is with respect to the problem the GA is trying to solve. For example, \cite{RefWorks:204} uses classification error as its fitness criteria, \cite{RefWorks:200} uses both the classification error and the dimension of a chromosome, while \cite{RefWorks:201} uses correlation, which might not be feasible when we need to measure the correlation between a discrete and a continuous variable.
   
-  \item Two parents can perform a \textit{crossover} to produce a pair of potentially fitter offsprings. There are several strategies for the crossover operator, such as one-point \cite{RefWorks:201}, two-point \cite{RefWorks:202, RefWorks:204} and uniform crossover.
+  \item Two parents can perform a \textbf{crossover} to produce a pair of potentially fitter offsprings. There are several strategies for the crossover operator, such as one-point \cite{RefWorks:201}, two-point \cite{RefWorks:202, RefWorks:204} and uniform crossover.
   
-  \item The \textit{mutation} operator probabilistically selects and changes one or more elements of a chromosome. For example, \cite{RefWorks:201, RefWorks:204} use a uniform distribution to select these elements.
+  \item The \textbf{mutation} operator probabilistically selects and changes one or more elements of a chromosome. For example, \cite{RefWorks:201, RefWorks:204} use a uniform distribution to select these elements.
 
-  \item The \textit{selection} process selects the fittest chromosome(s) of a population. Depending on the strategy that one employs, the selected chromosome(s) will either be selected as parents for crossover, or they will be retained and moved to the next generation (\textit{elitism/cloning}  strategy \cite{RefWorks:202}). One can also select the chromosomes with the worst fitness for crossover, in hope that this will raise the overall fitness of the population \cite{RefWorks:203}.
+  \item The \textbf{selection} process selects the fittest chromosome(s) of a population. Depending on the strategy that one employs, the selected chromosome(s) will either be selected as parents for crossover, or they will be retained and moved to the next generation (\textit{elitism/cloning}  strategy \cite{RefWorks:202, RefWorks:212}). One can also select the chromosomes with the worst fitness for crossover, in hope that this will raise the overall fitness of the population \cite{RefWorks:203}.
   
 \end{itemize}
 
-GA's encapsulate the concept of \textit{survival of the fittest}, as the fitter a chromosome is, the more likely it is either copied to the next generation, or selected as a parent for crossover \cite{RefWorks:209}. Furthermore, Kudo and Sklansky also recommends using GA's for ``large-scale'' problems that involve more than 50 features \cite{RefWorks:210}.
+GA's encapsulate the concept of \textit{survival of the fittest}, as the fitter a chromosome is, the more likely it is either copied to the next generation, or selected as a parent for crossover \cite{RefWorks:209}. Furthermore, Kudo and Sklansky also recommend GA's for ``large-scale'' problems that involve more than 50 features \cite{RefWorks:210}.
 
-There are several ways to implement GA's, and each has its own merits and drawbacks. The ``traditional'' way of implementing a GA, such as the method described by Mitchell in \cite{RefWorks:205}, generates $p$ (defined by the user) solutions at random. For example, this method is used in \cite{RefWorks:206}, where 20 solutions are randomly generated to form the initial population of the GA. However, we note that the GA in \cite{RefWorks:206} was performed on a dataset of only 9 features. In the context of our project, storing 20 arrays of size 400000 each might impose a large memory demand.
+There are several ways to implement GA's, and each has its own merits and drawbacks. The ``traditional'' way of implementing a GA, such as the method described by Mitchell in \cite{RefWorks:205}, initially generates $p$ (defined by the user) solutions at random. For example, this method is used in \cite{RefWorks:206}, where 20 solutions are randomly generated to form the initial population of the GA. However, we note that the GA in \cite{RefWorks:206} was performed on a dataset of only 9 features. In the context of our project, storing 20 arrays of size 400000 each might impose a large memory demand.
 
-In contrast, several works such as \cite{RefWorks:197, RefWorks:198, RefWorks:199, RefWorks:200, RefWorks:203} utilise a GA in a ``two-stage'' process. First, a filtering step removes features that might be irrelevant to the target class or redundant with respect to other features. For example, \cite{RefWorks:197, RefWorks:198, RefWorks:203} use mutual information to conduct an initial filter on all the features. \cite{RefWorks:201} argues that the reduced search space still contains features that are the most promising. Second, the set of filtered features is then passed on to a GA to explore solutions in the reduced space. It uses probabilistic operators to evolve the selected features from the first phase.
+In contrast, several works such as \cite{RefWorks:197, RefWorks:198, RefWorks:199, RefWorks:200, RefWorks:203} utilise a GA in a ``two-stage'' process. First, a filtering step removes features that might be irrelevant to the target class or redundant with respect to other features. For example, \cite{RefWorks:197, RefWorks:198, RefWorks:203} use mutual information to conduct an initial filter on all the features. Second, the set of filtered features is then passed on to a GA to explore solutions in the reduced space. This idea is illustrated in Figure \ref{bg:fs:ga:twoStage}.
 
-This two-stage process offers an improvement in terms of memory demand, as the filter process shrinks the dimensions of the solution space for the GA. Instead of storing all 400000 features, we only need to keep track of the binary strings encoded for the reduced search space. However, as we only consider features deemed to be potentially important by the filter process, the GA implemented this way might suffer from a compromise in optimality.
+\begin{figure}
+\centering
+\begin{tikzpicture}[node distance=3cm]
+\node (original) [node] {Original $M$ features};
+\node (filtered) [node, right=of original] {Filtered $N$ features ($N<M$)};
+\node (final) [node, right=of filtered] {Final $k$ features};
 
-Furthermore, one drawback of GA's is the number of parameters and strategies that need to be tuned. For example, in performing the \textit{crossover}, the parents can either be  the solutions with the worst fitness \cite{RefWorks:203}, or randomly selected from the population \cite{RefWorks:205}. The \textit{mutation} rate, which often takes a small value (e.g. 1 to 15\%) \cite{RefWorks:206}, say $k$, will uniformly choose $k$ percent of a chromosome, and these elements would have their bits inverted. One would need to take the time to investigate what parameters and/or strategies would work best for the data set.
+\draw [arrow] (original) -- node {Filter process} (filtered);
+\draw [arrow] (filtered) -- node {Genetic algorithm} (final);
 
-Nevertheless, it is interesting to investigate if incorporating a GA with the MRmMC method, briefly discussed in section \ref{bg:fs:mi}, will improve the classification score. This will be discussed in detail in section \ref{ga:mrmmc}.
+\end{tikzpicture}
+\caption{Two stage genetic algorithm.}
+\label{bg:fs:ga:twoStage}
+\end{figure}
+
+This two-stage process offers an improvement in terms of memory demand, as the filter process shrinks the dimension of the solution space for the GA. Instead of storing all 400000 features, we only need to keep track of the binary strings encoded for the reduced search space. However, although \cite{RefWorks:201} argues that the reduced search space still contains features that are the most promising, the GA implemented this way evidently suffers from a compromise in optimality.
+
+Even though previous works using GA's have reported positive experimental results, one difficulty of GA's is the number of parameters that need to be tuned \cite{RefWorks:210}:
+\begin{itemize}
+  \item Population size
+  \item Maximum number of generations
+  \item Crossover rate
+  \item Mutation rate
+\end{itemize}
+
+Moreover, different strategies can be used in certain parts of the GA. For example, in performing the \textit{crossover}, the parents can either be the solutions with the worst fitness \cite{RefWorks:203}, or selected in proportion to their fitness \cite{RefWorks:205}. The mutation rate, which often takes a small value (e.g. 1 to 15\%) \cite{RefWorks:206}, say $m$, will uniformly choose $m$ percent of a chromosome, and these elements would have their bits inverted.
+
+One would need to take the time to investigate what parameters and/or strategies would work best for the data set, and justify any parameters that seem arbitrary.
+
+Nevertheless, as an extension proposed by the authors, it is interesting to investigate if incorporating a GA with the MRmMC method (briefly discussed in section \ref{bg:fs:mi})  will improve the classification score. This will be discussed in detail in section \ref{ga:mrmmc}.
 
 
 \subsection{Previous work in feature selection methods} \label{bg:fs:previous}
@@ -672,17 +734,17 @@ There are also ``floating'' versions of the above selection methods, which allow
 There also has been work that combines genetic algorithms with SVMs \cite{RefWorks:120}. However, these algorithms are deemed to be more time consuming, although it can cover more combinations of feature subsets.
 
 \subsection{Novel methods in feature selection} \label{bg_GLGS}
-In \cite{RefWorks:119}, Tang et. al suggested two novel methods for feature selection:
+In \cite{RefWorks:119}, Tang \textit{et. al} suggested two novel methods for feature selection:
 \begin{itemize}
 \item Gradient-based leave-one-out gene selection (GLGS) algorithm
 \item Leave-one-out calculation sequential forward selection (LOOCSFS) algorithm
 \end{itemize}
 
-The GLGS uses a gradient-based algorithm, while the LOOCSFS incorporates the Sequential Forward Selection method and uses the leave-one-out cross validation error (LOOE) of the SVM as a selection criterion. Experiments on different datasets by Tang et. al seem to come to the conclusion that the GLGS algorithm might be a good choice for small number of samples (individuals in our context), with large $d$ and $t$, where $d$ is the number of features and $t$ is the number of features to be selected. We can take this approach in our context, and see if either method outperforms the other with our data.
+The GLGS uses a gradient-based algorithm, while the LOOCSFS incorporates the Sequential Forward Selection method and uses the leave-one-out cross validation error (LOOE) of the SVM as a selection criterion. Experiments on different datasets by Tang \textit{et. al} seem to come to the conclusion that the GLGS algorithm might be a good choice for small number of samples (individuals in our context), with large $d$ and $t$, where $d$ is the number of features and $t$ is the number of features to be selected. We can take this approach in our context, and see if either method outperforms the other with our data.
 
-Furthermore, Tang et. al pointed out that the number of features to be selected by the algorithm ($t$) must be defined beforehand for the algorithm to work. The experimenters set this number to be 100 for all the datasets that were explored. However, the paper later recommends different values of $t$ for two of the datasets that were used.
+Furthermore, Tang \textit{et. al} pointed out that the number of features to be selected by the algorithm ($t$) must be defined beforehand for the algorithm to work. The experimenters set this number to be 100 for all the datasets that were explored. However, the paper later recommends different values of $t$ for two of the datasets that were used.
 
-This suggests that $t$ might be dependent on the dataset used. We can thus select $t$ using the approaches listed by Tang et. al:
+This suggests that $t$ might be dependent on the dataset used. We can thus select $t$ using the approaches listed by Tang \textit{et. al}:
 \begin{itemize}
 \item Terminate the algorithm if the selection criterion does not improve much when more features are added.
 \item Plot a graph of the error against $t$. We can inspect visually the most optimal value of $t$.
@@ -703,18 +765,18 @@ This suggests that $t$ might be dependent on the dataset used. We can thus selec
 
 For all numerical experiments involving the different methods described below, the SVM will be used should there be a need for a classifier. For example, if the method used is a wrapper method, the cross validation error of fitting an SVM would be used to evaluate the algorithm. In contrast, in a filter method, the SVM would not come into play.
 
-The SVM is fitted using the \textit{scikit-learn} Python software \cite{scikit-learn}. Calling the \texttt{SVC()} method would create a classifier based on libsvm \cite{libsvm} with default parameters, such as the default Radial Basis Function (RBF) kernel, and the error parameter $C=1.0$ (see section \ref{bg:ml:svm:model}). However, a practical guide by Hsu et. al in \cite{RefWorks:128} explains that when the number of features is much larger than the number of samples, using a linear kernel would suffice; in other words, we might not need to map our data into higher dimensions.
+The SVM is fitted using the \textit{scikit-learn} Python software \cite{scikit-learn}. Calling the \texttt{SVC()} method would create a classifier based on libsvm \cite{libsvm} with default parameters, such as the default Radial Basis Function (RBF) kernel, and the error parameter $C=1.0$ (see section \ref{bg:ml:svm:model}). However, a practical guide by Hsu \textit{et. al} in \cite{RefWorks:128} explains that when the number of features is much larger than the number of samples, using a linear kernel would suffice; in other words, we might not need to map our data into higher dimensions.
 
 This hypothesis was tested on our data set. Indeed, using the RBF kernel with all the features, the cross validation score obtained was 0.834644, while with the linear kernel, the score was 0.929160. The cross validation scores can be obtained via the method \texttt{sklearn.model\_selection.cross\_val\_score}. The number of folds performed performed is 5. These settings will be used throughout the experiments in this project.
 
-Furthermore, it is not sufficient to simply assume the default penalty parameter $C=1.0$. Instead, as Hsu et. al suggested, performing a grid search on $C$ would allow us to find the optimal $C$. However, due to time constraints, the following experiments would stick to the default value of $C$. Moreover, this proejct focuses on the feature selection algorithms, not the parameters of the SVM.
+Furthermore, it is not sufficient to simply assume the default penalty parameter $C=1.0$. Instead, as Hsu \textit{et. al} suggested, performing a grid search on $C$ would allow us to find the optimal $C$. However, due to time constraints, the following experiments would stick to the default value of $C$. Moreover, this proejct focuses on the feature selection algorithms, not the parameters of the SVM.
 
 \section{Data preprocessing}
 % Shuffling the data (random_state) + rationale
 % Normalise data before training on SVM classifier.
 % Store shuffled data in data store.
 
-Hsu et. al also described the importance of scaling our data before fitting an SVM on the data. In particular, scaling the data would prevent features with large values from dominating those with smaller values. Restricting the values of features such that each feature has zero mean and unit variance is recommended when using the \texttt{SVC()} package. This was done with the \texttt{sklearn.preprocessing} package in \textit{scikit-learn}.
+Hsu \textit{et. al} also described the importance of scaling our data before fitting an SVM on the data. In particular, scaling the data would prevent features with large values from dominating those with smaller values. Restricting the values of features such that each feature has zero mean and unit variance is recommended when using the \texttt{SVC()} package. This was done with the \texttt{sklearn.preprocessing} package in \textit{scikit-learn}.
 
 Furthermore, as the raw data was sorted based on the classification (target label) of each sample, it is sensible to shuffle the data such that the target labels would not be in a particular order. The cross validation method also partitions the data set into folds, and the process of fitting a classifier on a fold would be affected if all the target labels are the same. The shuffling was done using the \texttt{sklearn.utils.shuffle} method. The method also allows us to set the reproducibility of the shuffling. Furthermore, once the entire data set and labels are shuffled, these are stored in the DataStore, and retrieved if needed.
 
@@ -737,7 +799,7 @@ While the sequential forward search (SFS - section \ref{bg:fs:greedy}) increment
 \subsection{Relevance and redundancy}
 % Explain how RFS takes into account relevance and redundancy.
 
-\subsection{Runtime analysis}
+\subsection{Runtime}
 In the first ``round'' of the algorithm, all $M$ features are evaluated. In the second ``round'', $M/2$ features are evaluated. Suppose this continues for $2^n$ rounds.
 
 Then, we can calculate the number of evaluations the algorithm performs:
@@ -764,9 +826,9 @@ Thus, the total number of evaluations made by RFS is
 \begin{align*}
 M \sum_{j=1}^k \frac{1}{j} < M \log k
 \end{align*}
-where $k$ in this context is the number of features that we want to retain from the full feature set. So, the RFS algorithm is executed in $O(M\log k)$ (ignoring the complexity of the SVM classification).
+where $k$ in this context is the number of features that we want to retain from the full feature set. So, the RFS algorithm is executed in $\mathcal{O}(M\log k)$ (ignoring the complexity of the SVM classification).
 
-In contrast, the SFS algorithm iterates through the whole feature set in each ``round''. So, its complexity would be $O(Mk)$.
+In contrast, the SFS algorithm iterates through the whole feature set in each ``round''. So, its complexity would be $\mathcal{O}(Mk)$. In the extreme, if we want SFS to iterate through all the features, instead of terminating with $k$ features, the runtime complexity of SFS would be $\mathcal{O}(M^2)$.
 
 It is evident that since RFS is a greedier variant (it iterates only a fraction of the features each time) of SFS, the solution returned by RFS would most likely be less optimal than that by SFS. However, we need to find a balance between computational complexity and optimality of our solution. As $M$ is large in this case, the time complexity of the RFS would be helpful in selecting $k$ features within a manageable amount of time, although we have to be aware that the optimality of RFS is not guaranteed.
 
@@ -972,7 +1034,7 @@ q_k = f_k  - \frac{f_k^\top q_1}{q_1^\top q_1}q_1  - \frac{f_k^\top q_2}{q_2^\to
 \end{align*}
 which is evidently the \textit{classical Gram-Schmidt} (CGS) process. However, CGS is notable for its numerical instability because there is usually a loss of orthogonality among the resulting $q_k$ vectors \cite{RefWorks:195}. Instead, the \textit{modified Gram-Schmidt} (MGS) is preferred. Although there are several algorithms in the literature of linear algebra that solves the problem of instability of CGS such as Householder transformations, this project will not delve further into these algorithms, but instead simply use MGS to compute the set of orthogonal vectors $Q$. \cite{RefWorks:194} also notes that MGS is almost as numerically stable as algorithms that use Householder reflectors.
 
-The pseudocode in algorithm \ref{MGS}, taken from \cite{RefWorks:195}, outlines the procedure for MGS. We also note that MGS produces an upper triangular matrix $\boldsymbol R$ that does not play a role in computing $R^2$. Furthermore, the original matrix $A$ in algorithm \ref{MGS} is overwritten by \textit{orthonormal} columns, which are orthogonal columns with the added constraint that they have a magnitude (2-norm) of 1. This would not affect the results:
+The pseudocode in algorithm \ref{MGS}, taken from \cite{RefWorks:195}, outlines the procedure for MGS. We also note that MGS produces an upper triangular matrix $\boldsymbol R$ that does not play a role in computing $R^2$. Furthermore, the original matrix $A$ in algorithm \ref{MGS} is overwritten by \textit{orthonormal} columns, which are orthogonal columns with the added constraint that they have a magnitude (2-norm) of 1. This would not affect how $R^2$ is used as described above:
 
 \begin{proof}
 Suppose we have an arbitrary vector $q \in \mathbb{R}^n$ and a normalised vector $\tilde{q} \in \mathbb{R}^n$ such that $\tilde{q} = \sfrac{q}{\| q \|_2}$. Then,
@@ -1008,6 +1070,29 @@ $A_j = A_j - Q_k \times R(k, j) $ \;
 
 \section{Integrating genetic algorithms with MRmMC} \label{ga:mrmmc}
 
+As mentioned in section \ref{bg:fs:ga}, genetic algorithms (GA's) are a popular method in the literature of feature selection. The GA implemented in this project has two variants, in terms of the evaluation function of the GA (the function that determines the \textit{fitness} of the chromosomes). First, we can evaluate fitness based on the classification scores of an SVM. Second, fitness can be quantified based on the relevance and redundancy measure of MRmMC. It will be interesting to see if either method will outperform the other.
+
+\subsection{Parameters and strategies}
+
+First, we will use the ``two-stage'' GA process, as illustrated in Figure \ref{bg:fs:ga:twoStage}, due to the large number of features that we need to deal with in the epigenetics data set. To stick to the MRmMC method as closely as possible, we can use the correlation coefficient $r_{qn}$ to choose the best few features to pass to the GA. Alternatively, we could also use the classification score of each feature on an SVM as a guide to eliminate features that might not be relevant to the target class, as used in RFS.
+
+Next, the \textit{elitism/cloning} strategy will be used when creating a new generation of chromosomes, as performed in, for example, \cite{RefWorks:212}. By copying the best solutions in each generation to the next, we can guarantee that the maximum fitness of the next generation will not decrease.
+
+The literature also offers different stopping criteria for the GA. For example, \cite{RefWorks:202} stops the GA after a fixed number of generations, while \cite{RefWorks:212} stops the algorithm when there is no change in the fitness function in 30 generations.
+
+Lastly, the parameters used in the algorithm implemented are summarised in the table below:
+
+\begin{center}
+    \begin{tabular}{| c | c |} \hline
+    Mutation rate $p_m$ &  \\ \hline
+    Crossover rate $p_c$ & \\ \hline
+    Cloning/elitism rate $p_e$ &  \\ \hline
+    Population size $P$ & \\ \hline
+    Number of generations $G$ & \\ \hline
+    \end{tabular}
+\end{center}
+
+
 \section{Use of high performance computing}
 
 \chapter{Results}
@@ -1017,6 +1102,15 @@ $A_j = A_j - Q_k \times R(k, j) $ \;
 
 \chapter{Conclusion}
 \section{Further work}
+
+One serious limitation of the work presented in this project, is the fact that only a small percentage of the features in our reduced subset $S$ is explored. The ``optimal'' solution generated from the feature selection algorithms presented here might be a local optimum.
+
+If there were more time and resources, we could explore the possibility of including more features in the subset $S$, and find other local optima, if any.
+
+Furthermore, as mentioned in section \ref{bg:fs:ga}, there are many parameters in genetic algorithms that need to be tuned, and it might be enlightening to experiment with parameters that are different from the ones used in this project.
+
+As mentioned in section \ref{bg:fs:mi}, mutual information (MI) is a highly popular measure to quantify the relationship between features and the target class (relevance) and between features themselves (redundancy). As our data set uses continuous variables, it is difficult to estimate probabilities involving these variables. The Parzen Window \cite{RefWorks:183} seems to be a feasible way to estimate these probabilities. A logical extension will be to use MI with the Parzen Window to quantify relevance and redundancy. This can then be combined with genetic algorithms.
+
 
 \chapter{Notes}
 \begin{itemize}
