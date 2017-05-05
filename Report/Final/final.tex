@@ -60,7 +60,7 @@
 
 \begin{titlingpage}
 
-\vspace*{3cm}
+\vspace*{2cm}
 
 \begin{center}
 \includegraphics[height=3cm]{images/imperial}
@@ -114,8 +114,8 @@ I would like to thank:
   \item Dr. Panos Parpas
   \item Dr. Karim Malki, for his help in getting me acquainted to the background of this project.
   \item Dr. Ruth Misener, for her constructive feedback on the project.
-  \item Dr. Fariba Sadri, my personal tutor, for her patient guidance and sagely advice, especially in my last year of studies.
   \item The High Performance Computing (HPC) team at Imperial College, for providing prompt help and valuable guidance in using the HPC facilities.
+  \item Dr. Fariba Sadri, my personal tutor, for her patient guidance and sagely advice, especially in my last year of studies.
   \item The Singapore community at Imperial College, for making my time at Imperial so memorable.
   \item My friends, family and project mates, for their support throughout my 4 years of education at Imperial.
 \end{itemize}
@@ -451,37 +451,64 @@ This section would explore the literature of feature selection, and discuss cert
 \subsection{Purpose and motivation} \label{bg:fs:purpose}
 % Overview of purpose of FS.
 
-Discriminant analysis, which is common in microarray data analysis and cancer classification (see section \ref{bg:cancer}), is the key idea behind this project. In the context of data with high dimensions, one of the main concerns of discriminant analysis is feature selection: instead of using all of the features or dimensions to predict the result of the classification, we use only a (small) subset of the features. These features should be representative of all the features. Feature selection is also an important step in other areas such as text categorisation \cite{RefWorks:197}.
+Discriminant analysis, which is common in microarray data analysis and cancer classification (see section \ref{bg:cancer}), is the key idea behind this project. In the context of data with high dimensions, one of the main concerns of discriminant analysis is feature selection: instead of using all of the features or dimensions to predict the result of the classification, we use only a (small) subset of the features. These features should be representative of all the features. Feature selection is also an important step in other areas such as text categorisation \cite{RefWorks:197}. We can also visualise the data set as a matrix, and tackling the feature selection problem is akin to find a smaller matrix that can be used much more efficiently that the original matrix \cite{RefWorks:163}.
 
 The process of feature selection can be described as finding a subset $S$ of the original $M$ features, such that the cardinality of $S$, $|S|=k$, where $k \ll M$. Furthermore, classification accuracy using these $k$ features should not be significantly lower than using all $M$ features. Finding ways to obtain $S$ is the main concern of feature selection.
 
 As mentioned in section \ref{intro_ML}, the data suffers a \textit{curse of dimensionality}, where the number of features exceeds the number of samples available. This usually causes \textit{over-fitting} on the classifier \cite{RefWorks:115, RefWorks:175}, which refers to the situation where the classifier can classify the training data perfectly, but performs poorly with unseen data \cite{RefWorks:98}. As such, feature selection will play an important preprocessing role in allowing us to understand the data better.
 
-Overall, there are several benefits associated with feature selection:
+Overall, there are several benefits associated with feature selection that are often mentioned in literature:
 \begin{itemize}
   \item \textbf{Savings in computational cost.} Reducing the dimensions of our features by removing what Kudo and Sklansky call \textit{garbage features} \cite{RefWorks:210} can improve the computational cost of our algorithm, which includes the cost incurred for training a classifier, and using the classifier to perform predictions.
   \item \textbf{Interpretable results.} In contrast with feature extraction, feature selection retains the properties of the original features, instead of returning a combination of these features (see section \ref{bg:fs:extraction}). For this project, ideally, we want to be able to obtain a compact subset of features from which we can draw biological conclusions.
-  \item \textbf{Improvements in classification accuracy.} More features might, due to experimental faults or the nature of the data \cite{RefWorks:197}, lead to more noise in our data set. Having a more compact subset to train our classifier might improve the performance of the classifier \cite{RefWorks:174}.
-\end{itemize}
-
-\subsection{Implementing feature selection algorithms}
-
-Feature selection algorithms can be implemented in three ways \cite{RefWorks:210}:
-\begin{itemize}
-  \item \textbf{Specifying $k$}: The algorithm stops when the number of features we desire in our reduced subset is obtained.
-  \item \textbf{Best performance}: The algorithm terminates when the performance of the reduced subset exceeds a specified threshold.
-  \item \textbf{Balance between performance and subset size}: The last method combines the above two, for example, by maximising performance and minimising $k$.
+  \item \textbf{Improvements in classification accuracy.} More features might, due to experimental faults or the nature of the data, lead to more noise in our data set \cite{RefWorks:163, RefWorks:197}. Having a more compact subset to train our classifier might improve the performance of the classifier \cite{RefWorks:174}.
 \end{itemize}
 
 \subsection{Feature selection versus feature extraction} \label{bg:fs:extraction}
 
-In contrast to feature selection, feature extraction techniques, such as principal component analysis (PCA) and Linear Discriminant Analysis (LDA), result in a set of features that is a transformation of the original features. In other words, the original features are transformed into a space with lower dimensions. For example, PCA employs a transformation to map features to a space spanned by its principal components.
+In contrast to feature selection, feature extraction techniques, such as principal component analysis (PCA) and Linear Discriminant Analysis (LDA), result in a set of features that is a transformation or combination of the original features. In other words, the original features are transformed into a space with lower dimensions. For example, PCA employs a transformation to map features to a space spanned by its principal components.
 
-Although feature extraction helps us by reducing the dimension of the data we have, the interpretation of the original features is lost through the transformation. This is a particularly pertinent problem to this project, as the project should strive to obtain features that are biologically relevant, and can be interpreted by an expert \cite{RefWorks:192}. Furthermore, the original features in the data might contain data that are irrelevant to the target class, or that might be redundant (more in section \ref{bg:fs:relevance}). Such features should ideally be removed.
+Feature extraction reduces the dimensions of the data by generating a new, compact set of features. This implies that the interpretation of the original features is lost through the transformation. Furthermore, the original features in the data might contain data that are irrelevant to the target class, or that might be redundant (more in section \ref{bg:fs:relevance}). Such features should ideally be removed.
 
-In contrast, feature selection methods preserve the original features. This allows us to interpret the result of applying classifiers to the reduced set of features \cite{RefWorks:142}.
+In contrast, feature selection methods preserve the original features by simply removing those that are not relevant to the classification task. In general, feature extraction is performed when \textit{model accuracy is more important than model interpretability} \cite{RefWorks:163}. Thus, in this project, we would want to obtain features that are biologically relevant, and can be interpreted by an expert \cite{RefWorks:192}. This allows us to interpret the result of applying classifiers to the reduced set of features \cite{RefWorks:142}.
 
-\subsection{Classification of feature selection methods}
+\subsection{Classification of feature selection methods} \label{bg:fs:classification}
+
+Feature selection methods can be categorised into one of the following \cite{RefWorks:117, RefWorks:118}:
+
+\begin{itemize}
+\item \textbf{Filters} rank features with either a univariate or multivariate measure. The former evaluates each feature individually, and selects only the top ranking features, while the latter evaluates a subset of features. No learning is involved in filters; they are independent of the classifier \cite{RefWorks:216}. Interaction between features is also not considered (see section \ref{bg:fs:relevance} on relevance and redundancy).
+
+\item \textbf{Wrappers} regard the learning algorithm as a black box, and evaluate features based on the classification score of the learner. Wrappers usually incur more computational cost due to the cross validation procedure (training and prediction steps) when evaluating the features. 
+
+\item \textbf{Embedded} methods incorporate the feature selection process into the training of the classifier. These methods combine the search in the feature space and the space of learning hypotheses, but they are specific to the choice of the classifier \cite{RefWorks:118}.
+
+\item \textbf{Hybrid} methods are usually a combination of the above approaches.
+
+\end{itemize}
+
+These methods have their own merits and drawbacks. For example, as filters are independent of the classifier, they would be computationally more efficient. However, most filters are univariate, and thus might not take into account feature redundancy (see section \ref{bg:fs:relevance}). One can use multivariate filters which consider subsets, but these incur more computational cost.
+
+On the other hand, although wrappers are reported to produce better classification accuracy than filters \cite{RefWorks:163}, they are closely associated with the choice of learning algorithm, and might not generalise to other classifiers. One can also consider employing a ``two-stage'' process, such as in \cite{RefWorks:216}, where a filter is used to remove the unimportant features, and a classifier-dependent method can then be used to further refine the remaining features.
+
+Indeed, Bolón-Canedo \textit{et. al} \cite{RefWorks:163} and Sharma \textit{et. al} \cite{RefWorks:215} echo these trades-off, by pointing out that ``the best method'' does not exist and that no single algorithm stands out in all aspects. Furthermore, Hua \textit{et. al} \cite{RefWorks:216} performed a review of feature selection algorithms using different data sets, and came to the conclusion that none of the methods that were reviewed performed consistently well across all the data sets. 
+
+Previous works on feature selection seek to find a method that reports good classification accuracy for a specific problem setting. This is evident in previous works in the literature - when one proposes a novel method or modification of a feature selection algorithm, one would compare the accuracy scores with other existing algorithms in the literature, and determine if their proposed method has an improvement over the existing ones in literature. This is precisely the strategy this project will take in chapter \ref{methods}.
+
+\subsection{Terminating feature selection algorithms} \label{bg:fs:terminating}
+
+Feature selection algorithms can be terminated via the following ways \cite{RefWorks:210}:
+\begin{itemize}
+  \item \textbf{Specifying $k$}: The algorithm stops when the number of features we desire in $S$ is obtained.
+  \item \textbf{Best performance}: The algorithm terminates when the performance of $S$ exceeds a specified threshold.
+  \item \textbf{No significant improvement}: The algorithm can terminate when the performance of $S$ does not improve much \cite{RefWorks:215}.
+  \item \textbf{Balance between performance and subset size}: Consider both classifier performance and $k$.
+\end{itemize}
+
+It seems that from most works in feature selection, authors often specify a fixed value of $k$. Furthermore, in \cite{RefWorks:119} by Tang \textit{et. al}, experiments on different datasets conclude that their algorithm might be a good choice for a small number of samples, with large $M$ and $k$. Furthermore, they pointed out that $k$ must be defined beforehand. The experimenters set this number to be 100 for all the datasets that were explored, but later recommend different values of $k$ for two of the datasets that were used.
+
+This suggests that $k$ is dependent on the dataset. If $k$ is not a constraint of the problem (e.g. in bioinformatics problems, we can specify that we just require $k$ of the most informative genes), we could perform a grid search. However, due to time and computational constraints, we will probably not be able to perform a grid search on all the features (i.e. $k \in X = [0, M]$), but only on an interval of $X$. So, even if we find an optimal $k$ in that interval of $X$, it is most likely a local optimum.
+
 
 \subsection{Exhaustive versus heuristic search}
 
@@ -526,21 +553,19 @@ Evidently, although an exhaustive search would guarantee an optimal subset, its 
 
 \subsection{Feature relevance and feature redundancy} \label{bg:fs:relevance}
 
-Relevance and redundancy play important roles in the literature of feature selection.
+Relevance and redundancy play important roles in the literature of feature selection. In \cite{RefWorks:163}, Bolón-Canedo \textit{et. al} assert that ``\textit{detecting the relevant features and discarding the irrelevant and redundant ones}'' are processes that define feature selection.
 
-% Different methods have been suggested to quantify relevance and redundancy.
+In general, a feature is relevant if it is closely related to the target class; in other words, it has a large influence on the outcome of the classification of the samples. For example, one can evaluate the relevance of each feature through some measure and rank the relevance of the features. It is tempting to select the first $k$ features as our final subset $S$, but, as Peng \textit{et. al} put it, ``The best $k$ features are not the $k$ best features'' \cite{RefWorks:182}, as the highly ranked features are likely to have similar discriminating power \cite{RefWorks:163}. In other words, some features might be redundant.
 
-% Mutual information. But hard to estimate for continuous variables. Parzen window.
+A feature $f_1$ is redundant with respect to another feature $f_2$, if $f_1$ is ``similar'' to $f_2$. This similarity can be quantified in many ways and mutual information is often used (see section \ref{bg:fs:mi}). \cite{RefWorks:187} describes the ``ultimate feature redundancy'' as two features having exact linear dependency. For example, $f_1$ can be found to be $f_1 = 2 \, f_2$, and thus $f_2$ does not provide additional information in the presence of $f_1$ (or vice versa).
 
-% t-statistic/F-statistic.
+In contrast, greedy searches, which will be explained in detail in the later sections, do not explicitly quantify relevance or redundancy. Instead, it evaluates a subset of features based on, say classification score of a machine learner, to determine the discriminating power of that subset.
 
-Furthermore, there is a possibility that not all of the genes in our data set have a role to play in the classification of schizophrenia. As such, the feature selection method is necessary to select the significant features and eliminate the others. Besides, once we obtain only the relevant features, it would be less computationally expensive to train our classifier just on these features.
+In the context of this project, there is a possibility that not all of the genes in our data set have a role to play in the classification of schizophrenia. As such, the feature selection method is necessary to select the significant features and eliminate the others. Besides, once we obtain our compact subset $S$, it would be computationally cheaper to train our classifier based on just on these features.
 
-The best $k$ features are not the $k$ best features \cite{RefWorks:182}.
 
 \subsection{Greedy search} \label{bg:fs:greedy}
-
-As mentioned in section \ref{bg:fs:purpose}, the cost of an exhaustive search on all possible subsets of all $M$ features is exponential with $M$. Even though the exhaustive search guarantees an optimal solution, its computational cost does not scale with more features. As a result, researchers have proposed several algorithms that involve heuristics to guide the search for the optimal subset $S$. Although none of the methods which use heuristics can guarantee an optimal solution \cite{RefWorks:182}, these methods improve the computational cost of optimal solutions, which is very beneficial in the context of high dimensional data.
+As mentioned in section \ref{bg:fs:purpose}, the cost of an exhaustive search on all possible subsets of all $M$ features is exponential with $M$. Even though the exhaustive search guarantees an optimal solution, its computational cost does not scale with more features. As a result, researchers have proposed several algorithms that involve heuristics to guide the search for the optimal subset $S$. Although none of the methods which use heuristics can guarantee an optimal solution, these methods improve the computational cost of optimal solutions - thus classified as sub-optimal - which is very beneficial in the context of high dimensional data, and are more practical to execute \cite{RefWorks:140, RefWorks:182}.
 
 For example, the \textit{sequential forward selection} (SFS) \cite{RefWorks:177} is a wrapper method that involves a greedy search strategy. The method starts with $S=\emptyset$. For each feature $m$, we compute an evaluation function, $J(\cdot)$, which, in this context, is the classification score of the learner from just using $m$ alone (i.e. only 1 feature). The scores are then sorted, and the feature (call it $f_1$) with the highest score is selected. $f_1$ is then paired sequentially with each of the remaining features to form a subset, and classification scores using just 2 features are obtained and sorted. Let $f_2$ be the feature where the set $S= \left\lbrace f_1, f_2 \right\rbrace$ has the highest classification score. The process continues until we have our desired $k$ features.
   
@@ -693,62 +718,6 @@ One would need to take the time to investigate what parameters and/or strategies
 Nevertheless, as an extension proposed by the authors, it is interesting to investigate if incorporating a GA with the MRmMC method (briefly discussed in section \ref{bg:fs:mi})  will improve the classification score. This will be discussed in detail in section \ref{ga:mrmmc}.
 
 
-\subsection{Previous work in feature selection methods} \label{bg:fs:previous}
-
-Feature selection methods can be classified as \cite{RefWorks:117, RefWorks:118}:
-\begin{itemize}
-\item \textbf{Filters:} Ranks genes based on a univariate measure, and selects only the top ranking genes. No learning is involved. Interaction between features is also not considered.
-\item \textbf{Wrappers:} Use learning to decide which subset(s) of features are relevant.
-\item \textbf{Embedded:} Incorporates feature selection process into the classifier.
-\item \textbf{Hybrid:} Combination of the above approaches.
-\end{itemize}
-
-Several reviews of feature selection methods on microarray data \cite{RefWorks:117, RefWorks:118} came to the conclusion that filter methods are not as appropriate as the others, as, for example, the method might rank similar features highly, and thus pose a lot of redundancy after processing the data. Besides, filter methods do not take into account the classifier that we train, and they do not consider the interaction between features \cite{RefWorks:119}.
-
-Furthermore, since embedded methods are executed together with the training process of the classifier, the resulting optimal set of features is coupled with the classifier that is trained. In other words, this set of features is classifier dependent \cite{RefWorks:118}. Since we want the classifier to eventually generalise to other epigenetic datasets, we might want to avoid this class of methods. 
-
-%\subsection{Filters}
-Assign heuristic score to each feature. See if the feature contributes significantly to classification/prediction. Including chi-square, mutual information etc. Pick high scoring features to keep. Does not take into account interactions between features.
-
-``Could use ``light'' filtering as an efficient initial step if running time is an issues.''	
-
-%\subsection{Wrappers}
-
-Learning algorithm is a black box. Simply using it to compute objective function, then search. Exhaustive search expensive, greedy search common and effective.
-
-Backward elimination tends to find better models, especially those with interacting features. But too expensive to fit large models at beginning of search. Both back/forward elimination can be too greedy.
-
-Can use AIC/BIC as heuristic. Add model-complexity penalty to the training error.
-
-
-In general, wrapper methods are expected to yield better features. However, one disadvantage of wrappers is that it is computationally expensive, and the cost of the method increases with the feature space.
-
-Wrapper methods can be classified into optimal and suboptimal search algorithms \cite{RefWorks:120}. The former searches the whole space of features and their subsets, while the latter only considers part of this space. The optimal algorithms can give us better results since they consider all combinations of the features, but they are obviously computationally too expensive. It has also been shown that this problem is NP-hard \cite{RefWorks:139}. Although the suboptimal algorithms does not guarantee the best result, they are much more practical to execute and are able to tackle the problem of overfitting \cite{RefWorks:140}. Such algorithms include:
-\begin{itemize}
-\item \textbf{Sequential forward selection:} start from an empty set of features. At each iteration, add in a new feature that maximises the selection criterion (e.g. training error produced by classifier). Stop when the criterion stops improving.
-\item \textbf{Sequential backward selection:} start from the whole set of features. Delete one feature at a time, until the number of features required is reached.
-\end{itemize}
-
-There are also ``floating'' versions of the above selection methods, which allows backtracking to remove (or add) features that might improve the selection criterion \cite{RefWorks:121}.
-
-There also has been work that combines genetic algorithms with SVMs \cite{RefWorks:120}. However, these algorithms are deemed to be more time consuming, although it can cover more combinations of feature subsets.
-
-\subsection{Novel methods in feature selection} \label{bg_GLGS}
-In \cite{RefWorks:119}, Tang \textit{et. al} suggested two novel methods for feature selection:
-\begin{itemize}
-\item Gradient-based leave-one-out gene selection (GLGS) algorithm
-\item Leave-one-out calculation sequential forward selection (LOOCSFS) algorithm
-\end{itemize}
-
-The GLGS uses a gradient-based algorithm, while the LOOCSFS incorporates the Sequential Forward Selection method and uses the leave-one-out cross validation error (LOOE) of the SVM as a selection criterion. Experiments on different datasets by Tang \textit{et. al} seem to come to the conclusion that the GLGS algorithm might be a good choice for small number of samples (individuals in our context), with large $d$ and $t$, where $d$ is the number of features and $t$ is the number of features to be selected. We can take this approach in our context, and see if either method outperforms the other with our data.
-
-Furthermore, Tang \textit{et. al} pointed out that the number of features to be selected by the algorithm ($t$) must be defined beforehand for the algorithm to work. The experimenters set this number to be 100 for all the datasets that were explored. However, the paper later recommends different values of $t$ for two of the datasets that were used.
-
-This suggests that $t$ might be dependent on the dataset used. We can thus select $t$ using the approaches listed by Tang \textit{et. al}:
-\begin{itemize}
-\item Terminate the algorithm if the selection criterion does not improve much when more features are added.
-\item Plot a graph of the error against $t$. We can inspect visually the most optimal value of $t$.
-\end{itemize}
 
 \chapter{Data exploration}
 % What I did to explore the data?
@@ -756,31 +725,69 @@ This suggests that $t$ might be dependent on the dataset used. We can thus selec
 % What needed to be done to render data usable for classifiers? (e.g. normalise, shuffle)
 % Describe use of data store and how it helps in getting data faster.
 
-\section{Problems faced with raw data}
+\section{Understanding the data} \label{data:understanding}
 % Trouble opening the file on basic programs like Microsoft Excel --> pandas and HDFStore used to mitigate.
 
-\section{Using SVM's}
+The data set\footnote{Available from \url{http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE84727}.} contains 2 giga bytes worth of data, with dimensions $420374 \times 847$. Due to the sheer size of the data set, it is not possible to open it on a typical program such as Microsoft Excel without waiting for a long time.
+
+To circumvent this issue, the Python library \texttt{pandas} \cite{RefWorks:213} was used. \texttt{pandas} provides high performance and user-friendly data structures and tools to analyse data sets. In particular, \texttt{pandas} provide a \texttt{pandas.read\_csv} method that reads the csv file. The data set can then be cast into a \texttt{DataFrame}, analogous to the data structure common in the $R$ programming language.
+
+One particular advantage of using \texttt{pandas} is that the \texttt{DataFrame} has an \texttt{Index} object, that is able to store the names of the labels along the axes. For example, by examining Figure \ref{data:pandas:example}, we can see how the data set is organised when cast into a \texttt{DataFrame} in \texttt{pandas}. It is also helpful that \texttt{pandas} indicates \texttt{[847 rows x 420374 columns]} which tells us that labels such as \texttt{101103430155\_R06C01} indicates a test case (individual) while the label \texttt{cg00000029} refers to a feature (methylation site - see background in section \ref{bg:bio}).
+
+\texttt{pandas} also work well with lists and arrays in the standard Python library, and data structures in \texttt{numpy} \cite{RefWorks:214}. Furthermore, calling \texttt{pandas.read\_csv} and loading the data into a \texttt{DataFrame} each time we need the data set will impede efficiency. Fortunately, \texttt{pandas} offers the \texttt{HDFStore} class, which utilises \texttt{PyTables} \cite{pytables} to allow fast read and write of \texttt{pandas} data structures. Therefore, each time we need the data set, or indeed any data that takes a lot of time to read, we simply have to retrieve it from the \texttt{HDFStore}.
+
+Finally, the \texttt{pandas} data structures work well with the \texttt{scikit-learn} software, which is used extensively in this project, such as fitting an SVM and obtaining cross validation scores (see section \ref{data:svms}).
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.9]{images/pandas-example.JPG}
+\caption{A (truncated) output which one would obtain when attempting to print the \texttt{DataFrame} that contains the (shuffled) data set. We can use this output to study the information available in the \texttt{DataFrame}.}
+\label{data:pandas:example}
+\end{figure}
+
+\section{Using SVM's} \label{data:svms}
 
 % popular method for most FS algorithms
 
 For all numerical experiments involving the different methods described below, the SVM will be used should there be a need for a classifier. For example, if the method used is a wrapper method, the cross validation error of fitting an SVM would be used to evaluate the algorithm. In contrast, in a filter method, the SVM would not come into play.
 
-The SVM is fitted using the \textit{scikit-learn} Python software \cite{scikit-learn}. Calling the \texttt{SVC()} method would create a classifier based on libsvm \cite{libsvm} with default parameters, such as the default Radial Basis Function (RBF) kernel, and the error parameter $C=1.0$ (see section \ref{bg:ml:svm:model}). However, a practical guide by Hsu \textit{et. al} in \cite{RefWorks:128} explains that when the number of features is much larger than the number of samples, using a linear kernel would suffice; in other words, we might not need to map our data into higher dimensions.
+The SVM is fitted using the \texttt{scikit-learn} Python software \cite{scikit-learn}. Calling the \texttt{SVC()} method would create a classifier based on \texttt{libsvm} \cite{libsvm} with default parameters, such as the default Radial Basis Function (RBF) kernel, and the error parameter $C=1.0$ (see section \ref{bg:ml:svm:model}). However, a practical guide by Hsu \textit{et. al} in \cite{RefWorks:128} explains that when the number of features is much larger than the number of samples, using a linear kernel would suffice; in other words, we might not need to map our data into higher dimensions.
 
-This hypothesis was tested on our data set. Indeed, using the RBF kernel with all the features, the cross validation score obtained was 0.834644, while with the linear kernel, the score was 0.929160. The cross validation scores can be obtained via the method \texttt{sklearn.model\_selection.cross\_val\_score}. The number of folds performed performed is 5. These settings will be used throughout the experiments in this project.
+This hypothesis was tested on our data set. Indeed, fitting an SVM using the RBF kernel with all the features, the cross validation score obtained was 0.834644, while with the linear kernel, the score was 0.929160. The cross validation scores can be obtained via the method \texttt{sklearn.model\_selection.cross\_val\_score}. The number of folds performed performed is 5. These settings will be used throughout the experiments in this project.
 
-Furthermore, it is not sufficient to simply assume the default penalty parameter $C=1.0$. Instead, as Hsu \textit{et. al} suggested, performing a grid search on $C$ would allow us to find the optimal $C$. However, due to time constraints, the following experiments would stick to the default value of $C$. Moreover, this proejct focuses on the feature selection algorithms, not the parameters of the SVM.
+Furthermore, it is not sufficient to simply assume the default penalty parameter $C=1.0$. Instead, as Hsu \textit{et. al} suggested, performing a grid search on $C$ would allow us to find the optimal $C$. However, due to time constraints, the following experiments would stick to the default value of $C$. Moreover, this project focuses on the feature selection algorithms, not the parameters of the SVM.
 
 \section{Data preprocessing}
 % Shuffling the data (random_state) + rationale
 % Normalise data before training on SVM classifier.
 % Store shuffled data in data store.
 
-Hsu \textit{et. al} also described the importance of scaling our data before fitting an SVM on the data. In particular, scaling the data would prevent features with large values from dominating those with smaller values. Restricting the values of features such that each feature has zero mean and unit variance is recommended when using the \texttt{SVC()} package. This was done with the \texttt{sklearn.preprocessing} package in \textit{scikit-learn}.
+Hsu \textit{et. al} also described the importance of scaling our data before fitting an SVM on the data. In particular, scaling the data would prevent features with large values from dominating those with smaller values. Restricting the values of features such that each feature has zero mean and unit variance is recommended when using the \texttt{SVC()} package. This was done with the \texttt{sklearn.preprocessing} package in \texttt{scikit-learn}.
 
-Furthermore, as the raw data was sorted based on the classification (target label) of each sample, it is sensible to shuffle the data such that the target labels would not be in a particular order. The cross validation method also partitions the data set into folds, and the process of fitting a classifier on a fold would be affected if all the target labels are the same. The shuffling was done using the \texttt{sklearn.utils.shuffle} method. The method also allows us to set the reproducibility of the shuffling. Furthermore, once the entire data set and labels are shuffled, these are stored in the DataStore, and retrieved if needed.
+Furthermore, as the raw data was sorted based on the classification (target label) of each sample, it is sensible to shuffle the data such that the target labels would not be in a particular order. The cross validation method also partitions the data set into folds, and the process of fitting a classifier on a fold would be affected if all the target labels are the same. The shuffling was done using the \texttt{sklearn.utils.shuffle} method. The method also allows us to set the reproducibility of the shuffling. Furthermore, once the entire data set and labels are shuffled, these are stored in the \texttt{DataStore}, and retrieved if needed (see section \ref{data:understanding}).
 
 \chapter{Description of methods used}
+\label{methods}
+
+\section{$t$-test} \label{t-test}
+
+The $t$-statistic is a commonly used heuristic to quantify the importance of each feature with respect to the target labels. As mentioned in section \ref{bg:fs:classification}, the $t$-test is a filter method, which iterates through each of the feature and compute a $t$ statistic:
+\begin{align*}
+insert formula here
+\end{align*}
+
+The $t$ statistic and the $p$ values can be computed using \texttt{scipy.stats.ttest\_ind} in the \texttt{scipy} \cite{scipy} software. For example, we can calculate the $t$ statistic between two groups $a$ and $b$. Using this method, the null hypothesis is that the means of $a$ and $b$ ($\mu_a$ and $\mu_b$ respectively) are equal. That is,
+\begin{align*}
+H_0: \mu_a = \mu_b \quad \text{vs.} \quad H_1: \mu_a \neq \mu_b
+\end{align*}
+
+\texttt{ttest\_ind} will then perform a two-sided test, and return the value of the $t$ statistic and its $p$ value.
+
+In the context of feature selection, for each feature, we have to group the samples according to its classification under this feature. This means that group $a$ will be those samples whose classification is 1, say, and group $b$ will be those samples whose classification is 0. Under the null hypothesis $H_0$, the means of these two groups will be the same. That is, the feature values do not have any impact on the classification of the samples. A low $p$ value means that we have enough evidence to reject $H_0$, that is, we can be certain that this feature has a significant contribution to the classification.
+
+As discussed in section \ref{bg:fs:terminating}, once we have the $p$ values of all the features, we can decide how to use these values to terminate the feature selection algorithm. First, we can select the first $k$ features that have the \textit{lowest} $p$ values (i.e. most certain that $\mu_a \neq \mu_b$). Second, we can choose a certain threshold and discard those features whose $p$ values \textit{exceed} this threshold.
+
+Since this method is a filter method, we would expect this method to complete within a much shorter time than the other methods that will be described and explained below.
 
 \section{Restricted Forward Selection (RFS)} \label{body:rfs}
 
@@ -1152,13 +1159,10 @@ E\left[ \text{var} (X|Y) \right]
 \end{align*}
 
 
-
-
-
 \newpage
 
 
-\bibliographystyle{unsrt}
+\bibliographystyle{abbrv}
 \bibliography{references}
 
 \end{document}
