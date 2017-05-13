@@ -1,0 +1,72 @@
+from ast import literal_eval as make_tuple
+from sklearn import preprocessing
+from sklearn.svm import SVC
+from sklearn.model_selection import cross_val_score
+
+import numpy as np
+import pandas as pd
+
+import matplotlib.pyplot as plt
+import matplotlib.pylab as pylab
+from ast import literal_eval as make_tuple
+
+NUM_FEATURES = 420374
+#NUM_RESULTS = 100
+
+# Constant terms.
+STORE_NAME = '..\DataStore.h5'
+LABEL_KEY = 'shuffledLabels'
+DATA_KEY = 'shuffledData'
+
+if __name__ == "__main__":
+
+    indices = []
+    scores = []
+    results = []
+
+    filename = "t_test_results.txt"
+    f = open(filename, 'r')
+
+    for i in xrange(NUM_FEATURES):
+        content = f.readline().strip()
+        (index, score) = make_tuple(content)
+        results.append((index, score))
+        indices.append(index)
+        scores.append(score)
+
+    f.close()
+
+    results = list(reversed(results))
+    result_scores = []
+
+    for i in range(10, 500, 10):
+        topResults = [results[j] for j in range(i)]
+        topIdx = map(lambda (idx, p_value):idx, topResults)
+
+        # Read from data store.
+        store = pd.HDFStore(STORE_NAME)
+        shuffledData = pd.read_hdf(STORE_NAME, DATA_KEY)
+        shuffledLabels = pd.read_hdf(STORE_NAME, LABEL_KEY)
+        store.close()
+
+        (cases, features) = shuffledData.shape
+        labels = shuffledLabels.values
+
+        clf = SVC(kernel='linear')
+        selected_features = shuffledData.iloc[:, topIdx]
+        selected_features = selected_features.apply(preprocessing.scale)
+
+        cross_val_scores = cross_val_score(clf, selected_features, y=labels, cv=5, scoring='accuracy')
+        #print np.mean(cross_val_scores)
+        #print cross_val_scores
+        result_scores.append(np.mean(cross_val_scores))
+
+    # Plot graph
+    rfs, = plt.plot(range(10, 500, 10), result_scores, 'ko', label="t-test")
+    plt.xlabel("Number of features", fontsize=25)
+    plt.ylabel("Cross validation score", fontsize=25)
+    plt.title( "Cross validation score against number of features for RFS using SVM (Linear kernel)", fontsize=25)
+    #plt.show()
+
+    fig = plt.figure()
+
