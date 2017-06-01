@@ -26,6 +26,7 @@
 \usepackage[font=small,labelfont=it]{caption}
 \usepackage{tikz}
 \usepackage{subcaption}
+\usepackage{setspace}
 \usepackage{chemfig}
 \usetikzlibrary{arrows, arrows.meta, shapes.geometric,  positioning, calc, trees, chains, decorations.pathreplacing, decorations.pathmorphing, shapes, 
 matrix, shapes.symbols}
@@ -137,6 +138,7 @@ matrix, shapes.symbols}
 
 \afterpage{\blankpage}
 
+\onehalfspacing
 \chapter*{Abstract}
 
 \afterpage{\blankpage}
@@ -147,12 +149,12 @@ matrix, shapes.symbols}
 I would like to thank:
 \begin{itemize}
   \item Dr. Panos Parpas
-  \item Dr. Karim Malki, for his help in getting me acquainted to the background of this project.
+  \item Dr. Karim Malki, for his fervent help and guidance in this project, and his .
   \item Dr. Ruth Misener, for her constructive feedback on the project.
   \item The High Performance Computing (HPC) team at Imperial College, for providing prompt help and valuable guidance in using the HPC facilities.
   \item Dr. Fariba Sadri, my personal tutor, for her patient guidance and sagely advice, especially in my last year of studies.
   \item The Singapore community at Imperial College, for making my time at Imperial so memorable.
-  \item My friends, family and project mates, for their support throughout my 4 years of education at Imperial.
+  \item My friends, family and course mates, for their support throughout my 4 years of education at Imperial.
 \end{itemize}
 
 I would also like to acknowledge the scholarship of the \textit{Defence Science and Technology Agency, Singapore}, for the opportunity to receive an excellent education at the Department of Computing.
@@ -160,7 +162,9 @@ I would also like to acknowledge the scholarship of the \textit{Defence Science 
 
 \afterpage{\blankpage}
 
+\doublespacing
 \tableofcontents
+\onehalfspacing
 
 \newpage
 
@@ -173,33 +177,34 @@ I would also like to acknowledge the scholarship of the \textit{Defence Science 
 
 \section{Schizophrenia and epigenetics}
 
-Schizophrenia is a complex mental disorder that displays an array of symptoms, including hallucination and depression. It is commonly perceived that schizophrenia is a hereditary disease that can be passed down within the family, but some individuals diagnosed with schizophrenia do not have a family member with the disorder \cite{RefWorks:8}. 
+Schizophrenia is a complex mental disorder that displays an array of symptoms, including hallucination and depression. It is commonly perceived that schizophrenia is a hereditary disease that can be passed down within the family, but it is reported that some individuals diagnosed with schizophrenia do not have a family member with the disorder \cite{RefWorks:8}. 
 
 Furthermore, there is a strong indication that, besides genetic factors, environmental factors such as tobacco smoke and one's diet also have an influence in the development of diseases, including psychiatric disorders \cite{RefWorks:8, RefWorks:10, RefWorks:247}. This results in a hypothesis that the \textit{epigenetics} of an individual might have a role to play in the development of schizophrenia (section \ref{bg_genetic_data}) \cite{RefWorks:12}.
 
-As Nessa Carey puts it in \textit{The Epigenetics Revolution}, epigenetics is manifested when ``two genetically identical individuals are non-identical in some way we can measure'' \cite{RefWorks:248}. Simply put, epigenetics provides a ``window'' which allows one's external environment to influence his or her DNA. Monozygotic (identical) twins have the same genetic material, but if one twin has schizophrenia, the other twin has a 50\% chance of being diagnosed with schizophrenia, compared to 0.5\% to 1\% in the general population, according to Carey. However, it begs the question: why is the other twin not diagnosed with the disease with 100\% certainty? This then is epigenetics at work, as environmental factors, not the twins' genetic material, influences the likelihood of the twins' diagnoses of schizophrenia.
+As Nessa Carey puts it in \textit{The Epigenetics Revolution}, epigenetics is manifested when ``two genetically identical individuals are non-identical in some way we can measure'' \cite{RefWorks:248}. Simply put, epigenetics provides a ``window'' which allows one's external environment to influence his or her DNA.
+
+Interestingly, monozygotic (identical) twins have the same genetic material, but if one twin has schizophrenia, the other twin has a 50\% chance of being diagnosed with schizophrenia, compared to 0.5\% to 1\% in the general population, according to Carey. However, it begs the question: why is the other twin not diagnosed with the disease with 100\% certainty, since they have the same genetic material? This then is epigenetics at work, as environmental factors, not just the twins' genetic material, influences the likelihood of the twins' diagnoses of schizophrenia.
 
 
 \section{Using machine learning to predict schizophrenia} \label{intro_ML}
 
-Using data from a recent study on epigenetics and schizophrenia (section \ref{bg_genetic_data}), this project aims to use machine learning to elucidate any statistical regularity in the data, in hope that any insight into the data can help geneticists and psychiatrists understand the etiology of schizophrenia - and indeed, other psychiatric disorders - better.
+Using data from a recent study on epigenetics and schizophrenia (section \ref{bg_genetic_data}), this project aims to use machine learning to elucidate any statistical regularity in the data, in hope that any insight into the data can help geneticists and psychiatrists better understand the etiology of schizophrenia.
 
-Previous work on using machine learning on biological data (section \ref{bg:cancer}) has always been plagued with the \textit{curse of dimensionality}, where the number of biological samples is far lesser than the number of features (or dimensions) of the data (the ``$p \gg n$'' problem \cite{RefWorks:96}). In this project, the data has 847 samples (individuals) with 420374 features, resulting in about 2 gigabytes of data. Besides the high dimensionality faced by the data, we also encounter a  potential problem of a similar nature: not all of the features in the data involved in the study would directly play a part in the classification of the disorder; some genes may only contribute a little to the outcome of the classification. It is also hypothesised that subsets of features, rather than individual features, contribute to the genesis of the disorder \cite{RefWorks:10}. 
+Previous work on using machine learning on biological data (section \ref{bg:cancer}) has always been plagued with the \textit{curse of dimensionality}, where the number of biological samples is far lesser than the number of features (or dimensions) of the data (the ``$p \gg n$'' problem \cite{RefWorks:96}). In this project, the data has 847 samples (individuals) with 420374 features, resulting in about 2 gigabytes of data.
 
-
-%These potential problems make the project interesting, as we cannot simply use ordinary machine learning techniques to manipulate the data. We have to adapt our algorithms and classifiers to suit the complexity and context of the problem.
+Besides the high dimensionality faced by the data, we also encounter a  potential problem of a similar nature: not all of the features in the data involved in the study would directly play a part in the classification of the disorder; some features may only contribute a little to the outcome of the classification. It is also hypothesised that subsets of features, rather than individual features, contribute to the genesis of the disorder \cite{RefWorks:10}.
 
 
 \section{Importance of feature selection}
-The aforementioned problems inherent in the data set makes \textit{feature selection} an important preprocessing step to select only the features that have significant contribution to the classification outcome (section \ref{bg:feature_selection}). This project pays particular attention to the feature selection process and sees which, if any, feature selection algorithm is especially beneficial in analysing the aforementioned data set.
+The aforementioned problems inherent in the data set makes \textit{feature selection} an important preprocessing step to select only the features that have significant contribution to the classification outcome (section \ref{bg:feature_selection}). This project pays particular attention to the feature selection process and sees which, if any, feature selection algorithm is especially beneficial in analysing the data set.
 
 Recently, a paper published by Senawi \textit{et. al} \cite{RefWorks:187} proposes a new method, Maximum Relevance Minimal Multicollinearity (MRmMC), to quantify the relevance and redundancy (section \ref{bg:fs:relevance}) of the features of a data set.
-This project extends MRmMC by investigating if incorporating a genetic algorithm will enhance the performance of MRmMC. This project further contributes to the investigation by comparing the merits, drawbacks and performance of different feature selection methods that are commonly used in the feature selection literature.
+This project extends MRmMC by investigating if incorporating a genetic algorithm will enhance the performance of MRmMC. This project further contributes to the investigation by comparing the merits, drawbacks and performance of different feature selection methods that are commonly used in the feature selection literature (section \ref{bg:feature_selection}).
 
-Thus, although the problem of epigenetics and schizophrenia forms the context for this project, this project will primarily describe and evaluate feature selection methods, comparing them to the MRmMC method. 
+Thus, although the problem of epigenetics and schizophrenia forms the context for this project, this project will primarily describe and evaluate feature selection methods, comparing them to the MRmMC method (section \ref{methods}).
 
-\section{•}
-Moreover, the current research on psychiatric disorders do not receive as much attention as other illnesses such as cancer \cite{RefWorks:82}. Thus, any insight generated from this project would be beneficial to helping us understand psychiatric disorders better.
+%\section{•}
+%Moreover, the current research on psychiatric disorders do not receive as much attention as other illnesses such as cancer \cite{RefWorks:82}. Thus, any insight generated from this project would be beneficial to helping us understand psychiatric disorders better.
 
 
 \chapter{Background}
@@ -223,17 +228,19 @@ This section outlines the necessary biology that will be relevant to the discuss
 
 \item \textbf{DNA bases:} The hereditary information stored in DNA molecules are made up of four bases - Adenine (A), Thymine (T), Cytosine (C) and Guanine (G). These bases pair up in a specific way: A with T and C with G. Along with other types of molecules, these pairs form a nucleotide. Nucleotides are then arranged in a double helix structure.
 
-\item \textbf{Genes:} A gene is the fundamental building block of heredity. Genes consist of DNA, and encode instructions to produce proteins. These instructions are used to produce proteins through the process of transcription and translation. This process is often called the \textit{central dogma of molecular biology}.
+\item \textbf{Genes:} A gene is the fundamental building block of heredity. Genes consist of DNA, and encode instructions to produce proteins. These instructions are used to produce proteins through the process of transcription and translation. These processes form the \textit{central dogma of molecular biology}.
 
 \item \textbf{Gene expression:} Gene expressions behave like a switch to determine when and what kind of proteins are produced by cells. All cells in a human being carry the same genome. Thus, gene expression allows cells to specialise into different functionalities (e.g. differentiate between a brain cell and a skin cell).
 
 \item \textbf{Epigenetics:} The study of modifications in cells that are not influenced by changes in an individual's DNA.
 
-\item \textbf{Epigenome:} The epigenome is a set of chemical compounds and modifications that can alter the genome, and thus alter DNA and the proteins that it produces. The epigenome can thus alter the ``on/off'' action in gene expression and control the production of proteins. The epigenome arises naturally, but can be affected by external factors (e.g. environmental factors, disease), which might explain why even though twins have the same genome, it often happens that one twin inherits a disease, while the other does not \cite{RefWorks:107}.
+\item \textbf{Epigenome:} The epigenome is a set of chemical compounds and modifications that can alter the genome, and thus alter DNA and the proteins that it produces. The epigenome can thus alter the ``on/off'' action in gene expression and control the production of proteins.
+
+%The epigenome arises naturally, but can be affected by external factors (e.g. environmental factors, disease), which might explain why even though twins have the same genome, it often happens that one twin inherits a disease, while the other does not \cite{RefWorks:107}.
 
 \item \textbf{DNA methylation:} A common chemical modification is DNA methylation, where methyl groups ($-$CH$_3$) are attached to the bases of DNA at a specific place of cytosine (see Figure \ref{bg:bio:methylation}). These methyl groups switch off the gene which they are attached to in the DNA, and thus no protein can be generated from that gene. However, despite this chemical modification, an individual's underlying genetic sequence remains unchanged \cite{RefWorks:249}.
 
-\item \textbf{CpG island:} These DNA methylations mostly occur in CpG islands, which are areas in the DNA where the base cytosine is next to a guanine. 
+\item \textbf{CpG island:} DNA methylations mostly occur in CpG islands, which are areas in the DNA where a cytosine molecule is next to a guanine. 
 \end{itemize}
 
 \begin{figure}[t!]
@@ -258,9 +265,13 @@ Similar twin studies also allow us to explore the extent to which epigenetics in
 
 In a similar vein, this project aims to investigate the relationship between epigenetic data and the chance of being afflicted with schizophrenia. In other words, can we use one's genetic data to predict his or her chance of having schizophrenia?
 
-This project makes use of data from a recent genetic-epigenetic analysis of schizophrenia, conducted in 2016 \cite{RefWorks:78}, which utilised high-throughput methods that enable genomics researchers to perform epigenome-wide association studies (EWAS).
+This project makes use of data from a recent genetic-epigenetic analysis of schizophrenia, conducted in 2016 \cite{RefWorks:78}.
 
-In this study in particular, the researchers aimed to use these methods to identify positions in the genome that display DNA methylation associated with environmental exposure and disease. We thus want to find out if there are statistically significant differences in DNA methylation, between individuals diagnosed with schizophrenia (case) and those who were not (control). In particular, we are interested in the data offered in ``phase 2'' of the study, where schizophrenia-associated differentially methylated positions (DMPs) (positions on the genome where there is a difference in DNA methylation patterns between two sets of genomes) were tested among 847 individuals, 414 of whom were schizophrenia cases.
+%which utilised high-throughput methods that enable genomics researchers to perform epigenome-wide association studies (EWAS).
+
+In this study, the researchers aimed to identify positions in the genome that display DNA methylation associated with environmental exposure and disease. We thus want to find out if there are statistically significant differences in DNA methylation, between individuals diagnosed with schizophrenia (case) and those who were not (control).
+
+In particular, we are interested in the data offered in ``phase 2'' of the study, where schizophrenia-associated differentially methylated positions (DMPs) (positions on the genome where there is a difference in DNA methylation patterns between two sets of genomes) were tested among 847 individuals, 414 of whom were schizophrenia cases.
 
 Throughout this project, we shall identify the data produced from this study as \textit{the data}.
 
@@ -269,9 +280,11 @@ Throughout this project, we shall identify the data produced from this study as 
 
 There is a significant amount of literature on cancer classification using gene expression data. These works primarily aim to uncover biological or medical insights using biological data obtained from microarrays, which are tools to measure the gene expression of thousands of genes simultaneously \citep{RefWorks:79}. For example, using neural networks, gene expression data can be used to distinguish between tumour types, which helps in cancer diagnosis \citep{RefWorks:80, RefWorks:88}. \cite{RefWorks:196} has even identified genes that can potentially predict outcomes based on survival data. We can draw lessons from these studies to apply to this project.
 
-What is similar about this project and previous work on cancer classification is that the data for both cases are plagued with high dimensionality (\textit{Curse of dimensionality}). For example, in cancer studies, microarrays produce data with a large number of genes (features) but a small number of samples (observations) \cite{RefWorks:88}. Furthermore, only a (small) subset of the features (genes) are relevant for the studies, as not all genes are useful in determining the type of cancer a patient has. This is known as biological noise \cite{RefWorks:89}. As such, feature reduction on the data has to be performed to select only the relevant features for the classification problem. In other words, an ideal subset of pertinent features would ideally be sparse, as we seek to identify the features that are most relevant to the classification.
+What is similar about this project and previous work on cancer classification is that the data for both cases are plagued with the curse of dimensionality. For example, in cancer studies, microarrays produce data with a large number of genes (features) but a small number of samples (observations) \cite{RefWorks:88}. Furthermore, only a (small) subset of the features are relevant for the studies, as not all features are useful in determining the type of cancer a patient has. This is considered to be biological noise \cite{RefWorks:89}. As such, feature reduction on the data has to be performed to select only the relevant features for the classification problem. In other words, an ideal subset of pertinent features would ideally be sparse, as we seek to identify the features that are most relevant to the classification.
 
-However, what is different about studies on psychiatric disorders and studies on cancer, is that the latter is observable, such that we can know for sure that an individual has cancer using medical methods, such as conducting a blood test; it is not as obvious that an individual has a psychiatric disorder, as its symptoms might not be straightforward. For example, \cite{RefWorks:114} discusses culture-related issues in diagnosing schizophrenia: ``the assessment of disorganized speech may be made difficult by linguistic variation in narrative styles across cultures''. Furthermore, ``ideas that appear to be delusional in one culture (e.g. witchcraft) may be commonly held in another''. These highlight how diagnosing a psychiatric disorder like schizophrenia is not straightforward.
+However, what is different about studies on psychiatric disorders and studies on cancer, is that the latter is observable, such that we can know for sure that an individual has cancer using medical methods, such as conducting a blood test; it is not as obvious that an individual has a psychiatric disorder, as its symptoms might not be straightforward. For example, \cite{RefWorks:114} discusses culture-related issues in diagnosing schizophrenia: ``the assessment of disorganized speech may be made difficult by linguistic variation in narrative styles across cultures''.
+
+%Furthermore, ``ideas that appear to be delusional in one culture (e.g. witchcraft) may be commonly held in another''. These highlight how diagnosing a psychiatric disorder like schizophrenia is not straightforward.
 
 
 \section{Machine learning classifiers} \label{bg_ML}
@@ -551,11 +564,11 @@ This section explores the literature of feature selection, and discusses certain
 \subsection{Purpose and motivation} \label{bg:fs:purpose}
 % Overview of purpose of FS.
 
-Discriminant analysis, which is common in microarray data analysis and cancer classification (see section \ref{bg:cancer}), is the key idea behind this project. In the context of data with high dimensions, one of the main concerns of discriminant analysis is feature selection: instead of using all of the features or dimensions to predict the result of the classification, we use only a (small) subset of the features. These features should be representative of all the features. Feature selection is also an important step in other areas such as text categorisation \cite{RefWorks:197}. We can also visualise the data set as a matrix, and tackling the feature selection problem is akin to finding a smaller matrix that can be used much more efficiently that the original matrix \cite{RefWorks:163}.
+Discriminant analysis, which is common in microarray data analysis and cancer classification (see section \ref{bg:cancer}), is the key idea behind this project. In the context of data with high dimensions, one of the main concerns of discriminant analysis is feature selection: instead of using all of the features or dimensions to predict the result of the classification, we use only a (small) subset of the features. These features should be representative of all the features. We can also visualise the data set as a matrix, and tackling the feature selection problem is akin to finding a smaller matrix that can be used much more efficiently that the original matrix \cite{RefWorks:163}.
 
-The process of feature selection can be described as finding a subset $S$ of the original $M$ features, such that the cardinality of $S$, $|S|=k$, where $k \ll M$. Furthermore, classification accuracy using these $k$ features should not be significantly lower than using all $M$ features. Finding ways to obtain a satisfactory $S$ is the main concern of feature selection.
+The process of feature selection can be described as finding a subset $S$ of the original $M$ features, such that the cardinality of $S$, $|S|=k$, where $k \ll M$. Furthermore, classification accuracy using these $k$ features should not be significantly lower than using all $M$ features. Finding ways to obtain a subset $S$ that satisfy these criteria is the main concern of feature selection.
 
-As mentioned in section \ref{intro_ML}, the data suffers a \textit{curse of dimensionality}, where the number of features exceeds the number of samples available. This usually causes \textit{over-fitting} on the classifier \cite{RefWorks:115, RefWorks:175}, which refers to the situation where the classifier can classify the training data perfectly, but performs poorly with unseen data \cite{RefWorks:98}. This is a common problem and challenge in classification, and reducing the dimensions of the original data set often helps reduce overfitting \cite{RefWorks:228}. As such, feature selection will play an important preprocessing role in allowing us to understand the data better.
+As mentioned in section \ref{intro_ML}, the data suffers from the curse of dimensionality, where the number of features exceeds the number of samples available. This usually causes \textit{over-fitting} on the classifier \cite{RefWorks:115, RefWorks:175}, which refers to the situation where the classifier can classify the training data perfectly, but performs poorly with unseen data \cite{RefWorks:98}. This is a common problem and challenge in classification, and reducing the dimensions of the original data set often helps reduce overfitting \cite{RefWorks:228}. As such, feature selection will play an important preprocessing role in allowing us to understand the data better.
 
 Overall, there are several benefits associated with feature selection that are often mentioned in literature \cite{RefWorks:140}:
 \begin{itemize}
@@ -568,9 +581,11 @@ Overall, there are several benefits associated with feature selection that are o
 
 In contrast to feature selection, feature extraction techniques, such as principal component analysis (PCA) and Linear Discriminant Analysis (LDA), result in a set of features that is a transformation or combination of the original features. In other words, the original features are transformed into a space with lower dimensions. For example, PCA employs a transformation to map features to a space spanned by its principal components.
 
-Feature extraction reduces the dimensions of the data by generating a new, compact set of features. This implies that the interpretation of the original features is lost through the transformation. Furthermore, the original features in the data might contain data that are irrelevant to the target class, or that might be redundant (see section \ref{bg:fs:relevance}). Such features should ideally be removed.
+Feature extraction reduces the dimensions of the data by generating a set of new features. This implies that the interpretation of the original features is lost through the transformation. Furthermore, the original features in the data might contain data that are irrelevant to the target class, or that might be redundant (see section \ref{bg:fs:relevance}). Such features should ideally be removed.
 
 In contrast, feature selection methods preserve the original features by simply removing those that are not relevant to the classification task. In general, feature extraction is performed when model accuracy is more important than model interpretability \cite{RefWorks:163}. Thus, in this project, we would want to obtain features that are biologically relevant, and can be interpreted by an expert \cite{RefWorks:192}. This allows us to interpret the result of applying classifiers to the reduced set of features \cite{RefWorks:142}.
+
+Due to these reasons, this project will focus on feature selection instead of feature extraction.
 
 \subsection{Classification of feature selection methods} \label{bg:fs:classification}
 
@@ -589,9 +604,9 @@ Feature selection methods can be categorised into one of the following \cite{Ref
 
 \subsection{Feature selection methods and trades-off} \label{bg:fs:tradeoff}
 
-The categories described above have their own merits and drawbacks. For example, as filters are independent of the classifier, they would be computationally more efficient. However, most filters are univariate, and thus might not take into account feature redundancy (see section \ref{bg:fs:relevance}). One can use multivariate filters which consider subsets, but these incur more computational cost.
+The categories described above have their own merits and drawbacks. For example, as filters are independent of the classifier, they would be computationally more efficient. However, most filters are univariate, and thus might not take into account feature redundancy (see section \ref{bg:fs:relevance}). One can use multivariate filters which consider subsets of features, but these incur more computational cost.
 
-On the other hand, wrappers are reported to produce better classification accuracy than filters \cite{RefWorks:163}, since they directly use a classifier to select features. At the same time, this means that wrappers are closely associated with the choice of learning algorithm, and might not generalise to other classifiers. One can also consider employing a ``two-stage'' process, such as in \cite{RefWorks:216}, where a filter is first used to remove unimportant features, and a classifier-dependent method can then be used to further refine the remaining features.
+On the other hand, wrappers are reported to produce better classification accuracy than filters \cite{RefWorks:163}, since they directly use a classifier to select features. At the same time, this means that wrappers are closely associated with the choice of learning algorithm, and might not generalise to other classifiers. One can also consider employing a ``two-stage'' process, such as in \cite{RefWorks:216}, where a filter is first used to remove unimportant features, and a classifier-dependent method can then be used to further refine the remaining features. Yet, one also needs to consider the question of how many features the first filter step should remove.
 
 Indeed, Bolón-Canedo \textit{et. al} \cite{RefWorks:163} and Sharma \textit{et. al} \cite{RefWorks:215} echo these trades-off, by pointing out that ``the best method'' does not exist and that no single algorithm stands out in all aspects. Furthermore, Hua \textit{et. al} \cite{RefWorks:216} performed a review of feature selection algorithms using different data sets, and came to the conclusion that none of the methods that were reviewed performed consistently well across all the data sets. This sentiment is also reflected in \cite{RefWorks:217}.
 
@@ -607,9 +622,9 @@ Feature selection algorithms can be terminated via the following ways \cite{RefW
   \item \textbf{Balance between performance and subset size}: Optimise both classifier performance and $k$.
 \end{itemize}
 
-It seems that from most works in feature selection, authors often specify a fixed value of $k$. Furthermore, in \cite{RefWorks:119} by Tang \textit{et. al}, experiments on different datasets conclude that their algorithm might be a good choice for a small number of samples, with large $M$ and $k$. $k$ must also be defined beforehand. The experimenters set this number to $k=100$ for all the datasets that were explored, but later recommended different values of $k$ for two of the datasets that were used.
+It seems that from most works in feature selection, authors often specify a fixed value of $k$. Furthermore, in \cite{RefWorks:119} by Tang \textit{et. al}, experiments on different datasets conclude that their algorithm might be a good choice for a small number of samples, with large $M$ and $k$. The experimenters set $k=100$ for all the datasets that were explored, but later recommended different values of $k$ for two of the datasets that were used.
 
-This suggests that $k$ is dependent on the dataset. If $k$ is not a constraint of the problem (e.g. in bioinformatics problems, we can specify that we just require $k$ of the most informative genes), we could perform a \textit{grid search}. However, due to time and computational constraints, one will probably not be able to perform a grid search on all the features (i.e. $k \in X = [0, M]$), but only on an interval of $X$. So, even if we find an optimal $k$ in that interval of $X$, it is most likely a local optimum.
+This suggests that $k$ is dependent on the dataset. If $k$ is not a constraint of the problem, we could perform a grid search to find an optimal $k$. However, due to time and computational constraints, one will probably not be able to perform a grid search on all the features (i.e. $k \in [1, M]$), but only on an interval of $[1, M]$. So, even if we find an optimal $k$ in that interval of $[1, M]$, it is most likely a local optimum.
 
 
 \subsection{Exhaustive versus heuristic search} \label{bg:fs:exhaustive}
@@ -663,7 +678,7 @@ A feature $f_1$ is redundant with respect to another feature $f_2$, if $f_1$ is 
 
 Greedy searches, which will be explained in detail in the later sections, use relevance or redundancy to guide the search in the feature space. For example, it evaluates a subset of features based on, say, classification score of a machine learner, to determine the discriminating power of that subset.
 
-In the context of this project, there is a possibility that not all of the features in our data set have a role to play in the classification of schizophrenia. As such, the feature selection method is necessary to select the significant features and eliminate the others. Besides, once we obtain a compact subset $S$, it would be computationally cheaper to train our classifier based on just on these features.
+In the context of this project, there is a possibility that not all of the features in our data set have a role to play in the classification of schizophrenia. As such, the feature selection method is necessary to select the significant features and eliminate the others. Besides, once we obtain a compact subset $S$, it would be computationally cheaper to train our classifier based on just these features.
 
 
 \subsection{Greedy search} \label{bg:fs:greedy}
@@ -1011,18 +1026,18 @@ Works such as \cite{RefWorks:245, RefWorks:246} conclude from empirical results 
 
 
 \chapter{Data exploration}
-\section{Understanding the data} \label{data:understanding}
+\section{Investigating the data} \label{data:understanding}
 % Trouble opening the file on basic programs like Microsoft Excel --> pandas and HDFStore used to mitigate.
 
 The data set\footnote{Available from \url{http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE84727}.} contains 2 giga bytes worth of data, with dimensions $420374 \times 847$. Due to the sheer size of the data set, it is not possible to open it on a typical program such as Microsoft Excel without waiting for a long time.
 
-To circumvent this issue, the Python library \texttt{pandas} \cite{RefWorks:213} was used. \texttt{pandas} provides high performance and user-friendly data structures and tools to analyse data sets. In particular, \texttt{pandas} provide a \texttt{pandas.read\_csv} method that reads the csv file. The data set can then be cast into a \texttt{DataFrame}, analogous to the data structure common in the $R$ programming language.
+To circumvent this issue, the Python library \texttt{pandas} \cite{RefWorks:213} was used. \texttt{pandas} provides high performance and user-friendly data structures and tools to analyse data sets. In particular, \texttt{pandas} provide \texttt{read\_csv} and \texttt{read\_excel} methods that allows us to read the large file. The data set can then be cast into a \texttt{DataFrame}, analogous to the data structure common in the $R$ programming language.
 
 One particular advantage of using \texttt{pandas} is that the \texttt{DataFrame} has an \texttt{Index} object, that is able to store the names of the labels along the axes. For example, by examining Figure \ref{data:pandas:example}, we can see how the data set is organised when cast into a \texttt{DataFrame} in \texttt{pandas}. It is also helpful that \texttt{pandas} indicates \texttt{[847 rows x 420374 columns]} which tells us that labels such as \texttt{101103430155\_R06C01} indicates a test case (individual) while the label \texttt{cg00000029} refers to a feature (methylation site - see background in section \ref{bg:bio}).
 
-\texttt{pandas} also work well with lists and arrays in the standard Python library, and data structures in \texttt{numpy} \cite{RefWorks:214}. Furthermore, calling \texttt{pandas.read\_csv} and loading the data into a \texttt{DataFrame} each time we need the data set will impede efficiency. Fortunately, \texttt{pandas} offers the \texttt{HDFStore} class, which utilises \texttt{PyTables} \cite{pytables} to allow fast read and write of \texttt{pandas} data structures. Therefore, each time we need the data set, or indeed any data that takes a lot of time to read, we simply have to retrieve it from the \texttt{HDFStore}.
+\texttt{pandas} also work well with lists and arrays in the standard Python library, and data structures in \texttt{numpy} \cite{RefWorks:214}. Furthermore, calling \texttt{pandas.read\_csv} and loading the data into a \texttt{DataFrame} each time we need the data set will impede efficiency. To this end, \texttt{pandas} offers the \texttt{HDFStore} class, which utilises \texttt{PyTables} \cite{pytables} to allow fast read and write of \texttt{pandas} data structures. Therefore, each time we need the data set, or indeed any data that takes a lot of time to read, we simply have to retrieve it from the \texttt{HDFStore} with a key.
 
-Finally, the \texttt{pandas} data structures work well with the \texttt{scikit-learn} software, which is used extensively in this project, such as fitting an SVM and obtaining cross validation scores (see section \ref{data:svms}).
+Finally, the \texttt{pandas} data structures work well with the \texttt{scikit-learn} software, which is used extensively in this project, such as fitting an SVM and obtaining cross validation scores.
 
 \begin{figure}
 \centering
@@ -1035,18 +1050,45 @@ Finally, the \texttt{pandas} data structures work well with the \texttt{scikit-l
 
 % popular method for most FS algorithms
 
-For all numerical experiments involving the different methods described below, the SVM will be used should there be a need for a classifier. For example, if the method used is a wrapper method, the cross validation error of fitting an SVM would be used to evaluate the algorithm. In contrast, in a filter method, the SVM would not come into play. This is similar to previous works such as \cite{RefWorks:216}, where the classifier is fixed, and attention is focused on the trends displayed by the feature selection algorithms.
+For all numerical experiments described in chapter \ref{methods}, the SVM (see section \ref{bg:svm}) will be used, should there be a need for a classifier. For example, if the method used is a wrapper method, an SVM is used to evaluate the algorithm. In contrast, in a filter method, the SVM would not come into play. This is similar to previous works such as \cite{RefWorks:216}, where the classifier is fixed, and attention is focused on the feature selection algorithms.
 
-The SVM is fitted using the \texttt{scikit-learn} Python software \cite{scikit-learn}. Calling the \texttt{SVC()} method would create a classifier based on \texttt{libsvm} \cite{libsvm} with default parameters, such as the default Radial Basis Function (RBF) kernel, and the error parameter $C=1.0$ (see section \ref{bg:ml:svm:model}). However, a practical guide by Hsu \textit{et. al} in \cite{RefWorks:128} explains that when the number of features is much larger than the number of samples, using a linear kernel would suffice; in other words, we might not need to map our data into higher dimensions.
+The SVM is fitted using the \texttt{scikit-learn} Python software \cite{scikit-learn}. Calling the \texttt{SVC()} method would create a classifier based on \texttt{libsvm} \cite{libsvm} with default parameters, such as the default Radial Basis Function (RBF) kernel, and default error parameter $C=1.0$ (see section \ref{bg:ml:svm:model}). Alternatively, one can specify the error parameter and the type of kernel.
 
-This hypothesis was tested on our data set. Indeed, fitting an SVM using the RBF kernel with all the features, the cross validation score obtained was 0.834644, while with the linear kernel, the score was 0.929160. The cross validation scores can be obtained via the method \texttt{sklearn.model\_selection.cross\_val\_score}. The number of folds performed performed is 5, which will be used throughout the experiments in this project. Furthermore, fitting an SVM with either the linear or RBF kernel took about 30 minutes using HPC \cite{RefWorks:218}.
+However, a practical guide by Hsu \textit{et. al} in \cite{RefWorks:128} explains that when the number of features is much larger than the number of samples, using a linear kernel would suffice; in other words, we might not need to map our data into higher dimensions.
 
-Furthermore, it is not sufficient to simply assume the default penalty parameter $C=1.0$. Instead, as Hsu \textit{et. al} suggested, performing a grid search on $C$ would allow us to find the optimal $C$. However, due to time constraints, the following experiments would stick to the default value of $C$. Moreover, this project focuses on the feature selection algorithms, not the parameters of the SVM.
+Furthermore, however, it is not sufficient to simply assume the default penalty parameter $C=1.0$. Instead, as Hsu \textit{et. al} suggested, performing a grid search on $C$ allows us to find an optimal $C$ that might perform better than the default value. However, due to time constraints, the following experiments would stick to the default value of $C$ (see section \ref{further_work}). Moreover, this project focuses on the feature selection algorithms, not the parameters of the SVM.
+
+
+\section{Cross validation}
+The cross validation scores can be obtained via the \texttt{cross\_val\_score} method in the \texttt{sklearn.model\_selection} package. The number of folds used is 5, which will be used throughout the experiments in this project. That is, 80\% of samples will be used to train the SVM, while the other 20\% will be used for testing the newly-fit SVM to obtain an accuracy score. This is repeated 5 times, where the training/testing set in each iteration is unique. The cross-validation score across all the folds is then the average classification accuracy across all five iterations. Fitting an SVM and obtaining cross validation scores using 5-fold cross validation with either the linear or RBF kernel took about 30 minutes using the High Performance Computing cluster at Imperial College \cite{RefWorks:218}.
+
+\begin{figure}
+\centering
+\begin{tikzpicture}[
+  node distance=+1em and +0pt,
+  outer xsep=+0pt,
+  outer ysep=+0pt,
+]
+ \listset{chain name=r1,do={[g], [g], [g], [g]•, [g]•, [h], [h], [h], [h], [h], [h], [h], [h], [h], [h], [g], [g], [g], [g], [g]}}
+ \tikzset{every first on chain/.style={below=of \tikzpreviouschain-begin}}
+ \listset{chain name=r2, do={[h], [h], [h], [h],[h], [g]•, [g]•, [g]•, [g], [g], [g], [g], [g], [g], [g], [h], [h], [h], [h], [h]}}
+      
+\end{tikzpicture}
+\end{figure}
+
+
+
+The hypothesis made by Hsu \textit{et. al} discussed above, where a linear kernel might suffice for data with high dimension, was tested on our data set. Fitting an SVM using the RBF kernel with all the features produced a cross validation score of 0.834644, while with the linear kernel, the score was 0.929160. Nevertheless, this result does not necessarily mean that the linear kernel is the better kernel, as an RBF kernel might outperform the linear kernel with a different set of features.
+
+The choice of 5 folds was also made in other works such as \cite{RefWorks:187}, while other works such as \cite{RefWorks:202} and \cite{RefWorks:212} use 10 folds. More folds will allow us to train and test the classifier more extensively, obtaining scores with higher accuracy. However, we note that \cite{RefWorks:187} and \cite{RefWorks:202} investigated data sets with less than 20 features. On the other hand, due to the large number of features this project deals with, using 5 folds seems to be a good balance between computational time and accuracy.
+
 
 
 
 \chapter{Methods and approaches}
 \label{methods}
+
+This chapter outlines the various feature selection algorithms with which this project has experimented. Chapter \ref{evaluation} will then discuss the numerical results that these algorithms have produced. 
 
 \section{Data preprocessing}
 % Shuffling the data (random_state) + rationale
@@ -1056,6 +1098,7 @@ Furthermore, it is not sufficient to simply assume the default penalty parameter
 The aforementioned guide by Hsu \textit{et. al} also described the importance of scaling our data before fitting an SVM on the data. In particular, scaling the data would prevent features with large values from dominating those with smaller values. Restricting the values of features such that each feature has zero mean and unit variance is also recommended when using the \texttt{SVC()} (support vector classification) package. This procedure is also conducted in other works such as in \cite{RefWorks:228}. In this project, the data was scaled with the \texttt{sklearn.preprocessing} package in \texttt{scikit-learn}, using the \texttt{scale} method.
 
 Furthermore, as the raw data was sorted based on the classification (target label) of each sample, it is sensible to \textit{shuffle} the data such that the target labels would not be in a particular order. The cross validation method also partitions the data set into folds, and the process of fitting a classifier on a fold would be affected if all the target labels are the same. The shuffling was done using the \texttt{sklearn.utils.shuffle} method. The method also allows us to set the reproducibility of the shuffling. Furthermore, once the entire data set and labels are shuffled, these are stored in the \texttt{DataStore}, and retrieved if needed (see section \ref{data:understanding}).
+
 
 \section{$t$-test} \label{t-test}
 
@@ -1676,7 +1719,7 @@ On average, we see that the best cross validation score is approximately 0.9569,
 
 \begin{figure}
 \begin{center}
-    \begin{tabular}{| p{12cm} | l |} \hline
+    \begin{tabular}{| p{12cm} | c |} \hline
     Parameters & Value \\ \hline \hline
     Number of features selected in initial generation $k$ & 8000 \\ \hline
     Number of top features to select with respect to $r_{qn}$ heuristic in first stage of GA $s$ & 16000 \\ \hline
@@ -1756,11 +1799,12 @@ It is interesting to note that despite reducing $k$ drastically, the magnitude o
 
 \subsection{Experimental results - Tournament selection}
 
+
 \section{Utilising parallelism} \label{body:parallel}
 
 In \cite{RefWorks:221}, an \textit{embarrassingly parallel} problem is described as one that can be ``divided into components that can be executed concurrently''. Similarly, we find that we can utilise the fact that the search space in some of the methods above can be decomposed into several independent subproblems.
 
-For example, for the $t$-test method described in section \ref{t-test}, the algorithm iterates through each of the features to compute the $t$-statistic and $p$-value. We note that the computation for one feature is independent of the computation of all of the other features. Thus, we can design our computation to take advantage of this parallelism. This concept is illustrated in Figure \ref{body:parallelism_diag}.
+For example, for the $t$-test method described in section \ref{t-test}, the algorithm iterates through each of the features to compute the $t$-statistic and $p$-value for each feature. Thus, the computation for one feature is independent of the computation of all of the other features. Thus, we can design our algorithm to take advantage of this parallelism. This concept is illustrated in Figure \ref{body:parallelism_diag}, where each process is responsible for computing a group of features.
 
 \begin{figure}
 \centering
@@ -1796,32 +1840,61 @@ MyStyle/.style={draw, minimum width=2em, minimum height=2em,
 \end{figure}
 
 
-In particular, in the computation of the $t$-statistic of each feature, 10 processes were used to distribute the computational work. A pool of worker processes was created with the \texttt{Pool} class in the \texttt{multiprocessing} package in Python. Next, a \texttt{partition} method was written to divide the search space - in this case, all of the features - into partitions for the processes to work on. The \texttt{Pool.map} method can then \texttt{map} a method - in this case, the computation of the $t$-statistic - on each of the partitions. The result is an improvement in runtime, from 263 seconds to 94 seconds.
+In particular, in the computation of the $t$-statistic of each feature, 10 processes were used to distribute the computational work. A pool of worker processes was created with the \texttt{Pool} class in the \texttt{multiprocessing} package in Python. Next, a \texttt{partition\_list} method was written to divide the search space (in this case, all of the features) into groups of features for the processes to work on.
 
-This idea can also be extended to the other methods, where the search space can be conveniently divided into independent segments. For example, in RFS, the algorithm (see algorithm \ref{RFSAlgo}) can be parallelised in both of the \texttt{for} loops. 
+In particular, the \texttt{Pool.map} method was used. This maps a method - in this case, the computation of the $t$-statistic - on each of the partitions. The result is an improvement in runtime, from 263 seconds to 94 seconds.
+
+As far as possible, this idea was extended to the other methods, where the search space can be conveniently divided into independent segments. For example, in RFS, the algorithm (see algorithm \ref{RFSAlgo}) can be parallelised in both of the \texttt{for} loops.
+
+\section{High performance computing}
+
+Most of the computation done for this project was performed using the high performance computing (HPC) cluster at Imperial College \cite{RefWorks:218}. In particular, the \texttt{cx1} general purpose computer cluster was used and the \texttt{PBSPro} queueing system is used to manage the jobs submitted by users. The \texttt{cx1} system provided a convenient and highly efficient means to perform computations that required a long time or a large memory demand.
+
+Users of the HPC cluster are provided with three directories: \texttt{\$WORK}, \texttt{\$HOME} and \texttt{\$TMPDIR}. \texttt{\$WORK} and \texttt{\$HOME} are directories that allow users to store data and files. On the other hand, \texttt{\$TMPDIR} is a directory for submitting jobs to the PBS system.
+
+A job is submitted to the system by submitting a job script that first specifies the walltime and memory that the job expects. The job script then lists bash commands, which, for example, copies files and runs Python programs. Most of the Python programs in this project write numerical results to a text file. These text files are then copied to the \texttt{\$WORK} or \texttt{\$HOME} directories, from which we can access.
+
+
+\chapter{Evaluation of experimental results}
+\label{evaluation}
+
 
 
 \chapter{Conclusion}
-\section{Further work}
+% The project's conclusions should list the things which have been learnt as a result of the work you have done.
+% For example, "The use of overloading in C++ provides a very elegant mechanism for transparent parallelisation of sequential programs"
 
-One serious limitation of the work presented in this project, is the fact that only a small percentage of the features in our reduced subset $S$ is explored. The ``optimal'' solution generated from the feature selection algorithms presented here might be a local optimum.
+Overall, this project has explored the epigenetics data collected in the study in \cite{RefWorks:78}. In particular, this project has experimented with various feature selection algorithms, investigating the efficacy of these algorithms on the epigenetics data.
 
-If there were more time and resources, we could explore the possibility of including more features in the subset $S$, and find other local optima, if any.
+\section{Further work} \label{further_work}
 
+\subsection{Finding global optima}
+
+One dilemma of greedy feature selection algorithms is that these algorithms only explore a subspace of the feature space. Furthermore, most of these algorithms prune their search for an optimum, halting their search if, for example, the performance of a subset starts to decline.
+
+Even though we have shown that some of the algorithms described here can find a subset $S$ that performs better than the full set of features, we are not guaranteed the global optimum for the algorithms listed in this project. In other words, even though we have found $S$ that can perform better than the full set of features, we do not know if there are other subsets with smaller or the same number of features that can perform even better.
+
+%Thus, an extension might entail a more thorough search of the feature space. Alternatively, a more theoretical approach can be taken, where we might derive upper and lower bounds for the subsets.
+ 
 
 \subsection{Exploring parameters and strategies}
-As mentioned in section \ref{bg:fs:ga}, there are many parameters in genetic algorithms (GA's) that need to be tuned, and it might be enlightening to experiment with parameters that are different from the ones used in this project. This might involve optimisation in many dimensions, each dimension representing a parameter. Furthermore, different strategies can be used in GA's, such as different terminating conditions, crossover strategies and selection strategies.
+
+Parameters play an important role in feature selection algorithms. One of such parameters is the value of $k$, the number of features to be selected from the set of features.
+
+The number of parameters and strategies also increases in genetic algorithms (GA's). As mentioned in section \ref{bg:fs:ga}, there are many parameters in GA's that need to be tuned, and it might be enlightening to experiment with parameters that are different from the ones used in this project. This might involve optimisation in many dimensions, each dimension representing a parameter. Furthermore, different strategies can be used in GA's, such as different terminating conditions, crossover, selection and mutation strategies.
 
 
 \subsection{Use of mutual information}
 As mentioned in section \ref{bg:fs:mi}, mutual information (MI) is a highly popular measure to quantify the relationship between features and the target class (relevance) and between features themselves (redundancy). MI has also been used in many other works involving feature selection.
 
-As our data set uses continuous variables, it is difficult to estimate probabilities involving these variables. The Parzen Window \cite{RefWorks:183} seems to be a feasible way to estimate these probabilities. It will be interesting to use the Parzen Window method to help quantify relevance and redundancy. This can then be combined with the other methods and algorithms used in this project. We can then determine if using the Parzen Window (or other methods) to estimate MI improves the feature selection process.
+This project avoids the use of MI despite its popularity, simply because the data set uses continuous variables. MI requires estimates of probabilities and it is computationally complex to estimate probabilities involving continuous variables.
+
+Various methods have been proposed to estimate MI for continuous variables. For example, the Parzen Window \cite{RefWorks:183} was proposed to estimate these probabilities. It will be interesting to use the Parzen Window method to help estimate probabilities involving continuous variables. This can then be combined with the other methods and algorithms used in this project. We can then determine if using the Parzen Window (or other methods) to estimate MI improves the feature selection process.
 
 
 \newpage
 
-
+\singlespacing
 \pagenumbering{roman}
 \bibliographystyle{unsrt}
 \bibliography{references}
