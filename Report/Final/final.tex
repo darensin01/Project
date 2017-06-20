@@ -143,7 +143,7 @@ matrix, shapes.symbols}
 
 \singlespacing
 \chapter*{Abstract}
-Schizophrenia is a mental disorder that is commonly perceived to be hereditary. However, there have been cases where patients with schizophrenia do not have a family member with the disorder. This hints that the epigenetics of an individual might have a significant role to play in causing an individual to have schizophrenia or other mental disorders. This project investigates epigenetics data and attempts to find any regularity or trend that might help us understand the relationship between epigenetics and schizophrenia.
+Schizophrenia is a mental disorder that is commonly perceived to be hereditary. However, there have been cases where patients with schizophrenia do not have a family member with the disorder. This hints that the epigenetics of an individual might have a significant role to play in causing an individual to have schizophrenia or other mental disorders. This project investigates an epigenetics data set and attempts to find any regularity or trend that might help us understand the relationship between epigenetics and schizophrenia.
 
 In particular, this data set has about 400000 features, and understanding this data set will require feature selection to select only the relevant features. This project explores several feature selection algorithms and looks into their effectiveness in selecting the useful features from this data set.
 
@@ -299,9 +299,9 @@ This project makes use of data from a recent genetic-epigenetic analysis of schi
 
 %which utilised high-throughput methods that enable genomics researchers to perform epigenome-wide association studies (EWAS).
 
-In this study, the researchers aimed to identify positions in the genome that display DNA methylation associated with environmental exposure and disease. We thus want to find out if there are statistically significant differences in DNA methylation between individuals diagnosed with schizophrenia (case) and those who were not (control). Blood samples of 847 individuals, 414 of whom were schizophrenia cases, were taken.
+In this study, the authors aimed to identify positions in the genome that display DNA methylation associated with environmental exposure and disease. We thus want to find out if there are statistically significant differences in DNA methylation between individuals diagnosed with schizophrenia (case) and those who were not (control). Blood samples of 847 individuals, 414 of whom were schizophrenia cases, were taken.
 
-Furthermore, the data set quantifies the degree of DNA methylation in specific positions along the genome. Specifically, these positions are CpG islands, and are labelled as \texttt{cgXXXXXXXX} (see Figure \ref{data:pandas:example}). The degree of DNA methylation in a CpG island of an individual is also recorded as a continuous value in the data set. This data set features 420374 CpG islands. Thus, one can visualise the data set as a 420374 $\times$ 847 matrix. More details of understanding the data are discussed in chapter \ref{data:understanding}.
+Furthermore, the data set quantifies the degree of DNA methylation in specific positions along the genome. These positions are CpG islands, and are labelled as \texttt{cgXXXXXXXX} (see Figure \ref{data:pandas:example}). The degree of DNA methylation in a CpG island of an individual is also recorded as a continuous value in the data set. This data set features 420374 CpG islands for 847 individuals. Thus, one can visualise the data set as a 420374 $\times$ 847 matrix. More details of understanding the data are discussed in chapter \ref{data:understanding}.
 
 %In particular, we are interested in the data offered in ``phase 2'' of the study, where schizophrenia-associated differentially methylated positions (DMPs) (positions on the genome where there is a difference in DNA methylation patterns between two sets of genomes) were tested among 
 
@@ -310,11 +310,11 @@ Throughout this project, we shall identify the data from this study as \textit{t
 
 \section{Comparison with cancer classification} \label{bg:cancer}
 
-There is a significant amount of literature on cancer classification using gene expression data. These works aim to uncover biological or medical insights using biological data obtained from microarrays, which can measure the gene expression of thousands of genes simultaneously \citep{RefWorks:79}. For example, using neural networks, gene expression data can be used to distinguish between tumour types, which helps in cancer diagnosis \citep{RefWorks:80, RefWorks:88}. \cite{RefWorks:199} has even identified genes that can potentially predict outcomes based on survival data. We can draw lessons from these studies to apply to this project.
+There is a significant amount of literature on cancer classification using gene expression data. These works aim to uncover biological or medical insights using biological data obtained from microarrays, which can measure the gene expression of thousands of genes simultaneously \citep{RefWorks:79}. For example, using neural networks, gene expression data can be used to distinguish between tumour types, which helps in cancer diagnosis \citep{RefWorks:80, RefWorks:88}. \cite{RefWorks:199} has even identified genes that can potentially predict cancer outcomes based on survival data. We can draw lessons from these studies to apply to this project.
 
 What is similar about this project and previous work on cancer classification is that the data for both cases are plagued with the curse of dimensionality. For example, in cancer studies, microarrays produce data with a large number of genes (features) but a small number of samples (observations) \cite{RefWorks:88}. Furthermore, only a small subset of the features are relevant for the studies, as not all features are useful in determining the type of cancer a patient has. This is regarded as biological noise \cite{RefWorks:89}. As such, feature reduction on the data has to be performed to select only the relevant genes for the classification problem. Moreover, an ideal subset of features would be sparse, as we seek to eliminate the features that are redundant with respect to other features.
 
-However, what is different between studies on psychiatric disorders and studies on cancer, is that the latter is observable, such that we can ascertain that an individual has cancer using medical methods, such as conducting a blood test; it is not as obvious that an individual has a psychiatric disorder, as its symptoms might not be straightforward. For example, \cite{RefWorks:114} discusses culture-related issues in diagnosing schizophrenia: ``the assessment of disorganized speech may be made difficult by linguistic variation in narrative styles across cultures''.
+However, what is different between studies on psychiatric disorders and studies on cancer is that the latter is observable, such that we can ascertain that an individual has cancer using medical methods, such as conducting a blood test; it is not as obvious that an individual has a psychiatric disorder, as its symptoms might not be straightforward. For example, \cite{RefWorks:114} discusses culture-related issues in diagnosing schizophrenia: ``\textit{the assessment of disorganized speech may be made difficult by linguistic variation in narrative styles across cultures}''. In other words, diagnosing an individual with schizophrenia is not as ``obvious''.
 
 %Furthermore, ``ideas that appear to be delusional in one culture (e.g. witchcraft) may be commonly held in another''. These highlight how diagnosing a psychiatric disorder like schizophrenia is not straightforward.
 
@@ -340,9 +340,9 @@ where $p_{(+)}$ and $p_{(-)}$ represents the proportion of samples with positive
 \end{mydef}
 
 \begin{mydef}[Information gain]
-The information gain with respect to the set $S$ and a attribute $A$ is defined as:
+The information gain with respect to a set $S$ and an attribute $A$ is defined as:
 \begin{align*}
-Gain(S, A) \equiv Entropy(S) - \sum_{v \in Values(A)} \frac{|S_v|}{|S|} \, Entropy(S_v)
+IG(S, A) = Entropy(S) - \sum_{v \in Values(A)} \frac{|S_v|}{|S|} \, Entropy(S_v)
 \end{align*}
 where $Values(A)$ is the set of all possible values of attribute $A$, and $|S_v|$ is the number of elements in the set $S$ with value $v$ for its attribute $A$.
 \label{bg:id3:ig}
@@ -360,11 +360,11 @@ The Random Forest method \cite{RefWorks:101} is a form of \textit{ensemble learn
 \item Split the dataset into distinct subsets.
 \item For each subset, train a decision tree using a decision tree algorithm, such as the ID3.
 \item Combine all the trees together to create a \textit{forest}.
-\item Suppose we have an unseen sample $\boldsymbol x$.  Put the $\boldsymbol x$ through each tree, and obtain the resulting classification for each tree.
+\item Suppose we have an unseen sample $\boldsymbol x$.  Put $\boldsymbol x$ through each tree, and obtain the resulting classification for each tree.
 \item Based on a ``majority vote'' system, determine the final classification of $\boldsymbol x$; that is, choose the classification that is the most popular among the decision trees.
 \end{itemize}
 
-Random Forest has been shown to outperform decision trees \cite{RefWorks:103}. However, the limitations of decision trees described above would still be inherent in the Random Forest method, since Random Forest uses Decision Trees. Besides, Random Forest requires more parameters in general. For example, we would need to determine the number of trees to be trained. This would require numerical experiments.
+Random Forest has been shown to outperform decision trees \cite{RefWorks:103}. However, the limitations of decision trees described above would still be inherent in the Random Forest method, since Random Forest uses decision trees. Besides, Random Forest requires more parameters in general. For example, we would need to determine the number of trees to be trained. This would require numerical experiments.
 
 It has also been shown that the number of trees required grows with the number of features that directly affect the classification outcome \cite{RefWorks:102}, and we do not know beforehand what these features are. As such, we might potentially have to train a lot of trees, which will require a lot of memory and time.
 
@@ -1195,7 +1195,7 @@ Finally, data structures in  \texttt{pandas} work well with the \texttt{scikit-l
 
 \begin{figure}
 \centering
-\includegraphics[scale=0.9]{images/pandas-example.JPG}
+\includegraphics[scale=0.75]{images/pandas-example.JPG}
 \caption{A truncated output of the \texttt{DataFrame} that stores the (shuffled) data set. We can use this output to study the information available in the \texttt{DataFrame}, and how this information is structured.}
 \label{data:pandas:example}
 \end{figure}
@@ -1210,7 +1210,7 @@ A practical guide to SVMs by Hsu \textit{et. al} in \cite{RefWorks:128} argues t
 
 %; in other words, we might not need to map our data into higher dimensions with an RBF kernel.
 
-However, it is not sufficient to simply assume the default penalty parameter $C=1.0$. Instead, as Hsu \textit{et. al} suggested, performing a grid search on $C$ allows us to find an optimal $C$ that might perform better than the default value. However, due to time constraints, the following experiments would stick to the default value of $C$ (see section \ref{further_work}).
+However, it is not sufficient to simply assume the default penalty parameter $C=1.0$. Instead, as Hsu \textit{et. al} suggested, performing a grid search on $C$ allows us to find an optimal $C$ that might perform better than the default value. However, due to time constraints, the following experiments would stick to the default value of $C$. Using other kernels and parameters is proposed as an extension in section \ref{further_work}.
 
 %Moreover, this project focuses on the feature selection algorithms, not the parameters of the SVM.
 
@@ -1295,11 +1295,9 @@ The choice of 5 folds was also made in other works such as \cite{RefWorks:187}, 
 % Normalise data before training on SVM classifier.
 % Store shuffled data in data store.
 
-Before the data set can be used for cross validation, it needs to be preprocessed first. Hsu \textit{et. al} also described the importance of \textit{scaling} our data before fitting an SVM. In particular, scaling the data would prevent features with large values from dominating those with smaller values. Restricting the values of features such that each feature has zero mean and unit variance is also recommended when using the \texttt{SVC()} (support vector classification) package. This procedure is also carried out in other works such as \cite{RefWorks:228}. In this project, the data was scaled with the \texttt{sklearn.preprocessing} package in \texttt{scikit-learn}, using the \texttt{scale} method.
+Before the data set can be used for cross validation, it needs to be preprocessed first. Hsu \textit{et. al} also described the importance of \textit{scaling} our data before fitting an SVM. In particular, scaling the data would prevent features with large values from dominating those with smaller values. Scaling the features such that each feature has zero mean and unit variance is also recommended when using the \texttt{SVC()} (support vector classification) method. This procedure is also carried out in other works such as \cite{RefWorks:228}. In this project, the data was scaled with the \texttt{sklearn.preprocessing} package in \texttt{scikit-learn}, using the \texttt{scale} method.
 
-Furthermore, the raw data was sorted based on the classification (target label) of each sample: the samples in the raw data set were ordered such that the cases (label 0) came first, followed by the controls (label 1). It is thus sensible to \textit{shuffle} the data such that the target labels would not be in any particular order.
-
-The cross validation process also partitions the data set into folds, and the process of fitting a classifier using the data set will be affected if the samples are ordered, since this will introduce bias. For example, the test set might only contain samples in a particular class.
+Furthermore, the raw data was sorted based on the classification (target label) of each sample: the samples in the raw data set were ordered such that the cases (label 0) came first, followed by the controls (label 1). It is thus sensible to \textit{shuffle} the data such that the target labels would not be in any particular order. The cross validation process also partitions the data set into folds, and the process of fitting a classifier using the data set will be affected if the samples are ordered, since this will introduce bias. For example, one of the test sets might only contain samples in a particular class.
 
 The shuffling was done using the \texttt{sklearn.utils.shuffle} method. The method also allows us to set the reproducibility of the shuffling. Furthermore, as discussed in section \ref{data:understanding}, once the entire data set and labels are shuffled, these are stored in a \texttt{DataStore}, and is retrieved when needed.
 
@@ -1307,7 +1305,7 @@ The shuffling was done using the \texttt{sklearn.utils.shuffle} method. The meth
 
 \section{Using all features} \label{data:all_features}
 
-In the context of feature selection, it is only be sensible to compare the performance of the feature selection algorithms to the situation where all the features are used in SVM classification.
+In the context of feature selection, it is only sensible to compare the performance of the feature selection algorithms to the situation where all the features are used in SVM classification.
 
 %The hypothesis made by Hsu \textit{et. al} discussed above, where a linear kernel might suffice for data with high dimension, was tested on our data set.
 
@@ -1320,7 +1318,7 @@ As mentioned in section \ref{intro:epi}, epigenetics can be interpreted as a ``w
 From the relevant files\footnote{For example, the files available from \url{http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE84727}.}, we can also extract the \textit{gender} and \textit{age} information for most of our samples. We thus need to check if these confounding factors influence the classification of our samples.
 
 \subsection{Effects of linear regression}
-A linear regression was performed on the data set, where we take age and gender as the independent variables and the feature values as the dependent variable. We want to see if there is any relationship between age and gender and the features. Suppose we let $Y=\text{feature}$ and $X_1=\text{age}$, $X_2=\text{gender}$. Then, from \cite{RefWorks:219}, we have a linear model
+Linear regression was performed on the data set, where we take age and gender as the independent variables and the feature values as the dependent variable. We want to see if there is any relationship between age, gender and the features. Suppose we let $Y=\text{feature}$ and $X_1=\text{age}$, $X_2=\text{gender}$. Then, from \cite{RefWorks:219}, we have a linear model
 \begin{align*}
 y = \beta_0 + \beta_1 \, x_1 + \beta_2 \, x_2 + \epsilon
 \end{align*}
@@ -1360,7 +1358,7 @@ We again fit an SVM using the residuals:
 
 From the table above, we can see that the CV scores do not differ significantly (about 3\% to 7\% difference). With the residuals, the SVM seems to have slightly lower classification accuracy. This suggests that age and gender only have a small influence on the classification of the samples.
 
-However, we should also note that in the original data, the ages of about 200 individuals were missing. These individuals were removed from the samples for the linear regression procedure, resulting in about 600 samples in the residuals data set. Because it is preferable to have more samples when fitting SVMs, and because we do not experience much performance degradation by using the residuals, we will use the \textit{original} data set instead.
+We should also note that in the original data, the ages of about 200 individuals were missing. These individuals were removed from the samples for the linear regression procedure, resulting in about 600 samples in the residuals data set. Because it is preferable to have more samples when fitting SVMs, and because there is little difference in using the residuals, we will use the \textit{original} data set instead.
 
 
 
@@ -1379,7 +1377,7 @@ The $t$-statistic and its corresponding $p$-value can be computed using the \tex
 H_0: \mu_0 = \mu_1 \quad \text{vs.} \quad H_1: \mu_0 \neq \mu_1
 \end{align*}
 
-\texttt{ttest\_ind} will then perform a two-sided test, and return the value of the $t$-statistic and its $p$-value. Given two groups of samples $X_0$ and $X_1$, the $t$-statistic, $T$ is:
+\texttt{ttest\_ind} will then perform a two-sided test, and return the value of the $t$-statistic and its $p$-value. Given two groups of samples $X_0$ and $X_1$, the $t$-statistic $T$ is:
 \begin{align*}
 T = \frac{\bar{x}_0 - \bar{x}_1}{\sqrt{\frac{s_0^2}{n_0} + \frac{s_1^2}{n_1}}}
 \end{align*}
@@ -1391,7 +1389,7 @@ M_1 = \frac{\left(\sfrac{s_1^2}{n_1}\right)^2}{n_1-1}
 \end{gather*}
 
 \subsection{Interpretation of $t$-test}
-In the context of feature selection, for each feature, we have to group the samples according to their classification under this feature. This means that, for each feature, samples whose classification is 0 will belong to group 0, and samples whose classification is 1 will belong to group 1.
+In the context of feature selection, for each feature, we have to group the samples according to their classification under this feature. This means that for each feature, samples whose classification is 0 will belong to group 0, and samples whose classification is 1 will belong to group 1.
 
 Under the null hypothesis $H_0: \mu_0 = \mu_1$, the means of these two groups are the same. This implies that the feature values have no influence on the classification of the samples. Using \texttt{ttest\_ind}, a low $p$-value means that we have enough evidence to \textit{reject} $H_0$. Rejecting $H_0$ means that we are certain that a feature has significant contribution to the classification and is therefore highly relevant to the target labels. Thus, this method will select features whose $p$-values are significantly \textit{low}.
 
@@ -1413,9 +1411,9 @@ However, one stark drawback of this method is that $t$-test only considers each 
 
 \subsection{Variation of $t$-test: A lazy version of Sequential Forward Selection} \label{body:sfs:lazy}
 
-It is interesting to see if ranking each feature according to its individual CV score instead will differ significantly from the $t$-test method. In other words, instead of ranking features based on their $t$-statistic, we rank them based on their \textit{individual} CV score. Since this is a greedier and lazier version of Sequential Forward Selection (SFS), we call this method lazy SFS. Furthermore, unlike $t$-test, this variation of SFS can be classified as a wrapper method, since it uses the SVM to evaluate the features.
+It is interesting to see if ranking each feature according to its individual cross validation (CV) score will differ significantly from the $t$-test method. In other words, instead of ranking features based on their $t$-statistic, we rank them based on their \textit{individual} CV score. In this context, individual CV score refers to the CV score obtained by the SVM when it is fitted with only one feature. Since this is a greedier and lazier version of Sequential Forward Selection (SFS), we call this method lazy SFS. Furthermore, unlike $t$-test, this variation of SFS can be classified as a wrapper method, since it uses the SVM to evaluate the features.
 
-First, we iterated through each feature and fitted an SVM using just that feature. So, the SVM is trained on one feature at a time only. Then, a list of CV scores are obtained. We then sort this list in descending order. Similarly to $t$-test, selecting $k$ features means selecting the top $k$ features in the sorted list. We also note that the lazy SFS also suffers from the same shortcoming as $t$-test, as both do not take redundancy of features into account.
+First, we iterate through each feature and fit an SVM using just that feature. So, the SVM is trained on one feature at a time only. Then, a list of CV scores is obtained. We then sort this list in descending order. Similarly to $t$-test, selecting $k$ features means selecting the top $k$ features in the sorted list. We also note that the lazy SFS also suffers from the same shortcoming as $t$-test, as both do not take redundancy of features into account.
 
 \section{Recursive feature elimination} \label{body:rfe}
 
@@ -1446,7 +1444,7 @@ Since the RFS algorithm uses the SVM, it can be classified as a \textit{wrapper}
     Iteration & Subsets considered & Subset selected $S$ \\
     \hline
     1 & $f_1, f_2, \dots, f_M$ & $\left\lbrace f_3 \right\rbrace$ \\ \hline
-    2 & $\left\lbrace f_3, f_1 \right\rbrace, \left\lbrace f_3, f_2 \right\rbrace, \left\lbrace f_3, f_4 \right\rbrace, \dots , \left\lbrace f_1, f_{M/2} \right\rbrace$ & $\left\lbrace f_3, f_1 \right\rbrace$ \\ \hline
+    2 & $\left\lbrace f_3, f_1 \right\rbrace, \left\lbrace f_3, f_2 \right\rbrace, \left\lbrace f_3, f_4 \right\rbrace, \dots , \left\lbrace f_3, f_{M/2} \right\rbrace$ & $\left\lbrace f_3, f_1 \right\rbrace$ \\ \hline
     3 & $\left\lbrace f_3, f_1, f_2 \right\rbrace, \left\lbrace f_3, f_1, f_4 \right\rbrace, \dots , \left\lbrace f_3, f_1, f_{M/3} \right\rbrace$ & $\left\lbrace f_3, f_1, f_5 \right\rbrace$ \\ \hline
     \end{tabular}
 \caption{A diagram demonstrating how the first three iterations of RFS work. Suppose the features $f_3, f_1, f_5$ are the top three features.}
@@ -1543,7 +1541,7 @@ The conditional variance of $X$, given $Y$, is:
 \end{align*}
 \end{mydef}
 
-We also note that the conditional variance is a random variable with respect to $Y$, and so we can find the expectation of the quantity:
+Since the conditional variance is a random variable with respect to $Y$, we can find the expectation of the quantity:
 \begin{align}
 E_Y [ \var_X(X \, | \, Y) ] = E_YE_X[X^2 \, | \, Y] - E_Y [ E_X(X\,|\,Y) ] ^2 \label{mrmmc:eq:star}
 \end{align}
@@ -1572,7 +1570,7 @@ E_Y [ \var_X(X \, | \, Y) ] &= E[X^2] - \var_Y (E_X[X \, | \, Y]) - \left( E[X] 
 \end{align*}
 where we used the definition of marginal variance in definition \ref{mrmmc:def:margvar}.
 
-Thus, as discussed in \cite{RefWorks:187}, the variance of the random variable $X$ is made of two parts $\var_Y (E_X[X \, | \, Y])$ and $E_Y [ \var_X(X \, | \, Y) ]$. The latter describes the average variability with respect to different targets: on average, how much do the feature values vary with different targets?
+Thus, as discussed in \cite{RefWorks:187}, the variance of the random variable $X$ is made of two parts: $\var_Y (E_X[X \, | \, Y])$ and $E_Y [ \var_X(X \, | \, Y) ]$. The latter describes the average variability with respect to different targets: on average, how much do the feature values vary with different targets?
 
 %\begin{itemize}
   %\item $\var_Y (E_X[X \, | \, Y])$ describes the variability between the targets (or outcomes): how much do the targets deviate from its mean with the feature values?
@@ -1673,7 +1671,7 @@ E_X(X|Y=1) &= \frac{1}{2} \,  (0.5+0.1) = 0.3 \quad \text{(Expectation of $X$ ov
 P(Y=1) &= \frac{2}{3} \\
 E[X^2] &= \frac{1}{3} \, (0.5^2+0.2^2+0.1^2) = 0.1 \\
 E[X] &= \frac{1}{3} \, (0.5+0.2+0.1) \approx 0.2666 \\
-\var(X) &= E[X^2] - (E[X])^2 \approx 0.07111
+\var(X) &= E[X^2] - (E[X])^2 \approx 0.02892
 \end{align*}
 
 As such, we can employ the same method to compute the required expectations and variances for our data. To make this task simpler, we utilise methods in the \texttt{numpy} \cite{RefWorks:214} package: the \texttt{mean} and \texttt{var} methods are used to compute expectation and variance respectively.
@@ -1763,7 +1761,7 @@ This is evidently the \textit{classical Gram-Schmidt} (CGS) process. However, CG
 
 %Although there are several algorithms in the literature of linear algebra, such as Householder transformations, that alleviate the problem of instability of CGS, this project will not delve further into these algorithms, but instead simply use MGS to compute the set of orthogonal vectors $Q$. Besides, \cite{RefWorks:194} also notes that MGS is almost as numerically stable as algorithms that use Householder transformations.
 
-The computation of $Q$ was performed using the \texttt{numpy.linalg.qr} method. This method returns an \textit{orthonormal} matrix and an upper triangular matrix $\boldsymbol R$ that does not play a role in computing $R^2$. An orthonormal matrix has orthonormal columns, which are orthogonal columns with the added constraint that they have a magnitude (2-norm) of 1. This would not affect the computation of $R^2$:
+The computation of $Q$ was performed using the \texttt{numpy.linalg.qr} method. This method returns an \textit{orthonormal} matrix and an upper triangular matrix $\boldsymbol R$ that does not play a role in computing $R^2$. An orthonormal matrix has orthonormal columns, which are orthogonal columns with a magnitude (2-norm) of 1. This would not affect the computation of $R^2$:
 
 %The pseudocode in algorithm \ref{MGS}, from \cite{RefWorks:195}, outlines the procedure for MGS. We also note that MGS produces an upper triangular matrix $\boldsymbol R$ that does not play a role in computing $R^2$. Furthermore, the original matrix $A$ in algorithm \ref{MGS} is overwritten by \textit{orthonormal} columns, which are orthogonal columns with the added constraint that they have a magnitude (2-norm) of 1. This would not affect how $R^2$ is used as described above.
 
@@ -1825,9 +1823,9 @@ This means that, for our data set, the algorithm should only select at most 847 
 
 \subsection{Computational complexity}
 
-We first note that the MRmMC method is a filter method since it does not employ the SVM at all. A common benefit of filter methods is its computational efficiency. For example, the $t$-test only needs to compute the $t$-statistic of each feature once. Despite its classification as a filter method, the MRmMC is not as computationally efficient, especially when a lot of features are involved.
+We first note that the MRmMC method is a filter method since it does not employ the SVM at all. A common benefit of filter methods is its computational efficiency. For example, the $t$-test only needs to compute the $t$-statistic of each feature once. Despite its classification as a filter method, MRmMC is not as computationally efficient, especially when a lot of features are involved.
 
-Computational effort is mostly spent in computing the QR factorisation of the selected features. This is for the purpose of quantifying the redundancy among the selected features. According to \cite{RefWorks:253}, the CGS algorithm used to compute the orthgonal vectors has complexity $\mathcal{O}(mn^2)$ for a matrix $Q \in \mathbb{R}^{m \times n}$. That is, the complexity of the algorithm grows quadratically with more features, versus the linear time complexity offered by $t$-test. So, with more features, the algorithm will take a longer time to compute the QR factorisation of the matrix $Q$.
+Computational effort is mostly spent in computing the QR factorisation of the selected features. This is for the purpose of quantifying the redundancy among the selected features. According to \cite{RefWorks:253}, the CGS algorithm used to compute the orthgonal vectors has complexity $\mathcal{O}(mn^2)$ for a matrix $Q \in \mathbb{R}^{m \times n}$. That is, the complexity of the algorithm grows quadratically with features, versus the linear time complexity offered by $t$-test. So, with more features, the algorithm will take a longer time to compute the QR factorisation of the matrix $Q$.
 
 Thus, not using the $R^2$ term will allow us to avoid this computational complexity, which gives us a stronger reason to use genetic algorithms instead.
 
@@ -1854,20 +1852,6 @@ Then, from the top $s$ features, we randomly select $k$ features that will form 
 
 Figure \ref{bg:ga:twostage:diag} demonstrates this two-stage GA with 20 features in total. In this case, $M=20$, $s=9$ and $k=5$.
 
-Next, the \textit{elitism/cloning} strategy will be used when creating a new generation of chromosomes, as performed in \cite{RefWorks:212}. This means that we copy the best solutions in each generation to the next. This guarantees that the maximum fitness of the next generation will not decrease. The idea of elitism is enforced as follow:
-\begin{itemize}
-  \item Clone a fraction $p_e$ of the solutions that have the best fitness in each generation to the next generation.
-  \item Select the next $p_r$ of the solutions with the best fitness, mutate each solution and add to the next generation.
-  \item Remove $p_{elim}$ of the solutions with the worst fitness.
-\end{itemize}
-
-\textit{Crossover} is then done on the solutions that remain. This will be done based on the \textit{Roulette Wheel selection} and the \textit{tournament selection}.
-
-%Two parents will be randomly selected, in proportion to their relative fitness. This helps to boost the overall fitness of the offsprings, as there is a higher chance that a relatively fit parent is selected. At the same time, it helps to generate diversity, as parents with lower fitness also have a chance to be selected for crossover. This is done until there are $G$ solutions for the next generation.
-
-The literature also offers different stopping criteria for the GA. For example, \cite{RefWorks:202} stops the GA after a fixed number of generations, while \cite{RefWorks:212} stops the algorithm when there is no change in the fitness function in 30 generations. We experiment with the latter, where the algorithm terminates if the fitness increases by less than $t$ for $T$ generations.
-
-In summary, the parameters used in the algorithm implemented are summarised in Figure \ref{ga:mrmmc:params_1} in chapter \ref{evaluation}. The pseudocode of our GA is listed in algorithm \ref{GAAlgo}.
 
 \begin{figure}
 \centering
@@ -1964,6 +1948,22 @@ In summary, the parameters used in the algorithm implemented are summarised in F
 \label{bg:ga:twostage:diag}
 \end{figure}
 
+
+Next, the \textit{elitism/cloning} strategy will be used when creating a new generation of chromosomes, as performed in \cite{RefWorks:212}. This means that we copy the best solutions in each generation to the next. This guarantees that the maximum fitness of the next generation will not decrease. The idea of elitism is enforced as follow:
+\begin{itemize}
+  \item Clone a fraction $p_e$ of the solutions that have the best fitness in each generation to the next generation.
+  \item Select the next $p_r$ of the solutions with the best fitness, mutate each solution and add to the next generation.
+  \item Remove $p_{elim}$ of the solutions with the worst fitness.
+\end{itemize}
+
+\textit{Crossover} is then done on the solutions that remain. This will be done based on the \textit{Roulette Wheel selection} and the \textit{tournament selection}.
+
+%Two parents will be randomly selected, in proportion to their relative fitness. This helps to boost the overall fitness of the offsprings, as there is a higher chance that a relatively fit parent is selected. At the same time, it helps to generate diversity, as parents with lower fitness also have a chance to be selected for crossover. This is done until there are $G$ solutions for the next generation.
+
+The literature also offers different stopping criteria for the GA. For example, \cite{RefWorks:202} stops the GA after a fixed number of generations, while \cite{RefWorks:212} stops the algorithm when there is no change in the fitness function in 30 generations. We experiment with the latter, where the algorithm terminates if the fitness increases by less than $t$ for $T$ generations.
+
+In summary, the parameters used in our GA are summarised in Figure \ref{ga:mrmmc:params_1} in chapter \ref{evaluation}. The pseudocode of our GA is listed in algorithm \ref{GAAlgo}.
+
 \begin{algorithm}
 \DontPrintSemicolon
 \KwIn{Data set $D$. See section \ref{body:ga:params} for explanation of GA parameters.}
@@ -2016,7 +2016,6 @@ $consecutive\_gen \longleftarrow 0$\;
 $best\_fitness \longleftarrow current\_best\_fitness$ \;
 $gen\_solution \longleftarrow next\_gen\_solution$
 }
-Evaluate fitness of $gen\_solution$. \;
 $S \longleftarrow$ Features corresponding to the solution with $best\_fitness$.
 }
 \caption{Genetic algorithm($D$, $k$, $s$, $G$, $T$, $P_e$, $P_m$, $P_r$, $P_{elim}$) \label{GAAlgo}}
@@ -2028,7 +2027,7 @@ $S \longleftarrow$ Features corresponding to the solution with $best\_fitness$.
 
 In \cite{RefWorks:221}, an \textit{embarrassingly parallel} problem is described as one that can be ``\textit{divided into components that can be executed concurrently}''. Similarly, we find that we can utilise the fact that the search space in some of the methods above can be decomposed into several independent subproblems.
 
-For example, the $t$-test method described in section \ref{t-test} iterates through each feature to compute the $t$-statistic and $p$-value for the feature. Thus, the computation for one feature is independent of that for all other features. Hence, we can take advantage of this parallelism, by splitting the work into parts. This concept is illustrated in Figure \ref{body:parallelism_diag}, where $p$ processes each computes a group of features.
+For example, the $t$-test method described in section \ref{t-test} iterates through each feature to compute the $t$-statistic and $p$-value for the feature. Thus, the computation for one feature is independent of the computation for all other features. Hence, we can take advantage of this parallelism, by splitting the work into parts. This concept is illustrated in Figure \ref{body:parallelism_diag}, where $p$ processes each computes a group of features.
 
 \begin{figure}
 \centering
@@ -2074,9 +2073,9 @@ Most of the computation for this project was performed using the High Performanc
 
 Users of the HPC cluster are provided with three directories: \texttt{\$WORK}, \texttt{\$HOME} and \texttt{\$TMPDIR}. \texttt{\$WORK} and \texttt{\$HOME} are directories that allow users to store data and files. On the other hand, \texttt{\$TMPDIR} is a directory for submitting jobs to the PBS system.
 
-A job is submitted to the system by submitting a job script that first specifies the walltime and memory that the job expects. The job script then lists bash commands, which, for example, copies files and runs Python programs. Most of the Python programs in this project write numerical results to a text file. These text files are then copied to the \texttt{\$WORK} or \texttt{\$HOME} directories, from which we can copy to our own devices.
+A job is submitted to the system by submitting a job script that first specifies the walltime and memory that the job expects. The job script then lists bash commands, which, for example, copies files and runs Python programs. Most of the Python programs in this project write numerical results to a text file. These text files are then copied to the \texttt{\$WORK} directory, from which we can copy to our local machines.
 
-Furthermore, the cluster allowed \textit{serial jobs} to be conducted. That is, jobs that require multiple executions can be submitted and the job will be run for a specified number of times automatically. This feature was especially convenient for the execution of the GAs. 10 runs of the GA were performed for each of the selection strategies (roulette wheel and tournament), and serial execution made this task much easier.
+Furthermore, the cluster allowed \textit{serial jobs} to be conducted. That is, jobs that require multiple executions can be submitted and the program will be run for a specified number of times automatically. This feature was especially convenient for the execution of the GAs. 10 runs of the GA were performed for each of the selection strategies (roulette wheel and tournament), and serial execution made this task much easier.
 
 
 \chapter{Experimental results and evaluation}
@@ -2113,14 +2112,16 @@ CV score & 0.938628 & 0.937444 & 0.932703 & 0.92916  &          &          &    
 \label{t_test:table:range}
 \end{table}
 
-As mentioned in section \ref{t-test}, the $t$-test allows us to generate a list of $p$-values for each feature, and we then sort the $p$-values in ascending order. For each $k$, we will select the top $k$ features from the sorted list, fit an SVM with the $k$ features, and obtain CV scores. For example, when $k=500$, we will select the top 500 features in the sorted list.
+As mentioned in section \ref{t-test}, the $t$-test allows us to generate a list of $p$-values and we then sort the $p$-values in ascending order. For each $k$, we will select the top $k$ features from the sorted list, fit an SVM with the $k$ features, and obtain CV scores. For example, when $k=500$, we will select the top 500 features in the sorted list.
 
-From Figure \ref{body:t_test:fig:range}, we notice that the CV score peaks at around $k=15000$ with a score of 0.950448, and after this value of $k$, the CV score exhibits a decreasing trend. Evidently, due to the coarse granularity of $k$ that we have sampled, this method might miss out on some possible local maxima after $k=15000$. However, because the time required to fit an SVM and obtain CV scores increases with the number of features, it is perhaps sufficient to obtain a broad, general trend of $t$-test.
+From Figure \ref{body:t_test:fig:range}, we notice that the CV score peaks at around $k=15000$ with a score of 0.950448, and after this value of $k$, the CV score exhibits a decreasing trend. Evidently, due to the coarse granularity of $k$ that we have sampled, this method might have missed out on some local maxima after $k=15000$. However, because the time required to fit an SVM and obtain CV scores increases with the number of features, it is perhaps sufficient to obtain a broad, general trend of $t$-test.
 
 \subsection{Specific range of $k$}
 If we are interested in a specific range of $k$, we can easily plot a similar graph and sample $k$ with smaller step sizes. This is shown in Figure \ref{body:t_test:fig}, where $k$ ranges from 10 to 2000 with a step size of 10. That is, we have $k=10,20, \dots, 2000$. In this graph, we can see a similar trend, where the CV score increases with the number of features. The CV score peaks at around $k=1500$.
 
-To investigate where exactly the peak lies, we can zero in on a specific range of $k$ and sample $k$ with an even smaller step size. In Figure \ref{body:t_test:fig_zoom}, $k$ ranges from 1500 to 1600 with step size of 1. The peak is precisely $k=1589$, where the corresponding CV score is around 0.932738. We can see that even with a small set of features, we can perform better than the threshold. This shows that most of the features are actually not needed for good accuracy.
+To investigate where exactly the peak lies, we can zero in on a specific range of $k$ and sample $k$ with an even smaller step size. In Figure \ref{body:t_test:fig_zoom}, $k$ ranges from 1500 to 1600 with step size of 1. The peak is precisely $k=1589$, where the corresponding CV score is around 0.932738. We can see that even with a small set of features, we can perform better than the threshold.
+
+%This shows that most of the features are actually not needed for good accuracy.
 
 %%%%%%%%%% TABLE AND FIGURES %%%%%%%%%%%%%
 
@@ -2134,7 +2135,7 @@ To investigate where exactly the peak lies, we can zero in on a specific range o
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth]{images/t_test_2000_uneq_var1.jpeg}
-\caption{Plot of cross validation score against number of features, when an SVM with a linear kernel is fitted with the selected number of features, $k \in [10, 2000)$, with step size of 10. The dotted line represents the cross validation score with all 420374 features.}
+\caption{Plot of cross validation score against number of features, when an SVM with a linear kernel is fitted with the selected number of features, $k \in [10, 2000)$, with step size of 10.}
 \label{body:t_test:fig}
 \end{figure}
 
@@ -2146,7 +2147,7 @@ To investigate where exactly the peak lies, we can zero in on a specific range o
 \end{figure}
 
 \subsection{Lazy variation of SFS}
-Here, we investigate the lazy variation of SFS, which is a combination of both RFS and $t$-test, as discussed in section \ref{body:sfs:lazy}. Instead of $p$-values, we sort the features according to their individual CV scores. We then obtain Figure \ref{body:lazy_sfs:graph}. 
+Here, we investigate the lazy variation of SFS, as discussed in section \ref{body:sfs:lazy}. Instead of $p$-values, we sort the features according to their individual CV scores. We then obtain Figure \ref{body:lazy_sfs:graph}. 
 
 \begin{figure}
 \centering
@@ -2160,7 +2161,7 @@ We can see from the graph that at first, there is a similar trend to that in $t$
 \subsection{Comparing $t$-test and lazy SFS}
 Using lazy SFS, the subset with 310000 features performs slightly better than that with 8000 features, but the former has about 40 times as many features as the latter. In this case, it might be sensible to compromise 0.3\% of classification accuracy for about 300000 lesser features, as selecting only 8000 features for classification will impose much smaller computational and time constraints. Besides, it will be easier to make biological conclusions. This reflects the trade-offs faced in feature selection. We can also compare the lazy SFS and $t$-test clearly when we plot the two graphs in the same diagram in Figure \ref{body:t_test_and_lazy_sfs:graph}.
 
-Moreover, from the graph in Figure \ref{body:t_test_and_lazy_sfs:graph}, we can see that both methods have similar performance when $k$ is relatively small (i.e. $k<150000$). However, beyond this value of $k$, the lazy SFS method seems to outperform the $t$-test method, although this difference in CV score is not significant (about 0.01).
+Moreover, from the graph in Figure \ref{body:t_test_and_lazy_sfs:graph}, we can see that both methods have similar performance when $k$ is relatively small (i.e. $k<150000$). However, beyond this value of $k$, the lazy SFS method seems to outperform the $t$-test method, although the difference in CV score is not significant (about 0.01).
 
 \begin{figure}
 \centering
@@ -2168,8 +2169,6 @@ Moreover, from the graph in Figure \ref{body:t_test_and_lazy_sfs:graph}, we can 
 \caption{A ``magnified'' graph of CV scores against number of features using lazy SFS, focusing on the slight peak at around $k=300000$.}
 \label{body:lazy_sfs_smaller_range:graph}
 \end{figure}
-
-
 
 \begin{figure}
 \centering
@@ -2182,7 +2181,7 @@ Similarly to the discussion for the $t$-test method, the lazy SFS method only co
 
 %It is also interesting to note that the $t$-test gives a maximum CV score of 0.950448 with $k=15000$, while using the lazy SFS method (ignoring the peak at $k=310000$), we get a maximum CV score of 0.952794 with $k=8000$. Evidently, the lazy SFS method can produce a smaller subset that performs slightly better than the one selected by the $t$-test.
 
-Overall, both the $t$-test and the lazy SFS methods produce subsets with good performance relative to the threshold, but we also need to note that both methods do not take redundancy into account.
+Overall, both the $t$-test and the lazy SFS methods produce subsets with good performance relative to the threshold, but we also note that both methods do not take redundancy into account.
 
 
 \section{Recursive Feature Elimination} \label{eval:rfe}
@@ -2194,12 +2193,12 @@ As mentioned in section \ref{body:rfe}, the RFE algorithm removes \texttt{step} 
 
 We then obtain CV scores based on the features selected by the algorithm. The CV scores can also be found in Table \ref{rfe_results_table}.
 
-Next, we plot a graph of how the cross validation scores vary with the number of features selected. This graph can be found in Figure \ref{body:rfe:graph}.
+Next, we plot a graph of how the CV scores vary with the number of features selected. This graph can be found in Figure \ref{body:rfe:graph}.
 
 %We also plot the CV scores against the number of features that were specified. This graph can be found in Figure \ref{body:rfe:graph_1}.
 
 \subsection{Performance of RFE}
-From the graph in Figure \ref{body:rfe:graph}, we can see that there is an overall increasing trend with respect to the cross validation scores. However, all the scores fall below the threshold. Evidently, using RFE to select features does not seem to benefit the feature selection method. We can compare this result to the $t$-test experiments performed earlier. We notice that using the $t$-test seems to produce better results than RFE. Besides, $t$-test is also computationally much less expensive than RFE.
+From Figure \ref{body:rfe:graph}, we can see that there is an overall increasing trend in the CV scores. However, all the scores fall below the threshold. Evidently, using RFE to select features does not seem to benefit the feature selection method. We can compare this result to the $t$-test experiments performed earlier. We notice that using the $t$-test seems to produce better results than RFE. Besides, $t$-test is also computationally much less expensive than RFE.
 
 Regardless, we also need to take into account how the \texttt{step} parameter works in the RFE method. At each iteration, the algorithm tries to fit an SVM on the features. Suppose it is considering $F$ features, and the step size is $f$. It will remove $f$ features that have the lowest weights until the number of features needed is achieved. Thus, the step size $f$ here is important. From Table \ref{rfe_results_table}, we can see that the step sizes assigned to the algorithm are relatively large. For example, if we want only 10 features, the algorithm removes 10000 features at a time, which is a lot of features. This was done to allow the algorithm to terminate within a reasonable amount of time. Thus, this coarse step size might miss out on certain local optima which might be a cause of the trend we observe in RFE.
 
@@ -2270,7 +2269,7 @@ From the above discussion, we can conclude that RFE might not be a good method t
 
 Due to time constraints, the RFS algorithm was only able to select 800 features, and the corresponding graph can be found in Figure \ref{body:rfs_graph}. We see that across all 800 features, the graph does not exceed the threshold for the linear SVM.
 
-We see that the graph peaks at $k=53$ with a CV score of about 0.89611. After that, the CV score decreases and exhibits a slow increasing trend. However, the CV score does not exceed 0.89611 even with 800 features. We see that since there is an increasing trend in the CV scores, RFS might be able to select a subset that can perform better than the threshold. However, we cannot be absolutely certain about this until we use RFS to select more features.
+We see that the graph peaks at $k=53$ with a CV score of about 0.89611. After that, the CV score decreases and exhibits a slow increasing trend. However, the CV score does not exceed 0.89611 even with 800 features. We see that since there is an increasing trend in the CV scores, RFS might be able to select a subset that can perform better than the threshold. However, we cannot be absolutely certain about this until we use RFS to select more features. At the time of writing, RFS is being performed with $k=5000$.
 
 \begin{figure}
 \centering
@@ -2308,7 +2307,7 @@ However, what we see from Figures \ref{body:mrmmc_trun} and \ref{body:mrmmc:grap
 
 Evidently from both graphs, we can see that there is a general increasing trend in CV score as the number of features $k$ increases, but both methods are not able to find features that can do better than the threshold. Had the algorithm allowed more features to be included in the set, we might obtain a feature subset $S$ that can do better than the threshold.
 
-However, we can also argue that we just require the CV score of $S$ to be within a \textit{range} of the threshold CV score. For example, we might just need the CV score of $S$ to be within 5\% of the threshold. This means that the minimum CV score that we can accept is 0.882702, which is 95\% of the threshold CV score of 0.929160.
+However, we can also argue that we just require the CV score of $S$ to be within a \textit{range} of the threshold CV score. For example, we might just need the CV score of $S$ to be within 5\% of the threshold. This means that the minimum CV score that we can accept is 0.882702, which is 95\% of the threshold CV score of 0.929160. Both the full and truncated versions satisfy this constraint.
 
 Furthermore, previous methods, such as $t$-test, give us an approximate idea of the size of $S$ that will give us better performance than the threshold. $S$ should contain at least about 2000 features. Thus, we will not expect the subset that MRmMC chooses to outperform the set with all of the available features, since MRmMC can only choose 847 features from the data set. This is evident from the plots above.
 
@@ -2317,9 +2316,9 @@ Furthermore, previous methods, such as $t$-test, give us an approximate idea of 
 
 \section{MRmMC with Genetic Algorithm} \label{mrmmc_ga_results}
 
-Here, we modify MRmMC by removing the computation of $R^2$ and incorporating a GA. We also experiment with two selection strategies. Since the algorithm contains probabilistic elements, such as the mutation operator, the algorithm was run several times, and the average was taken. 10 runs were performed for each experimental setting. To obtain more accurate averages, we could perform more runs.
+Here, we modify MRmMC by removing the computation of $R^2$ and incorporating a genetic algorithm (GA). We also experiment with two selection strategies. Since the algorithm contains probabilistic elements, such as the mutation operator, the algorithm was run several times, and the average was taken. 10 runs were performed for each experimental setting. To obtain more accurate averages, we could perform more runs.
 
-For these experiments, the number of features selected for the \textit{first generation} of the GA $k$ is 8000, as illustrated in Figure \ref{bg:ga:twostage_b}. We differentiate this value of $k$ from the number of features eventually chosen by the algorithm in the subset $S$. We also select 16000 features that have the highest $r_{qn}$ measure for the \textit{first stage} of the GA, as illustrated in Figure \ref{bg:ga:twostage_a}.
+For these experiments, the number of features selected for the \textit{first generation} of the GA, $k$ is 8000, as illustrated in Figure \ref{bg:ga:twostage_b}. We differentiate this value of $k$ from the number of features eventually chosen by the algorithm in the subset $S$. We also select 16000 features that have the highest $r_{qn}$ measure for the \textit{first stage} of the GA, as illustrated in Figure \ref{bg:ga:twostage_a}.
 
 \subsection{Roulette Wheel}
 
@@ -2517,7 +2516,7 @@ This is proposed as an extension in section \ref{further_work}.
 
 \subsection{Evaluation of two-stage genetic algorithm}
 
-In the GA, we have employed the two-stage GA as discussed in section \ref{bg:ga:twostage}. The first stage calculates the $r_{qn}$ quantity as specified in the MRmMC paper in \cite{RefWorks:187} and chooses only the top 16000 features (Figure \ref{ga:mrmmc:params_1}) that have the highest $r_{qn}$. We see that considering only features that have the best individual $r_{qn}$ values seems to not degrade the performance of the algorithm significantly, as indicated by the CV scores.
+In the GA, we have employed the two-stage GA as discussed in section \ref{bg:ga:twostage}. The first stage calculates the $r_{qn}$ quantity as specified in the MRmMC paper in \cite{RefWorks:187} and chooses only the top 16000 features (Figure \ref{ga:mrmmc:params_1}) that have the highest $r_{qn}$. We see that considering only features that have the best individual $r_{qn}$ values does not seem to degrade the performance of the algorithm significantly, as indicated by the CV scores.
 
 This has also allowed the algorithm to reduce the amount of memory needed, since we only need to keep track of the top 16000 features, instead of considering all 420374 features. Evidently, this is another parameter that can vary. We might be able to save even more memory by filtering out more features in the first stage of the GA. At the same time, we might also have missed out important features by truncating those features that do not have high $r_{qn}$. This issue will require further investigation into the parameters of the GA, as discussed in section \ref{further_work}.
 
@@ -2534,7 +2533,7 @@ This has also allowed the algorithm to reduce the amount of memory needed, since
 
 \section{Biological interpretation} \label{bio:conclusion}
 
-In this section, we attempt to see if there are any features that repeatedly get selected by the feature selection algorithms. Specifically, we inspect the features that are chosen in the following scenarios:
+In this section, we attempt to see if there are any features that repeatedly get selected by the feature selection algorithms. In particular, we inspect the features that are chosen in the following scenarios:
 \begin{itemize}
   \item $t$-test with $k=15000$
   \item MRmMC with $k=41$
@@ -2550,7 +2549,7 @@ We find that in out of the 9 settings listed above, the feature \texttt{cg130556
 
 The features that are frequently selected can be mapped to a database that is publicly available. In particular, we extract information about our features through a database that contains methylation data in humans \cite{bio_conclusion}. From this database, we can extract the features' gene names.
 
-\texttt{cg13055685} corresponds to the gene \texttt{MCF2L;MCF2L} and the 11 features that appear in 8 of the settings correspond to:
+\texttt{cg13055685} corresponds to the gene name \texttt{MCF2L;MCF2L} and the 11 features that appear in 8 of the settings correspond to:
 \begin{itemize}
   \item \texttt{MAN2B2}
   \item \texttt{DAXX;DAXX;DAXX;DAXX}
@@ -2576,9 +2575,11 @@ Overall, this project has explored the epigenetics data collected in \cite{RefWo
 We can draw the following conclusions based on the work done in this project:
 \begin{itemize}
   \item The $t$-test method is able to select features that give good cross validation scores. Due to its limitations, these features might contain redundancies.
+  \item Recursive Feature Elimination requires more fine-tuning in its parameters for it to be effective on the data set.
   \item MRmMC is not suitable for high dimensional data, specifically data with more features than samples.
-  \item Incorporating genetic algorithms with MRmMC allowed us to find features that perform slightly better than those found by $t$-test and RFE. It has also allowed us to reduce the number of features obtained significantly.
+  \item Incorporating genetic algorithms with MRmMC allowed us to find features that perform slightly better than those found by $t$-test and RFE. It has also allowed us to significantly reduce the number of features obtained.
   \item A way to measure redundancy is still lacking in the GA variant of MRmMC.
+  \item Several features were repeatedly selected by the algorithms, and their corresponding genes were obtained.
 \end{itemize}
 
 \section{Further work} \label{further_work}
@@ -2620,7 +2621,7 @@ Various methods have been proposed to estimate MI for continuous variables. For 
 
 \subsection{Quantifying redundancy in MRmMC}
 
-Although implementing a GA with MRmMC gave good CV scores with a relatively small number of features, we cannot be sure if the features chosen contain any redundancy. An extension can thus be to check for redundancy within this chosen set of features.
+Although implementing a GA with MRmMC gave good cross validation scores with a relatively small number of features, we cannot be sure if the features chosen contain any redundancy. An extension can thus be to check for redundancy within this chosen set of features.
 
 The authors of the MRmMC paper in \cite{RefWorks:187} also suggested the need for an alternative redundancy measure. This might be due to the limitations of the redundancy measure $R^2$ that was originally proposed.
 
@@ -2634,7 +2635,7 @@ This measure was originally proposed in \cite{RefWorks:182}.
 
 \subsection{Further metrics to evaluate algorithms}
 
-From section \ref{mrmmc_ga_results}, the quantities listed in tables - best CV score, number of iterations and number of features chosen - can be used to evaluate the efficiency and efficacy of feature selection algorithms. In the previous chapter, we have evaluated the performance of the subset $S$ based on CV scores. An alternative will be to consider the above quantities to evaluate $S$.
+From section \ref{mrmmc_ga_results}, the quantities listed in tables - best cross validation (CV) score, number of iterations and number of features chosen - can be used to evaluate the efficiency and efficacy of feature selection algorithms. In the previous chapter, we have evaluated the performance of the subset $S$ based on CV scores. An alternative will be to consider the above quantities to evaluate $S$.
 
 For example, we can propose a metric $J$ to select a subset $\widehat{S}$ that takes into account the CV score $C$, the number of iterations $I$, and the number of features chosen $F$. Intuitively, we maximise $C$ and minimise $I$ and $F$. That is,
 \begin{align*}
